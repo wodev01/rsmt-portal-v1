@@ -20,7 +20,11 @@ var app = angular
     .constant('toastr', toastr);
 
 
-app.config(function ($mdThemingProvider, toastr, $urlRouterProvider, $stateProvider) {
+app.config(function ($mdThemingProvider, toastr, $urlRouterProvider, $stateProvider, $httpProvider) {
+
+    // Pull in `Request/Response Service` from the dependency injector
+    $httpProvider.interceptors.push('InterceptorsService');
+
     $mdThemingProvider.definePalette('rsmtPalette', {
         '50': 'BDBDBD',
         '100': '9E9E9E',

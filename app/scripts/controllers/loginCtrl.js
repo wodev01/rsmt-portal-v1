@@ -27,7 +27,7 @@ app.controller('LoginCtrl',
                     if (response.verified === 'true') {
                         $rootScope.loginUserName = response.name;
                         toastr.success('Signed in as ' + $rootScope.loginUserName);
-                        $state.go('main.clients');
+                        $state.go('main.dashboard');
                     }
                 },
                 function (rejection) {
