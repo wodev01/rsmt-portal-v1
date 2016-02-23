@@ -272,3 +272,37 @@ html, body {
     max-width: 100%;
     height: auto;
 }
+
+md-toolbar.top-header {
+    z-index: 62;
+}
+
+/*---------- SideNav ----------*/
+md-sidenav.left-side-nav {
+    width: 0;
+    min-width: 180px;
+    max-width: 0;
+    padding-top: 10px;
+    z-index: 61;
+}
+
+md-sidenav.left-side-nav .md-button {
+    text-align: left;
+    font-weight: normal;
+}
+
+md-sidenav.right-side-nav {
+    width: 0;
+    min-width: calc(100% - 180px);
+    max-width: 0;
+    top: 64px;
+}
+
+img.rsmt-logo {
+    height: 85px;
+}
+
+md-toolbar.light-black-bg-1 {
+    background-color: #2D2D2D !important;
+}
+

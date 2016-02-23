@@ -9,6 +9,13 @@
         </div>
 
         <md-menu md-position-mode="target-right target">
+
+          <!--  <div layout="row" layout-align="end center" ng-hide="isLoggedIn" flex>
+                <md-button class="md-warn md-raised md-hue-2"
+                           ng-click="showSignup($event)"
+                           ng-hide="isLoggedIn">Sign Up Here</md-button>
+            </div>-->
+
             <md-button ng-click="$mdOpenMenu($event)">
                 <span ng-bind="userObj.name"></span><md-icon md-font-set="material-icons">keyboard_arrow_down</md-icon>
             </md-button>
@@ -20,6 +27,17 @@
                             <p flex>
                                 <md-icon md-font-set="material-icons">settings</md-icon>
                                 Settings
+                            </p>
+                        </div>
+                    </md-button>
+                </md-menu-item>
+
+                <md-menu-item>
+                    <md-button ng-click="fnOpenTermsOfServiceModal($event);">
+                        <div layout="row">
+                            <p flex>
+                                <md-icon md-font-set="material-icons">description</md-icon>
+                                Terms of Use
                             </p>
                         </div>
                     </md-button>
@@ -46,21 +64,25 @@
                 layout="column"
                 md-component-id="left"
                 md-is-locked-open="$mdMedia('gt-sm')">
-        <md-button class="md-primary" ng-class="fnIsActive('/clients')"
-                   ng-click="$root.fnCloseSideNavs();" ui-sref="main.clients">
-            <md-icon md-font-set="material-icons">group</md-icon> Clients</md-button>
+        <md-button class="md-primary" ng-class="fnIsActive('/dashboard')"
+                   ng-click="$root.fnCloseSideNavs();" ui-sref="main.dashboard">
+            <md-icon md-font-set="material-icons">dashboard</md-icon> Dashboard</md-button>
 
-        <md-button class="md-primary" ng-class="fnIsActive('/payments')"
-                   ng-click="$root.fnCloseSideNavs();" ui-sref="main.payments">
-            <md-icon md-font-set="material-icons">payment</md-icon> Payments</md-button>
+        <md-button class="md-primary" ng-class="fnIsActive('/locations')"
+                   ng-click="$root.fnCloseSideNavs();" ui-sref="main.locations">
+            <md-icon md-font-set="material-icons">place</md-icon> Locations</md-button>
 
-        <md-button class="md-primary" ng-class="fnIsActive('/groups')"
-                   ng-click="$root.fnCloseSideNavs();" ui-sref="main.groups">
-            <md-icon md-font-set="material-icons">group_work</md-icon> Shop Groups</md-button>
+        <md-button class="md-primary" ng-class="fnIsActive('/crm')"
+                   ng-click="$root.fnCloseSideNavs();" ui-sref="main.crm">
+            <md-icon md-font-set="material-icons">group</md-icon> CRM</md-button>
 
-        <md-button class="md-primary" ng-class="fnIsActive('/shop-locations')"
-                   ng-click="$root.fnCloseSideNavs();" ui-sref="main.shopLocations">
-            <md-icon md-font-set="material-icons">location_on</md-icon> Shop Locations</md-button>
+        <md-button class="md-primary" ng-class="fnIsActive('/products')"
+                   ng-click="$root.fnCloseSideNavs();" ui-sref="main.products">
+            <md-icon md-font-set="material-icons">redeem</md-icon> Products</md-button>
+
+        <md-button class="md-primary" ng-class="fnIsActive('/location/setup')"
+                   ng-click="$root.fnCloseSideNavs();" ui-sref="main.locationSetup">
+            <md-icon md-font-set="material-icons">pin_drop</md-icon> Location Setup</md-button>
     </md-sidenav>
     <!-- Left Side Navigation : END-->
 

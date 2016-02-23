@@ -99,7 +99,32 @@ app.config(function ($mdThemingProvider, toastr, $urlRouterProvider, $stateProvi
         .state('main.dashboard', {
             url: "dashboard",
             controller: 'DashboardCtrl',
-            templateUrl: "views/authenticated/dashboard.html"
+            templateUrl: "views/authenticated/dashboard/dashboard.html"
+        })
+        .state('main.locations', {
+            url: "locations",
+            controller: 'LocationsCtrl',
+            templateUrl: "views/authenticated/locations/locations.html"
+        })
+        .state('main.crm', {
+            url: "crm",
+            controller: 'CrmCtrl',
+            templateUrl: "views/authenticated/crm/crm.html"
+        })
+        .state('main.products', {
+            url: "products",
+            controller: 'ProductsCtrl',
+            templateUrl: "views/authenticated/products/products.html"
+        })
+        .state('main.locationSetup', {
+            url: 'location/setup',
+            controller: 'LocationSetupCtrl',
+            templateUrl: "views/authenticated/locationSetup/locationSetup.html"
+        })
+        .state('main.settings', {
+            url: 'settings/:settingsName',
+            controller: 'SettingsCtrl',
+            templateUrl: 'views/authenticated/settings/settings.html'
         });
 
     /*--------- End of State Management ----------*/

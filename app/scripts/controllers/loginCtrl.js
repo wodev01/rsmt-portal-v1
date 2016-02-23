@@ -1,14 +1,6 @@
 'use strict';
-
-/**
- * @ngdoc function
- * @name rsmtPortalApp.controller:LoginCtrl
- * @description
- * # LoginCtrl
- * Controller of the rsmtPortalApp
- */
 app.controller('LoginCtrl',
-    function ($scope, $rootScope, $mdDialog, $mdMedia, $state, toastr) {
+    function ($scope, $rootScope, $mdDialog, $mdMedia, $state, toastr, ErrorMsg) {
 
         $scope.user = {isProcessing: false};
 

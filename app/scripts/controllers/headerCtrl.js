@@ -1,13 +1,11 @@
 'use strict';
+app.controller('HeaderCtrl', function ($scope, $mdDialog) {
 
-/**
- * @ngdoc function
- * @name rsmtPortalApp.controller:HeaderCtrl
- * @description
- * # HeaderCtrl
- * Controller of the rsmtPortalApp
- */
-angular.module('rsmtPortalApp')
-    .controller('HeaderCtrl', function ($scope) {
-
-    });
+    $scope.showSignup = function (ev) {
+        $mdDialog.show({
+            controller: 'SignUpDialogCtrl',
+            templateUrl: 'views/authenticated/settings/modals/signup.tmpl.html',
+            targetEvent: ev
+        });
+    };
+});
