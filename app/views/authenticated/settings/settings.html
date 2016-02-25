@@ -2,7 +2,6 @@
     <div class="margin-bottom-10" layout="row">
         <div class="md-display-1">Settings</div>
     </div>
-
     <br/>
 
     <div md-theme="grey" class="md-whiteframe-z2" ng-init="tabInit();">
@@ -20,9 +19,9 @@
                     </div>
                 </md-tab>
 
-                <md-tab label="Billing history" ui-sref="main.settings({settingsName:'billinghistory'})">
+                <md-tab label="Billing history" ui-sref="main.settings({settingsName:'billingHistory'})">
                     <div class="settingTab" ng-if="selectedIndex == 2" layout="row" layout-sm="column" layout-padding layout-fill>
-                        <div class="tabView" ng-include="'views/authenticated/settings/billinghistory.html'" ng-controller="BillingHistoryCtrl" ng-init="fnInitSubscriptions();" layout-padding layout-fill flex></div>
+                        <div class="tabView" ng-include="'views/authenticated/settings/billinghistory.html'" ng-controller="BillingHistoryCtrl" ng-init="fnInitBillingHistory();" layout-padding layout-fill flex></div>
                     </div>
                 </md-tab>
 

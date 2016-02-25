@@ -281,6 +281,15 @@ md-toolbar.top-header {
     z-index: 62;
 }
 
+/*---------- Remove error space in input-container ----------*/
+md-input-container.remove-error-space .md-errors-spacer {
+    min-height: 0px;
+}
+
+.md-rsmt-theme.md-hue-1 .md-datepicker-input {
+    background: none !important;
+}
+
 /*---------- SideNav ----------*/
 md-sidenav.left-side-nav {
     width: 0;

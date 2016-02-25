@@ -36,4 +36,22 @@ app.controller('MainCtrl', function ($scope, $mdDialog, $location, $cookies, coo
             $scope.userObj = JSON.parse(localStorage.getItem('userObj'));
         }
     };
+
+    $scope.fnOpenTermsOfServiceModal = function (ev) {
+        var TermsOfServiceModalController = ['$scope', '$mdDialog', function ($scope, $mdDialog) {
+            $scope.hide = function () {
+                $mdDialog.hide();
+            };
+
+            $scope.cancel = function () {
+                $mdDialog.cancel();
+            };
+        }];
+
+        $mdDialog.show({
+            controller: TermsOfServiceModalController,
+            templateUrl: 'views/modals/termsOfServiceDialog.html',
+            targetEvent: ev
+        });
+    };
 });

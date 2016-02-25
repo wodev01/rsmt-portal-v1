@@ -14,7 +14,10 @@ var app = angular
         'ngCookies',
         'ngSanitize',
         'ui.router',
-        'ngMaterial'
+        'ngMaterial',
+        'ui.grid',
+        'ui.grid.selection',
+        'ui.grid.autoResize'
     ])
     .constant('cookieName', 'cargly_rsmt_access_token')
     .constant('globalTimeZone', ["US/Hawaii", "US/Alaska", "US/Pacific", "US/Arizona", "US/Mountain", "US/Central", "US/Eastern"])
@@ -138,5 +141,24 @@ app.config(function ($mdThemingProvider, toastr, $urlRouterProvider, $stateProvi
         onAuthChanged: function () {
         }
     });
+
+});
+
+app.run(function ($rootScope, $mdSidenav) {
+    /*----- change ui-grid height -----*/
+    $rootScope.fnReturnGridHeight = function (dataLength, intRowHeight, isPaginationEnabled, isFilteringEnabled) {
+        var rowHeight = 50; // your row height
+        var headerHeight = 30; // your header height
+        var footerHeight = 32;  // your footer heightv
+        var horizScrollBarHeight = 18; // x-scrollbar height
+
+        var rowHeader = headerHeight + (isFilteringEnabled ? 25 : 0);
+        var rowContent = (dataLength * (intRowHeight ? intRowHeight : rowHeight)) + horizScrollBarHeight;
+        var rowFooter = isPaginationEnabled ? footerHeight : 0;
+
+        return {
+            'height': (rowHeader + rowContent + rowFooter) + "px"
+        };
+    };
 
 });

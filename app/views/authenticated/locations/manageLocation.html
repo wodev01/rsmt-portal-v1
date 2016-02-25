@@ -1,0 +1,32 @@
+<md-sidenav class="md-sidenav-right md-whiteframe-z2 right-side-nav" md-component-id="manageLocationView">
+    <!-- swapping view header -->
+    <md-toolbar class="light-black-bg-1">
+        <div class="md-toolbar-tools" layout="row" layout-align="space-between center">
+            {{editLocationName}}
+            <md-button ng-click="fnCloseLocationManageSwap();" class="md-raised md-accent">Back</md-button>
+        </div>
+    </md-toolbar>
+
+    <md-content md-theme="grey">
+        <md-tabs class="md-primary" md-selected="selectedClientTab" md-dynamic-height ng-if="isTabsLoad">
+            <md-tab label="Edit">
+                <div ng-if="selectedLocationTab == 0"
+                     ng-controller="LocationInfoCtrl"
+                     ng-include="'views/authenticated/locations/locationsInfo.html'">
+                </div>
+            </md-tab>
+
+            <md-tab label="Recommended Service">
+                <div ng-if="selectedLocationTab == 1"></div>
+            </md-tab>
+
+            <md-tab label="Repair Orders">
+                <div ng-if="selectedLocationTab == 2"></div>
+            </md-tab>
+
+        </md-tabs>
+    </md-content>
+
+</md-sidenav>
+<!-- include swapping view-->
+<div ng-include="rightUserSwapView"></div>

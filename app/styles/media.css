@@ -1,0 +1,29 @@
+@media (max-width: 959px) {
+    .login-form-container {
+        min-width: 300px;
+    }
+
+    img.rsmt-logo {
+        height: 60px;
+    }
+
+    md-sidenav.left-side-nav {
+        padding-top: 50px;
+    }
+
+    md-sidenav.right-side-nav {
+        min-width: 100%;
+        top: 48px;
+    }
+}
+
+@media screen and (max-width: 599px) {
+    /* All Modal Dialog */
+    md-toolbar .md-toolbar-tools .text-small-599 {
+        font-size: 14px;
+    }
+
+}
+
+@media (max-width: 768px) {
+}

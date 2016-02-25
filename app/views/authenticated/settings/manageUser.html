@@ -1,0 +1,18 @@
+<md-sidenav class="md-sidenav-right md-whiteframe-z2" md-component-id="userSwap">
+    <!-- swapping view header -->
+    <md-toolbar class="md-theme-light">
+        <h1 class="md-toolbar-tools">
+            <span ng-if="!isUserEditable">New User</span>
+            <span ng-if="isUserEditable">Edit User</span>
+            <span flex></span>
+            <md-button ng-click="fnCloseSwap()" class="md-raised btn btnGreen">
+                Back
+            </md-button>
+        </h1>
+    </md-toolbar>
+
+
+</md-sidenav>
+
+
+
