@@ -17,6 +17,7 @@ var app = angular
         'ngMaterial'
     ])
     .constant('cookieName', 'cargly_rsmt_access_token')
+    .constant('globalTimeZone', ["US/Hawaii", "US/Alaska", "US/Pacific", "US/Arizona", "US/Mountain", "US/Central", "US/Eastern"])
     .constant('toastr', toastr);
 
 

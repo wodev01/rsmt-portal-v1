@@ -255,6 +255,10 @@ html, body {
     border: solid thin #CCCCCC !important;
 }
 
+.text-center {
+    text-align: center !important;
+}
+
 .text-right {
     text-align: right !important;
 }
@@ -306,3 +310,7 @@ md-toolbar.light-black-bg-1 {
     background-color: #2D2D2D !important;
 }
 
+/*---------- Remove error space in input-container ----------*/
+md-input-container.remove-error-space .md-errors-spacer {
+    min-height: 0;
+}

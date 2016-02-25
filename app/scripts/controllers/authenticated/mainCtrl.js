@@ -18,14 +18,14 @@ app.controller('MainCtrl', function ($scope, $mdDialog, $location, $cookies, coo
         });
     };
 
-    $scope.fnOpenTermsOfServiceModal = function (ev) {
+    /*$scope.fnOpenTermsOfServiceModal = function (ev) {
 
         $mdDialog.show({
             controller: 'TermsOfUseCtrl',
-            templateUrl: 'views/authenticated/settings/modals/termsOfServiceDialog.html',
+            templateUrl: 'views/modals/termsOfServiceDialog.html',
             targetEvent: ev
         });
-    };
+    };*/
 
     $scope.fnStateSettings = function () {
         $state.go('main.settings', {'settingsName': 'account'});
