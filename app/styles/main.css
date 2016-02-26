@@ -86,3 +86,33 @@
 .location-setup .finishing-setup-bg {
     background: url("../images/setup/FinishingSetup.jpeg");
 }
+
+/*---------- Dashbaord Tab ----------*/
+#dashboard-tab section .dashContainerContent {
+    height: 352px;
+}
+
+#dashboard-tab section .dashContainerContent.summaryContent {
+    height: 425px;
+    max-height: 425px;
+}
+
+/*---------- Summary Calculation ----------*/
+.total {
+    background-color: #EEEDEE;
+    text-align: center;
+}
+
+/*---------- Bar-chart no data message ----------*/
+.bar-data-msg {
+    position: absolute;
+    top: 40%;
+    left: 40%
+}
+
+/*---------- RO modal ----------*/
+.leftLabel {
+    font-weight: bold;
+    padding-right: 3px;
+}
+

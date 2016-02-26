@@ -1343,16 +1343,11 @@ app.controller('DashboardCtrl', function ($scope, $mdDialog, $filter, $timeout, 
     /*---------------- End of Marketing Source --------------*/
     /*---------- Init ----------*/
     $scope.fnInitDashboard = function () {
-        /*setTimeout( function(){
-         console.log(CarglyPartner.user);
-         $scope.partnerId = CarglyPartner.user.partnerId;
-         },1000
-         );*/
-        $scope.partnerId = 'ahBzfmNhcmdseXBsYXRmb3JtchULEghQUGFydG5lchiAgICQmP2fCww';
-
-
-        $scope.fnGetLocationDetails();
-        $scope.fnCreatechartGroupsDD();
+        setTimeout( function(){
+            $scope.partnerId = CarglyPartner.user.partnerId;
+            $scope.fnGetLocationDetails();
+            $scope.fnCreatechartGroupsDD();
+         },1000);
     };
 
     $scope.fnRefreshDom = function () {
@@ -1413,14 +1408,14 @@ app.controller('DashboardCtrl', function ($scope, $mdDialog, $filter, $timeout, 
 
     /*---------- Bind scroll and window resize event for viewport changes ----------*/
     $('#content').on('scroll', function() {
-        var elem = $('#content');
+        var elem = $('#content #dashboard-tab');
         if (elem && elem.length != 0) {
            dashboardRequest();
         }
     });
 
     $(window).resize(function() {
-        var elem = $('#content');
+        var elem = $('#content #dashboard-tab');
         if (elem && elem.length != 0) {
             dashboardRequest();
         }

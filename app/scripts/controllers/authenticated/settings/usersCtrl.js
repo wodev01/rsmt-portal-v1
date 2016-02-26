@@ -89,7 +89,6 @@ app.controller('UsersCtrl',
         };
 
         $scope.fnUserEdit = function (row) {
-            console.log("hello");
             $scope.isUserEditable = true;
             $scope.intIndex = row.rowIndex;
             $scope.userName = row.entity.name;
@@ -99,6 +98,7 @@ app.controller('UsersCtrl',
 
         //Swapping view open function
         $scope.fnOpenSwap = function() {
+            console.log("hello");
             setTimeout(function(){
                 $scope.rightView = '';
                 $scope.$apply();

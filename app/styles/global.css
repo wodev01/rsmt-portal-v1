@@ -323,3 +323,35 @@ md-toolbar.light-black-bg-1 {
 md-input-container.remove-error-space .md-errors-spacer {
     min-height: 0;
 }
+
+/*---------- UI-Grid ----------*/
+.ui-grid-pager-control input {
+    height: 24px;
+    padding: 0;
+}
+
+.ui-grid-viewport .ui-grid-cell-contents {
+    line-height: 3em;
+}
+
+md-dialog[aria-label=Delete] button[aria-label=Delete] {
+    background-color: rgb(198, 40, 40) !important;
+    border-color: #C9302C !important;
+    color: rgba(255, 255, 255, 0.87) !important;
+}
+
+/*---------- Chart CSS ----------*/
+.chart {
+    -webkit-box-shadow: 2px 2px 3px 3px rgba(50, 50, 50, 0.75);
+    -moz-box-shadow: 2px 2px 3px 3px rgba(50, 50, 50, 0.75);
+    box-shadow: 2px 2px 3px 3px rgba(50, 50, 50, 0.75);
+    margin-left: 5px;
+}
+
+.c3-chart-arcs-title {
+    font-size: 11px !important;
+}
+
+.c3-legend-item-tile, .c3-xgrid-focus, .c3-ygrid, .c3-event-rect, .c3-bars path {
+    cursor: pointer !important;
+}
