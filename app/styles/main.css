@@ -6,3 +6,83 @@
     max-width: 400px;
     max-height: 500px;
 }
+
+.Product_box {
+    border: 1px solid #000;
+    font-size: 21px;
+    height: auto;
+    padding: 31px;
+    border-radius: 8px;
+    cursor: pointer;
+    min-height: 90px;
+    margin: 20px;
+    float: left;
+    text-align: center;
+}
+
+.Product_box:hover {
+    -moz-box-shadow: 0 0 10px #ccc;
+    -webkit-box-shadow: 0 0 10px #ccc;
+    box-shadow: 0 0 10px #ccc;
+}
+
+
+/*---------- Location Setup ----------*/
+.location-setup md-card div.md-card-image {
+    background-repeat: no-repeat;
+    background-position: center center;
+}
+
+.location-setup md-card div.big-img {
+    height: 500px;
+    background-size: 70% 450px;
+}
+
+.location-setup md-card div.small-img {
+    height: 300px;
+    background-size: 100%;
+}
+
+.location-setup .run-setup-bg {
+    background: url("../images/setup/RunSetup.jpg");
+}
+
+.location-setup .welcome-setup-wizard-bg {
+    background: url("../images/setup/WelcomeSetupWizard.jpg");
+}
+
+.location-setup .set-destination-location-bg {
+    background: url("../images/setup/SetDestinationLocation.jpg");
+}
+
+.location-setup .select-start-menu-folder-bg {
+    background: url("../images/setup/SelectStartMenuFolder.jpg");
+}
+
+.location-setup .ready-to-install-bg {
+    background: url("../images/setup/ReadyToInstall.jpg");
+}
+
+.location-setup .installing-bg {
+    background: url("../images/setup/Installing.jpg");
+}
+
+.location-setup .setup-login-bg {
+    background: url("../images/setup/SetupLogin.jpeg");
+}
+
+.location-setup .loggedin-bg {
+    background: url("../images/setup/Loggedin.jpeg");
+}
+
+.location-setup .setup-details-bg {
+    background: url("../images/setup/SetupDetails.jpeg");
+}
+
+.location-setup .connect-shop-database-bg {
+    background: url("../images/setup/ConnectShopDatabase.jpeg");
+}
+
+.location-setup .finishing-setup-bg {
+    background: url("../images/setup/FinishingSetup.jpeg");
+}

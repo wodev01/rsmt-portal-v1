@@ -1,6 +1,6 @@
 'use strict';
-app.factory('locationService',['$q', '$rootScope',
-    function($q, $rootScope) {
+app.factory('locationService',['$q', 'ErrorMsg',
+    function($q, ErrorMsg) {
         var locationService = {};
 
         //Get locations data
@@ -13,7 +13,7 @@ app.factory('locationService',['$q', '$rootScope',
                     defer.resolve(data);
                 },
                 error:function(error) {
-                    $rootScope.fnCheckStatus(error.status);
+                    ErrorMsg.CheckStatusCode(error.status);
                     defer.resolve(error);
                 }
             });
@@ -31,7 +31,7 @@ app.factory('locationService',['$q', '$rootScope',
                     defer.resolve(data);
                 },
                 error:function(error) {
-                    $rootScope.fnCheckStatus(error.status);
+                    ErrorMsg.CheckStatusCode(error.status);
                     defer.resolve(error);
                 }
             });
@@ -49,7 +49,7 @@ app.factory('locationService',['$q', '$rootScope',
                     defer.resolve(data);
                 },
                 error:function(error) {
-                    $rootScope.fnCheckStatus(error.status);
+                    ErrorMsg.CheckStatusCode(error.status);
                     defer.resolve(error);
                 }
             });
@@ -66,7 +66,7 @@ app.factory('locationService',['$q', '$rootScope',
 					defer.resolve(data);
 				},
                 error:function(error) {
-                    $rootScope.fnCheckStatus(error.status);
+                    ErrorMsg.CheckStatusCode(error.status);
                     defer.reject(error);
                 }
 			});
@@ -83,7 +83,7 @@ app.factory('locationService',['$q', '$rootScope',
 					defer.resolve(data);
 				},
                 error:function(error) {
-                    $rootScope.fnCheckStatus(error.status);
+                    ErrorMsg.CheckStatusCode(error.status);
                     defer.reject(error);
                 }
 			});

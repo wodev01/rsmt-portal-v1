@@ -1,6 +1,6 @@
 'use strict';
-app.factory('billingHistoryService',['$q', '$rootScope',
-    function($q, $rootScope) {
+app.factory('billingHistoryService',['$q', 'ErrorMsg',
+    function($q, ErrorMsg) {
         var billingHistoryService = {};
 
         billingHistoryService.fetchBillingHistory = function(){
@@ -12,7 +12,7 @@ app.factory('billingHistoryService',['$q', '$rootScope',
                     defer.resolve(data);
                 },
                 error:function(error) {
-                    $rootScope.fnCheckStatus(error.status);
+                    ErrorMsg.CheckStatusCode(error.status);
                     defer.resolve(error);
                 }
             });

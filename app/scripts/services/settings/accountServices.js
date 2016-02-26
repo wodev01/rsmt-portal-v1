@@ -1,6 +1,6 @@
 'use strict';
-app.factory('accountServices',['$q', '$rootScope',
-    function($q, $rootScope) {
+app.factory('accountServices',['$q', 'ErrorMsg',
+    function($q, ErrorMsg) {
         var accountServices = {};
 
         //Get account data
@@ -13,7 +13,7 @@ app.factory('accountServices',['$q', '$rootScope',
                     defer.resolve(data);
                 },
                 error:function(error) {
-                    $rootScope.fnCheckStatus(error.status);
+                    ErrorMsg.CheckStatusCode(error.status);
                     defer.resolve(error);
                 }
             });
@@ -31,7 +31,7 @@ app.factory('accountServices',['$q', '$rootScope',
                     defer.resolve(data);
                 },
                 error:function(error) {
-                    $rootScope.fnCheckStatus(error.status);
+                    ErrorMsg.CheckStatusCode(error.status);
                     defer.resolve(error);
                 }
             });

@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="bower_components/angular-material/angular-material.css" />
     <link rel="stylesheet" href="bower_components/toastr/toastr.css" />
     <link rel="stylesheet" href="bower_components/angular-ui-grid/ui-grid.css" />
+    <link rel="stylesheet" href="bower_components/c3/c3.css" />
     <!-- endbower -->
     <!-- endbuild -->
 
@@ -59,20 +60,33 @@
 <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
 <script src="bower_components/toastr/toastr.js"></script>
 <script src="bower_components/angular-ui-grid/ui-grid.js"></script>
+<script src="bower_components/d3/d3.js"></script>
+<script src="bower_components/c3/c3.js"></script>
+<script src="bower_components/moment/moment.js"></script>
 <!-- endbower -->
 <!-- endbuild -->
 <script type="text/javascript" src="https://carglyplatform.appspot.com/partners/api/v1"></script>
 
+<!-- build:js({.tmp,app}) scripts/plugin.min.js -->
+<script type="text/javascript" src="scripts/vendor/within-viewport.js"></script>
+<script type="text/javascript" src="scripts/vendor/polyfill.js"></script>
+<!-- endbuild -->
+
 <!-- build:js({.tmp,app}) scripts/scripts.js -->
 <script src="scripts/app.js"></script>
 
+<!--Filters-->
+<script src="scripts/filters/filter.js"></script>
+
 <!-- START : SERVICES -->
+<script src="scripts/services/errorMsgService.js"></script>
+<script src="scripts/services/encodeParamService.js"></script>
+<script src="scripts/services/dashboard/dashboardServices.js"></script>
 <script src="scripts/services/locations/locationService.js"></script>
 <script src="scripts/services/settings/accountServices.js"></script>
 <script src="scripts/services/settings/userService.js"></script>
 <script src="scripts/services/settings/billingHistoryService.js"></script>
 <script src="scripts/services/interceptorsService.js"></script>
-<script src="scripts/services/errorMsgService.js"></script>
 <!-- END : SERVICES -->
 
 <!-- START : CTRL -->
@@ -83,7 +97,7 @@
 <script src="scripts/controllers/modals/forgotPasswordCtrl.js"></script>
 
 <!-- START : Dashboard CTRL -->
-<script src="scripts/controllers/authenticated/dashboardCtrl.js"></script>
+<script src="scripts/controllers/authenticated/dashboard/dashboardCtrl.js"></script>
 <!-- END : Dashboard CTRL -->
 
 <!-- START : Location CTRL -->
@@ -109,6 +123,7 @@
 <script src="scripts/controllers/authenticated/settings/accountSettingsCtrl.js"></script>
 <script src="scripts/controllers/authenticated/settings/usersCtrl.js"></script>
 <script src="scripts/controllers/authenticated/settings/billingHistoryCtrl.js"></script>
+<script src="scripts/controllers/authenticated/settings/manageUsersCtrl.js"></script>
 <!-- END : Settings CTRL -->
 
 

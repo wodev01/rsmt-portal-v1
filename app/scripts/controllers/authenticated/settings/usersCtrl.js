@@ -1,40 +1,28 @@
 'use strict';
 app.controller('UsersCtrl',
-    function ($scope, $http, $timeout, $mdSidenav, $log, $rootScope, $cookies, $state, $mdDialog, userService) {
+    function ($scope, $mdSidenav, $mdDialog, $stateParams, userService) {
         $scope.rightView = 'views/authenticated/settings/manageUser.html';
 
         $scope.fnNewUserView = function () {
+            $scope.userName = 'New User';
             $scope.isUserEditable = false;
             $scope.fnOpenSwap();
         };
 
-        $scope.userFilterOptions = {
-            useExternalFilter: false
-        };
-        $scope.userTotalServerItems = 0;
-
-        $scope.setPagingData = function (data) {
-            var pagedData = data;
-            $scope.usersData = pagedData;
-            $scope.userTotalServerItems = data.length;
-            if (!$scope.$$phase) {
-                $scope.$apply();
-
-            }
-        };
         $scope.getPagedDataAsync = function () {
-
-                    userService.fetchUsers().then(function(data){
-                        if(data.length !== 0){
-                            $scope.isDataNotNull = true;
-                            $scope.isMsgShow = false;
-                            CarglyPartner.users = data;
-                            $scope.setPagingData(data);
-                        }else{
-                            $scope.isDataNotNull = false;
-                            $scope.isMsgShow = true;
-                        }
-                    });
+            setTimeout(function () {
+                userService.fetchUsers().then(function (data) {
+                    if (data.length !== 0) {
+                        $scope.isDataNotNull = true;
+                        $scope.isMsgShow = false;
+                        CarglyPartner.users = data;
+                        $scope.usersData = data;
+                    } else {
+                        $scope.isDataNotNull = false;
+                        $scope.isMsgShow = true;
+                    }
+                });
+            }, 100);
         };
 
         $scope.$on('refreshUsers', function () {
@@ -47,11 +35,11 @@ app.controller('UsersCtrl',
 
 
         $scope.userAction = '<div layout="row"> ' +
-            '<md-button class="md-icon-button md-warn md-hue-2" ng-click="fnUserDelete(row,$event)">' +
+            '<md-button class="md-icon-button md-warn md-hue-2" ng-click="grid.appScope.fnUserDelete(row,$event)">' +
             '    <md-icon md-font-set="material-icons">delete</md-icon>' +
             '   <md-tooltip md-direction="top">Delete</md-tooltip>' +
             '</md-button> ' +
-            '<md-button class="md-icon-button md-accent" ng-click="fnUserEdit(row,$event)">' +
+            '<md-button class="md-icon-button md-accent" ng-click="grid.appScope.fnUserEdit(row,$event);">' +
             '   <md-icon md-font-set="material-icons">edit</md-icon>' +
             '   <md-tooltip md-direction="top">Edit</md-tooltip></md-button>' +
             '</md-button></div>';
@@ -101,7 +89,10 @@ app.controller('UsersCtrl',
         };
 
         $scope.fnUserEdit = function (row) {
+            console.log("hello");
             $scope.isUserEditable = true;
+            $scope.intIndex = row.rowIndex;
+            $scope.userName = row.entity.name;
             userService.setUserObj(row.entity);
             $scope.fnOpenSwap();
         };
@@ -113,9 +104,7 @@ app.controller('UsersCtrl',
                 $scope.$apply();
                 $scope.rightView = 'views/authenticated/settings/manageUser.html';
                 $scope.$apply();
-                $mdSidenav('userSwap').open()
-                    .then(function(){
-                        //$log.debug("open RIGHT is done");
+                $mdSidenav('userSwap').open().then(function(){
                     });
             });
         };
@@ -124,8 +113,6 @@ app.controller('UsersCtrl',
         $scope.fnCloseSwap = function() {
             $mdSidenav('userSwap').close()
                 .then(function(){
-                    //$log.debug("close RIGHT is done");
                 });
         };
-
     });

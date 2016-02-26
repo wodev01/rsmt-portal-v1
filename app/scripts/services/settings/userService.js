@@ -1,6 +1,6 @@
 'use strict';
-app.factory('userService',['$q', '$rootScope',
-    function($q, $rootScope) {
+app.factory('userService',['$q', 'ErrorMsg',
+    function($q, ErrorMsg) {
         var userService = {};
 
         //Get users data
@@ -13,7 +13,7 @@ app.factory('userService',['$q', '$rootScope',
                     defer.resolve(data);
                 },
                 error:function(error) {
-                    $rootScope.fnCheckStatus(error.status);
+                    ErrorMsg.CheckStatusCode(error.status);
                     defer.resolve(error);
                 }
             });
@@ -31,7 +31,7 @@ app.factory('userService',['$q', '$rootScope',
                     defer.resolve(data);
                 },
                 error:function(error) {
-                    $rootScope.fnCheckStatus(error.status);
+                    ErrorMsg.CheckStatusCode(error.status);
                     defer.resolve(error);
                 }
             });
@@ -52,7 +52,7 @@ app.factory('userService',['$q', '$rootScope',
                     defer.resolve(dataObj);
                 },
                 error:function(error) {
-                    $rootScope.fnCheckStatus(error.status);
+                    ErrorMsg.CheckStatusCode(error.status);
                     defer.resolve(error);
                 }
             });
