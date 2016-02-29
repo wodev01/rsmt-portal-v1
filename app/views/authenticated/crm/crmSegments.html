@@ -1,0 +1,33 @@
+<div class="tab-pane right-panel" id="segments-pane">
+
+    <h1>Segments</h1>
+
+    <div ng-if="!isLocationsData" style="text-align: center">
+        <h1 ng-model="msg">No Locations Available.</h1>
+    </div>
+
+    <div ng-if="isLocationsData">
+        <select ng-model="locationId" layout-padding layout-margin
+                ng-options="location.id as location.name for location in locationOptions"
+                ng-change="fnChangeLocation(locationId);"
+                style="margin-left: 0;">
+        </select>
+
+        <div ng-if="!isCrmSegmentsData && !isCrmSegmentsMsgShow" style="min-height: 300px;">
+            <div ng-include="'views/loader.html'"></div>
+        </div>
+
+        <div ng-if="isCrmSegmentsMsgShow" style="text-align: center">
+            <h2>No Segments available.</h2>
+        </div>
+
+        <!--ngGrid-->
+        <div ng-if="isCrmSegmentsData">
+            <div layout-fill flex
+                 ui-grid-selection ui-grid-auto-resize
+                 ng-style="$root.fnReturnGridHeight(crmSegmentsData.length)"
+                 ui-grid="crmSegmentsGridOptions">
+            </div>
+        </div>
+    </div>
+</div>

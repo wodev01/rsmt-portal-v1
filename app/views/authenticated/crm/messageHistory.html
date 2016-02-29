@@ -1,0 +1,60 @@
+<div class="tab-pane" id="message-history-tab">
+    <div ng-if="!isLocationsData" style="text-align: center">
+        <h1 ng-model="msg">No Locations Available.</h1>
+    </div>
+    <div ng-if="isLocationsData">
+        <section layout="row">
+            <div flex>
+                <select ng-model="idsObj.locationId" layout-padding layout-margin
+                        ng-options="location.id as location.name for location in locationOptions"
+                        ng-change="fnChangeLocation(idsObj.locationId)"
+                        style="margin-left: 0;">
+                </select>
+                <select ng-model="idsObj.segmentId" layout-padding layout-margin
+                        ng-if="isSegmentsData"
+                        ng-options="segment.id as segment.name for segment in segmentsOptions"
+                        ng-change="fnChangeSegment(idsObj)">
+                </select>
+            </div>
+            <div ng-if="isSegmentsData">
+                <div layout="row" layout-align="end center">
+                    <md-button aria-label="Refresh Grid"
+                               class="md-raised btn btnBlue"
+                               ng-click="fnRefreshGrid(idsObj)">Refresh</md-button>
+                    <md-button aria-label="Download CSV"
+                               class="md-raised btn btnBlue"
+                               ng-click="fnDownloadInteractionCSV($event, idsObj)">Export Interaction CSV</md-button>
+                </div>
+            </div>
+        </section>
+
+        <div ng-if="!isSegmentsData" style="text-align: center">
+            <h1 ng-model="msg">No Segments Available.</h1>
+        </div>
+
+        <div ng-if="isSegmentsData">
+            <div ng-if="!isCrmInteractionData && !isCrmMsgGridShow" style="min-height: 300px;">
+                <div ng-include="'views/loader.html'"></div>
+            </div>
+            <div ng-if="isCrmMsgGridShow" style="text-align: center"><h1 ng-model="msg">No CRM Interaction available</h1></div>
+            <!--ngGrid-->
+            <div ng-if="isCrmInteractionData" ui-grid="crmInteractionGridOptions"
+                 layout-fill flex ui-grid-selection ui-grid-auto-resize
+                 ng-style="$root.fnReturnGridHeight(crmInteractionData.length)"
+            ></div>
+            <div ng-if="isCrmInteractionData" layout="row" layout-align="center center"
+                 layout-margin style="margin-top: 18px">
+                <div ng-if="isPagingData">
+                    <md-button aria-label="More Segment Interactions" class="md-raised btn btnBlue"
+                               ng-click="fnLoadMoreCrmInteractions(idsObj)" >
+                        <span ng-if="isMoreCrmInteractions"> Loading... </span>
+                        <span ng-if="!isMoreCrmInteractions">More CRM Interactions </span>
+                    </md-button>
+                </div>
+                <div ng-if="!isPagingData">
+                    <h2>... No more results found ...</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

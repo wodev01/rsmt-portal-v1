@@ -116,3 +116,152 @@
     padding-right: 3px;
 }
 
+
+/*---------- CRM All Customer Tab ----------*/
+.breadcrumb {
+    list-style: none;
+    overflow: hidden;
+    font-size: 14px;
+    margin-left: -2.8em;
+}
+
+.breadcrumb li {
+    float: left;
+}
+
+.breadcrumb li a {
+    color: white;
+    text-decoration: none;
+    padding: 10px 0 10px 25px;
+    background: brown; /* fallback color */
+    background: hsla(34, 0%, 35%, 1);
+    position: relative;
+    display: block;
+    float: left;
+}
+
+.breadcrumb li a:after, .breadcrumb li a:before {
+    border: solid transparent;
+    content: ' ';
+    height: 0;
+    left: 100%;
+    position: absolute;
+    width: 0;
+}
+
+.breadcrumb li a:after {
+    border-width: 19px;
+    border-left-color: hsla(34, 0%, 35%, 1);
+    z-index: 1;
+    top: -1px;
+}
+
+.breadcrumb li a:before {
+}
+
+.breadcrumb li:first-child a {
+    padding-left: 10px;
+}
+
+.breadcrumb li:nth-child(2) a {
+    background: hsla(30, 0%, 45%, 1);
+}
+
+.breadcrumb li:nth-child(2) a:after {
+    border-left-color: hsla(30, 0%, 45%, 1);
+}
+
+.breadcrumb li:nth-child(3) a {
+    background: hsla(30, 0%, 55%, 1);
+}
+
+.breadcrumb li:nth-child(3) a:after {
+    border-left-color: hsla(30, 0%, 55%, 1);
+}
+
+.breadcrumb li:nth-child(4) a {
+    background: hsla(30, 0%, 65%, 1);
+}
+
+.breadcrumb li:nth-child(4) a:after {
+    border-left-color: hsla(30, 0%, 65%, 1);
+}
+
+.breadcrumb li:nth-child(5) a {
+    background: hsla(30, 0%, 75%, 1);
+}
+
+.breadcrumb li:nth-child(5) a:after {
+    border-left-color: hsla(30, 0%, 75%, 1);
+}
+
+.breadcrumb li:last-child a {
+    background: #ccc !important;
+    color: black;
+    pointer-events: none;
+    cursor: default;
+    padding-right: 18px;
+}
+
+.breadcrumb li:last-child a:after {
+    border: 0;
+}
+
+.breadcrumb li a:hover {
+    background: hsla(34, 0%, 25%, 1);
+}
+
+.breadcrumb li a:hover:after {
+    border-left-color: hsla(34, 0%, 25%, 1) !important;
+}
+
+#customerTab .leftLabel {
+    font-weight: bold;
+    padding-right: 3px;
+}
+
+#customerTab .contentHeader {
+    background-color: #d3d3d3 !important;
+    color: #000000;
+    margin-top: 5px;
+}
+
+/*---------- Jquery UI Date-range Picker ----------*/
+.ui-widget {
+    font-size: inherit;
+}
+
+.ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default {
+    background: none !important;
+}
+
+.comiseo-daterangepicker-calendar .ui-state-highlight a.ui-state-default {
+    color: #000000 !important;
+}
+
+.ui-state-highlight, .ui-widget-content .ui-state-highlight, .ui-widget-header .ui-state-highlight {
+    background: #FFC670 !important;
+}
+
+.comiseo-daterangepicker-presets,
+.comiseo-daterangepicker-calendar {
+    height: auto !important;
+}
+
+.comiseo-daterangepicker-right .comiseo-daterangepicker-presets {
+    padding: 0 !important;
+}
+
+.comiseo-daterangepicker-right .comiseo-daterangepicker-calendar {
+    border-left-width: 0 !important;
+    padding-left: 0 !important;
+}
+
+.comiseo-daterangepicker-left .comiseo-daterangepicker-calendar {
+    border-right-width: 0;
+    padding-right: 0;
+}
+
+.comiseo-daterangepicker-left .comiseo-daterangepicker-presets {
+    padding: 0;
+}

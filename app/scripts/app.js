@@ -17,7 +17,8 @@ var app = angular
         'ngMaterial',
         'ui.grid',
         'ui.grid.selection',
-        'ui.grid.autoResize'
+        'ui.grid.autoResize',
+        'ngMap'
     ])
     .constant('cookieName', 'cargly_rsmt_access_token')
     .constant('globalTimeZone', ["US/Hawaii", "US/Alaska", "US/Pacific", "US/Arizona", "US/Mountain", "US/Central", "US/Eastern"])

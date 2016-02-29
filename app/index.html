@@ -18,6 +18,10 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,400italic">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
+    <!-- build:css(.tmp) styles/jquery.comiseo.daterangepicker.min.css -->
+    <link rel="stylesheet" href="styles/jquery.comiseo.daterangepicker.css">
+    <!-- endbuild -->
+
     <!-- build:css(.tmp) styles/main.css -->
     <link rel="stylesheet" href="styles/global.css">
     <link rel="stylesheet" href="styles/main.css">
@@ -63,19 +67,26 @@
 <script src="bower_components/d3/d3.js"></script>
 <script src="bower_components/c3/c3.js"></script>
 <script src="bower_components/moment/moment.js"></script>
+<script src="bower_components/ngmap/build/scripts/ng-map.js"></script>
+<script src="bower_components/jquery-ui/jquery-ui.js"></script>
 <!-- endbower -->
 <!-- endbuild -->
 <script type="text/javascript" src="https://carglyplatform.appspot.com/partners/api/v1"></script>
+<!-- build:js({.tmp,app}) scripts/chargeio.min.js -->
+<script type="text/javascript" src="scripts/vendor/chargeio.min.js"></script>
+<!-- endbuild -->
+
+<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?v=3.22&region=US"></script>
 
 <!-- build:js({.tmp,app}) scripts/plugin.min.js -->
 <script type="text/javascript" src="scripts/vendor/within-viewport.js"></script>
+<script type="text/javascript" src="scripts/vendor/jquery.comiseo.daterangepicker.js"></script>
 <script type="text/javascript" src="scripts/vendor/polyfill.js"></script>
 <!-- endbuild -->
 
 <!-- build:js({.tmp,app}) scripts/scripts.js -->
 <script src="scripts/app.js"></script>
-
-<!--Filters-->
+<script src="scripts/directives/directives.js"></script>
 <script src="scripts/filters/filter.js"></script>
 
 <!-- START : SERVICES -->
@@ -88,6 +99,10 @@
 <script src="scripts/services/settings/billingHistoryService.js"></script>
 <script src="scripts/services/interceptorsService.js"></script>
 <script src="scripts/services/userSubscriptionService.js"></script>
+<script src="scripts/services/crm/crmInteractionService.js"></script>
+<script src="scripts/services/crm/allCustomerService.js"></script>
+<script src="scripts/services/crm/crmTemplateService.js"></script>
+<script src="scripts/services/crm/toastService.js"></script>
 <!-- END : SERVICES -->
 
 <!-- START : CTRL -->
@@ -112,6 +127,12 @@
 
 <!-- START : Crm CTRL -->
 <script src="scripts/controllers/authenticated/crm/crmCtrl.js"></script>
+<script src="scripts/controllers/authenticated/crm/allCustomersCtrl.js"></script>
+<script src="scripts/controllers/authenticated/crm/crmSegmentsCtrl.js"></script>
+<script src="scripts/controllers/authenticated/crm/customerStatisticsCtrl.js"></script>
+<script src="scripts/controllers/authenticated/crm/manageScheduledMessagesCtrl.js"></script>
+<script src="scripts/controllers/authenticated/crm/messageHistoryCtrl.js"></script>
+<script src="scripts/controllers/authenticated/crm/scheduledMessagesCtrl.js"></script>
 <!-- END : Crm CTRL -->
 
 <!-- START : Product CTRL -->

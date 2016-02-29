@@ -1,0 +1,63 @@
+<div class="tab-pane" id="customer-statistics-tab">
+
+    <div ng-if="!isLocationsData" style="text-align: center;">
+        <h1 ng-model="msg">No Locations Available.</h1>
+    </div>
+
+    <div ng-if="isLocationsData">
+        <select ng-model="locationId" layout-padding layout-margin
+                ng-options="location.id as location.name for location in locationOptions"
+                ng-change="fnChangeLocation(locationId);"
+                style="margin-left: 0;">
+        </select>
+
+        <!-- pie-chart -->
+        <section layout="column" layout-margin layout-fill>
+            <div class="dash-container md-whiteframe-z2">
+                <md-toolbar>
+                    <div class="md-toolbar-tools container-header">
+                        <span class="md-flex">Customers Count based on Email-Address</span>
+                    </div>
+                </md-toolbar>
+
+                <md-content class="md-padding container-content" ng-if="!isMsgShow && !isDataNotNull">
+                    <div ng-include="'views/loader.html'"></div>
+                </md-content>
+
+                <md-content class="md-padding" ng-if="!isDataNotNull && isMsgShow" layout-margin layout-padding>
+                    <span>Data not available.</span>
+                </md-content>
+
+                <md-content class="md-padding daily-container-content" ng-if="isDataNotNull">
+                    <div id="pie-chart" ng-init="fnGeneratePieChart();"></div>
+                </md-content>
+            </div>
+        </section>
+
+        <!-- Google map -->
+        <section layout="column" layout-margin layout-fill>
+            <div class="dash-container md-whiteframe-z2">
+                <md-toolbar>
+                    <div class="md-toolbar-tools container-header">
+                        <span class="md-flex">Customers by Location</span>
+                    </div>
+                </md-toolbar>
+
+                <md-content class="md-padding container-content" ng-if="!isMsgShow && !isDataNotNull">
+                    <div ng-include="'views/loader.html'"></div>
+                </md-content>
+
+                <md-content class="md-padding" ng-if="!isDataNotNull && isMsgShow" layout-margin layout-padding>
+                    <span>Data not available.</span>
+                </md-content>
+
+                <md-content class="md-padding daily-container-content" ng-if="isDataNotNull">
+                    <ng-map zoom="1" map-type-id="ROADMAP">
+                        <marker ng-repeat="cust in customersStatData" ng-if="customersStatData" on-click="showInfoWindow(event, cust)"
+                                position="{{cust.address}}"></marker>
+                    </ng-map>
+                </md-content>
+            </div>
+        </section>
+    </div>
+</div>
