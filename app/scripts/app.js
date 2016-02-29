@@ -103,7 +103,12 @@ app.config(function ($mdThemingProvider, toastr, $urlRouterProvider, $stateProvi
         .state('main.dashboard', {
             url: "dashboard",
             controller: 'DashboardCtrl',
-            templateUrl: "views/authenticated/dashboard/dashboard.html"
+            templateUrl: "views/authenticated/dashboard/dashboard.html",
+            resolve: {
+                checkSubscriptions : function(userSubscriptionService){
+                    return userSubscriptionService.checkSubscriptions(['realtime_dashboard']);
+                }
+            }
         })
         .state('main.locations', {
             url: "locations",
@@ -113,7 +118,12 @@ app.config(function ($mdThemingProvider, toastr, $urlRouterProvider, $stateProvi
         .state('main.crm', {
             url: "crm",
             controller: 'CrmCtrl',
-            templateUrl: "views/authenticated/crm/crm.html"
+            templateUrl: "views/authenticated/crm/crm.html",
+            resolve: {
+                checkSubscriptions : function(userSubscriptionService){
+                    return userSubscriptionService.checkSubscriptions(['crm_scheduled']);
+                }
+            }
         })
         .state('main.products', {
             url: "products",
@@ -123,7 +133,12 @@ app.config(function ($mdThemingProvider, toastr, $urlRouterProvider, $stateProvi
         .state('main.locationSetup', {
             url: 'location/setup',
             controller: 'LocationSetupCtrl',
-            templateUrl: "views/authenticated/locationSetup/locationSetup.html"
+            templateUrl: "views/authenticated/locationSetup/locationSetup.html",
+            resolve: {
+                checkSubscriptions : function(userSubscriptionService){
+                    return userSubscriptionService.checkSubscriptions(['realtime_dashboard']);
+                }
+            }
         })
         .state('main.settings', {
             url: 'settings/:settingsName',

@@ -65,6 +65,7 @@
                 md-component-id="left"
                 md-is-locked-open="$mdMedia('gt-sm')">
         <md-button class="md-primary" ng-class="fnIsActive('/dashboard')"
+                   ng-if="fnCheckSubscription(userSubscriptions,['realtime_dashboard'])"
                    ng-click="$root.fnCloseSideNavs();" ui-sref="main.dashboard">
             <md-icon md-font-set="material-icons">dashboard</md-icon> Dashboard</md-button>
 
@@ -73,6 +74,7 @@
             <md-icon md-font-set="material-icons">place</md-icon> Locations</md-button>
 
         <md-button class="md-primary" ng-class="fnIsActive('/crm')"
+                   ng-if="fnCheckSubscription(userSubscriptions,['crm_scheduled'])"
                    ng-click="$root.fnCloseSideNavs();" ui-sref="main.crm">
             <md-icon md-font-set="material-icons">group</md-icon> CRM</md-button>
 
@@ -81,6 +83,7 @@
             <md-icon md-font-set="material-icons">redeem</md-icon> Products</md-button>
 
         <md-button class="md-primary" ng-class="fnIsActive('/location/setup')"
+                   ng-if="fnCheckSubscription(userSubscriptions,['realtime_dashboard'])"
                    ng-click="$root.fnCloseSideNavs();" ui-sref="main.locationSetup">
             <md-icon md-font-set="material-icons">pin_drop</md-icon> Location Setup</md-button>
     </md-sidenav>
