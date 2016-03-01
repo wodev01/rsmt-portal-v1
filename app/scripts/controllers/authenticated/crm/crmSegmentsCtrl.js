@@ -81,8 +81,8 @@ app.controller('crmSegmentsCtrl',
             enableRowSelection: true,
             enableRowHeaderSelection: false,
             columnDefs: [
-                {name:'Action', field: 'name', displayName: 'Segment Name', minWidth: 100},
-                {name:'action', cellTemplate: $scope.crmSegmentsAction, width: 100, enableSorting:false}
+                {field: 'name', displayName: 'Segment Name', minWidth: 100},
+                {name:'action', displayName:'', cellTemplate: $scope.crmSegmentsAction, width: 100, enableSorting:false, enableColumnMenu: false}
             ]
         };
 

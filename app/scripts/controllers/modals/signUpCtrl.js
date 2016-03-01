@@ -83,7 +83,6 @@ app.controller('SignUpCtrl', function ($scope, $mdDialog,globalTimeZone) {
             };
 
             $scope.fnOpenSignUp = function(){
-                console.log("test1");
                 $mdDialog.show({
                     controller: 'SignUpCtrl',
                     templateUrl: 'views/modals/signup.html',
