@@ -1,19 +1,21 @@
-<section id="customerTab">
-    <div layout-margin>
-        <select ng-model="idsObj.locationId" layout-padding layout-margin
-                ng-options="location.id as location.name for location in locationOptions"
-                ng-change="fnChangeLocation(idsObj.locationId)"
-                style="margin-left: 0;">
-        </select>
+<md-content id="customerTab"  class="md-padding">
+        <md-input-container >
+            <md-select aria-label="Select location" ng-model="idsObj.locationId"
+                       ng-change="fnChangeLocation(idsObj.locationId);">
+                <md-option ng-repeat="location in locationOptions | unique: 'id'" ng-value="location.id">
+                    {{location.name}}
+                </md-option>
+            </md-select>
+        </md-input-container>
 
         <ul class="breadcrumb">
             <li ng-repeat="breadcrumb in breadcrumbArr" ng-click="fnOnSelectBreadcrumb($index)">
                 <a href="javascript:void(0);">{{breadcrumb.name}}</a>
             </li>
         </ul>
-    </div>
-    <div ng-if="customerIndex == 0" layout-margin>
-        <form name="searchForm">
+
+    <div ng-if="customerIndex == 0">
+        <form name="searchForm" class="margin-bottom-10">
             <input type="text" name="searchFilter"
                    class="filterBox"
                    ng-model="searchCustomerFilter"
@@ -22,23 +24,32 @@
                    ng-model-options="{ updateOn: 'default blur', debounce: { 'default': 1000, 'blur': 0 } }"
                    ng-keyup="fnCancelSearchFilter($event, this)"/>
         </form>
-        <div style="height: 400px" ng-if="!isDataNotNull && !isMsgShow">
-            <div ng-include="'views/loader.html'"></div>
+
+        <div ng-if="!isDataNotNull && !isMsgShow" layout="column" layout-align="center center"
+             layout-fill flex>
+            <md-progress-circular class="md-accent" md-diameter="100" md-mode="indeterminate"></md-progress-circular>
         </div>
-        <div ng-if="isMsgShow"><h1>No customers data available</h1></div>
-        <div ng-if="isDataNotNull" ui-grid="customersGridOptions" layout-fill flex
-             ui-grid-selection ui-grid-auto-resize
-             ng-style="$root.fnReturnGridHeight(customersData.length)">
+
+        <div ng-if="isMsgShow">
+            <div class="md-headline text-center">No customers data available.</div>
+        </div>
+
+        <div ng-if="isDataNotNull"
+             ui-grid="customersGridOptions" ui-grid-selection ui-grid-auto-resize
+             ng-style="$root.fnReturnGridHeight(customersData.length);">
         </div>
     </div>
+
     <div ng-if="customerIndex == 1">
         <!-- Customer Info-->
-        <div layout-margin class="shadow">
-            <md-whiteframe class="md-whiteframe-z1 contentHeader" layout layout-align="center center"
-                           style="background-color: #9E9E9E">
-                <h3>Customer Info</h3>
-            </md-whiteframe>
-            <div layout="row" layout-sm="column" layout-margin>
+        <div class="md-whiteframe-10dp">
+            <md-toolbar class="md-primary md-hue-1">
+                <div class="md-toolbar-tools" layout layout-align="center center">
+                    <span class="md-title">Customer Info</span>
+                </div>
+            </md-toolbar>
+
+            <div layout="row" layout-xs="column" layout-margin>
                 <div layout="row" flex>
                     <label class="leftLabel">Name:</label>
                     <label flex>{{customer.first_name}}&nbsp;{{customer.last_name}}</label>
@@ -48,7 +59,8 @@
                     <label flex>{{customer.company}}</label>
                 </div>
             </div>
-            <div layout="row" layout-sm="column" layout-margin>
+
+            <div layout="row" layout-xs="column" layout-margin>
                 <div layout="row" flex>
                     <label class="leftLabel">Address 1:</label>
                     <label flex>{{customer.address1}}</label>
@@ -58,7 +70,8 @@
                     <label flex>{{customer.postal_code}}</label>
                 </div>
             </div>
-            <div layout="row" layout-sm="column" layout-margin>
+
+            <div layout="row" layout-xs="column" layout-margin>
                 <div layout="row" flex>
                     <label class="leftLabel">City:</label>
                     <label flex>{{customer.city}}</label>
@@ -68,7 +81,8 @@
                     <label flex>{{customer.phone_numbers | joinTelArray}}</label>
                 </div>
             </div>
-            <div layout="row" layout-sm="column" layout-margin>
+
+            <div layout="row" layout-xs="column" layout-margin>
                 <div layout="row" flex>
                     <label class="leftLabel">State:</label>
                     <label flex>{{customer.state}}</label>
@@ -79,12 +93,15 @@
                 </div>
             </div>
         </div>
+
         <!-- Vehicles Info-->
-        <div layout-margin class="shadow">
-            <md-whiteframe class="md-whiteframe-z1 contentHeader" layout layout-align="center center"
-                           style="background-color: #9E9E9E">
-                <h3>Vehicles Info</h3>
-            </md-whiteframe>
+        <div class="md-whiteframe-10dp">
+            <md-toolbar class="md-primary md-hue-1">
+                <div class="md-toolbar-tools" layout layout-align="center center">
+                    <span class="md-title">Vehicles Info</span>
+                </div>
+            </md-toolbar>
+
             <div style="overflow: auto"> <!--max-height: 350px-->
                 <div layout="column" layout-sm="column" layout-margin>
                     <div layout="row" layout-sm="column">
@@ -134,12 +151,14 @@
     </div>
     <div ng-if="customerIndex == 2">
         <!-- Vehicles Info-->
-        <div layout-margin class="shadow">
-            <md-whiteframe class="md-whiteframe-z1 contentHeader" layout layout-align="center center"
-                           style="background-color: #9E9E9E">
-                <h3>Vehicles Info</h3>
-            </md-whiteframe>
-            <div layout="row" layout-sm="column" layout-margin>
+        <div class="md-whiteframe-10dp">
+            <md-toolbar class="md-primary md-hue-1">
+                <div class="md-toolbar-tools" layout layout-align="center center">
+                    <span class="md-title">Vehicles Info</span>
+                </div>
+            </md-toolbar>
+
+            <div layout="row" layout-xs="column" layout-margin>
                 <div layout="row" flex>
                     <label class="leftLabel">Model:</label>
                     <label flex>{{vehicleObj.model}}</label>
@@ -149,7 +168,8 @@
                     <label flex>{{vehicleObj.make}}</label>
                 </div>
             </div>
-            <div layout="row" layout-sm="column" layout-margin>
+
+            <div layout="row" layout-xs="column" layout-margin>
                 <div layout="row" flex>
                     <label class="leftLabel">Licenses:</label>
                     <label flex>{{vehicleObj.license}}</label>
@@ -159,7 +179,8 @@
                     <label flex>{{vehicleObj.year}}</label>
                 </div>
             </div>
-            <div layout="row" layout-sm="column" layout-margin>
+
+            <div layout="row" layout-xs="column" layout-margin>
                 <div layout="row" flex>
                     <label class="leftLabel">Color:</label>
                     <label flex>{{vehicleObj.color}}</label>
@@ -169,7 +190,8 @@
                     <label flex>{{vehicleObj.last_odo}}</label>
                 </div>
             </div>
-            <div layout="row" layout-sm="column" layout-margin>
+
+            <div layout="row" layout-xs="column" layout-margin>
                 <div layout="row" flex>
                     <label class="leftLabel">Notes:</label>
                     <label flex>{{vehicleObj.notes}}</label>
@@ -179,20 +201,25 @@
                     <label flex>{{vehicleObj.reference}}</label>
                 </div>
             </div>
+
         </div>
-        <div layout-margin class="shadow">
-            <md-whiteframe class="md-whiteframe-z1 contentHeader" layout layout-align="center center"
-                           style="background-color: #9E9E9E">
-                <h3>Recommended Items</h3>
-            </md-whiteframe>
-            <recommended-grid vehicle-id="vehicleObj.id" layout-margin layout-padding></recommended-grid>
+
+        <div class="md-whiteframe-10dp margin-bottom-10">
+            <md-toolbar class="md-primary md-hue-1">
+                <div class="md-toolbar-tools" layout layout-align="center center">
+                    <span class="md-title">Recommended Items</span>
+                </div>
+            </md-toolbar>
+            <recommended-grid vehicle-id="vehicleObj.id" ></recommended-grid>
         </div>
-        <div layout-margin class="shadow">
-            <md-whiteframe class="md-whiteframe-z1 contentHeader" layout layout-align="center center"
-                           style="background-color: #9E9E9E;width: 100%">
-                <h3>Repair Orders</h3>
-            </md-whiteframe>
-            <repair-order-grid vehicle-id="vehicleObj.id" layout-margin layout-padding></repair-order-grid>
+
+        <div class="md-whiteframe-10dp margin-bottom-10">
+            <md-toolbar class="md-primary md-hue-1">
+                <div class="md-toolbar-tools" layout layout-align="center center">
+                    <span class="md-title">Repair Orders</span>
+                </div>
+            </md-toolbar>
+            <repair-order-grid vehicle-id="vehicleObj.id"></repair-order-grid>
         </div>
     </div>
-</section>
+</md-content>

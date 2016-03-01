@@ -15,6 +15,11 @@
         min-width: 100%;
         top: 48px;
     }
+
+    /*---------- Segments modal ----------*/
+    md-dialog#manage-scheduledmsg-dialog {
+        min-width: 600px;
+    }
 }
 
 @media screen and (max-width: 599px) {

@@ -1,15 +1,19 @@
-<div class="tab-pane" id="customer-statistics-tab">
+<div id="customer-statistics-tab" class="md-padding">
 
-    <div ng-if="!isLocationsData" style="text-align: center;">
-        <h1 ng-model="msg">No Locations Available.</h1>
+    <div ng-if="!isLocationsData" class="margin-bottom-10">
+        <div class="md-headline text-center">No Locations Available.</div>
     </div>
 
     <div ng-if="isLocationsData">
-        <select ng-model="locationId" layout-padding layout-margin
-                ng-options="location.id as location.name for location in locationOptions"
-                ng-change="fnChangeLocation(locationId);"
-                style="margin-left: 0;">
-        </select>
+
+        <md-input-container >
+            <md-select aria-label="Select location" ng-model="locationId"
+                       ng-change="fnChangeLocation(locationId);">
+                <md-option ng-repeat="location in locationOptions" ng-value="location.id">
+                    {{location.name}}
+                </md-option>
+            </md-select>
+        </md-input-container>
 
         <!-- pie-chart -->
         <section layout="column" layout-margin layout-fill>
@@ -20,8 +24,9 @@
                     </div>
                 </md-toolbar>
 
-                <md-content class="md-padding container-content" ng-if="!isMsgShow && !isDataNotNull">
-                    <div ng-include="'views/loader.html'"></div>
+                <md-content ng-if="!isMsgShow && !isDataNotNull" layout="column" layout-align="center center"
+                layout-fill flex >
+                    <md-progress-circular class="md-accent" md-diameter="100" md-mode="indeterminate"></md-progress-circular>
                 </md-content>
 
                 <md-content class="md-padding" ng-if="!isDataNotNull && isMsgShow" layout-margin layout-padding>
@@ -44,7 +49,7 @@
                 </md-toolbar>
 
                 <md-content class="md-padding container-content" ng-if="!isMsgShow && !isDataNotNull">
-                    <div ng-include="'views/loader.html'"></div>
+                    <md-progress-circular class="md-accent" md-diameter="100" md-mode="indeterminate"></md-progress-circular>
                 </md-content>
 
                 <md-content class="md-padding" ng-if="!isDataNotNull && isMsgShow" layout-margin layout-padding>

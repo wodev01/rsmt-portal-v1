@@ -1,40 +1,45 @@
 <md-dialog aria-label="segmentInteractionForm" class="crmSegmentDialog" flex>
+
     <md-toolbar class="md-primary">
         <div class="md-toolbar-tools" layout="row" layout-align="space-between center">
-            <h3> CRM Segments </h3>
-            <span class="close" ng-click="fnCloseCrmDialog();">X</span>
+            <span class="md-title"> CRM Segments</span>
+            <md-button class="md-icon-button" ng-click="fnCloseCrmDialog();">
+                <md-icon md-font-set="material-icons">close</md-icon>
+                <md-tooltip md-direction="top">Close</md-tooltip>
+            </md-button>
         </div>
     </md-toolbar>
 
-    <div layout="column" layout-padding flex>
-        <div layout="column" layout-gt-sm="row" flex="100">
-            <md-input-container flex>
-                <label>Segment Name</label>
-                <input type="text" ng-model="crmSubSegmentObj.name" disabled/>
-            </md-input-container>
+    <md-dialog-content class="md-padding" layout="row">
+        <div layout="column" layout-padding flex>
+            <div layout="column" layout-gt-sm="row" flex>
+                <md-input-container class="remove-error-space" flex>
+                    <label>Segment Name</label>
+                    <input type="text" ng-model="crmSubSegmentObj.name" disabled/>
+                </md-input-container>
 
-            <md-input-container flex>
-                <label>Subject</label>
-                <input type="text" ng-model="crmSubSegmentObj.template_name" disabled/>
-            </md-input-container>
+                <md-input-container class="remove-error-space" flex>
+                    <label>Subject</label>
+                    <input type="text" ng-model="crmSubSegmentObj.template_name" disabled/>
+                </md-input-container>
 
-            <md-input-container flex>
-                <label>Due Days</label>
-                <input type="text" ng-model="crmSubSegmentObj.interaction_delay_days" disabled/>
-            </md-input-container>
-        </div>
+                <md-input-container class="remove-error-space" flex>
+                    <label>Due Days</label>
+                    <input type="text" ng-model="crmSubSegmentObj.interaction_delay_days" disabled/>
+                </md-input-container>
+            </div>
 
-        <div layout="column" flex>
-            <div class="shadow" layout="column" flex>
-                <md-whiteframe class="md-whiteframe-z1 contentHeader"
-                               layout="row" layout-align="space-around center" flex="100">
-                    <h3>Template Preview</h3>
-                </md-whiteframe>
+            <div layout="column" flex>
+            <div class="md-whiteframe-10dp" layout="column" flex>
+                <md-toolbar class="md-primary md-hue-1 md-whiteframe-2dp">
+                    <div class="md-toolbar-tools">Template Preview</div>
+                </md-toolbar>
 
-                <md-content style="overflow-x: auto !important;" flex>
+                <md-content layout-fill style="overflow-x: auto !important;" flex>
                     <div bind-html-compile="rendered_template.html" layout-padding layout-fill></div>
                 </md-content>
             </div>
         </div>
-    </div>
+        </div>
+    </md-dialog-content>
 </md-dialog>

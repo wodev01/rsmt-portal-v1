@@ -277,6 +277,15 @@ html, body {
     height: auto;
 }
 
+/*---------- Search Filter ----------*/
+input.filterBox {
+    height: 20px;
+    width: 230px;
+    border-radius: 2px;
+    border: 1px solid #CCCCCC;
+    padding: 5px;
+}
+
 md-toolbar.top-header {
     z-index: 62;
 }
@@ -354,4 +363,8 @@ md-dialog[aria-label=Delete] button[aria-label=Delete] {
 
 .c3-legend-item-tile, .c3-xgrid-focus, .c3-ygrid, .c3-event-rect, .c3-bars path {
     cursor: pointer !important;
+}
+
+#terms-of-service p {
+    line-height: 1.846;
 }
