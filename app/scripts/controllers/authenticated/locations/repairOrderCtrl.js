@@ -1,6 +1,6 @@
 'use strict';
 app.controller('repairOrderCtrl',
-    function ($scope, $http, $timeout, $mdSidenav, $log, $rootScope, $cookies, $state, $mdDialog, userService, locationService) {
+    function ($scope, $http, $timeout, $mdSidenav, $log, $cookies, $state, $mdDialog, userService, locationService) {
         $scope.repairOrderFilterOptions = {
             filterText: '',
             useExternalFilter: false
@@ -13,25 +13,16 @@ app.controller('repairOrderCtrl',
             currentPage: 1
         };
 
-        $scope.setPagingData = function (data, page, pageSize) {
-            var pagedData = data.slice((page - 1) * pageSize, page * pageSize);
-            $scope.repairOrdersData = pagedData;
-            $scope.repairOrderTotalServerItems = data.length;
-            if (!$scope.$$phase) {
-                $scope.$apply();
-            }
-        };
-
-        $scope.getPagedDataAsync = function (pageSize, page) {
+        $scope.getPagedDataAsync = function () {
             // repair Order call
-            if($rootScope.editLocation) {
-                $scope.locationID = $rootScope.editLocation.id;
+            if(locationService.getLocationObj().id) {
+                $scope.locationID = locationService.getLocationObj().id;
                 locationService.repairOrder($scope.locationID)
                     .then(function(data) {
                         if (data.length !== 0) {
                             $scope.isDataNotNull = true;
                             $scope.isMsgShow = false;
-                            $scope.setPagingData(data, page, pageSize);
+                            $scope.repairOrdersData =  data;
                         } else {
                             $scope.isDataNotNull = false;
                             $scope.isMsgShow = true;
@@ -47,24 +38,6 @@ app.controller('repairOrderCtrl',
 
         $scope.getPagedDataAsync($scope.pagingOptions.pageSize, $scope.pagingOptions.currentPage);
 
-        $scope.$watch('pagingOptions', function (newVal, oldVal) {
-            if (newVal !== oldVal) {
-                //was there a page change? if not make sure to reset the page to 1 because it must have been a size change
-                if (newVal.currentPage === oldVal.currentPage && oldVal.currentPage !== 1) {
-                    $scope.pagingOptions.currentPage = 1; //  this will also trigger this same watch
-                } else {
-                    // update the grid with new data
-                    $scope.getPagedDataAsync($scope.pagingOptions.pageSize, $scope.pagingOptions.currentPage, $scope.repairOrderFilterOptions.filterText);
-                }
-            }
-        }, true);
-
-        $scope.$watch('filterOptions', function (newVal, oldVal) {
-            if (newVal !== oldVal) {
-                $scope.getPagedDataAsync($scope.pagingOptions.pageSize, $scope.pagingOptions.currentPage, $scope.repairOrderFilterOptions.filterText);
-            }
-        }, true);
-
         $scope.roAction = '<div layout="row">' +
             '<md-button class="md-icon-button md-accent" ng-click="grid.appScope.fnViewRODetails($event,row)">' +
             '<md-icon md-font-set="material-icons">launch</md-icon>' +
@@ -73,6 +46,8 @@ app.controller('repairOrderCtrl',
             data: 'repairOrdersData',
             rowHeight: 50,
             multiSelect:false,
+            paginationPageSizes: [5, 10, 25, 50],
+            paginationPageSize: 5,
             enableRowSelection: true,
             enableRowHeaderSelection: false,
             enableGridMenu:true,

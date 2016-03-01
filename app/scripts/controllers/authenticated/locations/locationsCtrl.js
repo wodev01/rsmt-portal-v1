@@ -1,6 +1,6 @@
 'use strict';
 app.controller('LocationsCtrl',
-	function ($scope, $mdSidenav, $rootScope, $mdDialog,$timeout, locationService) {
+    function ($scope, $mdSidenav, $rootScope, $mdDialog, $timeout, locationService) {
 
         $rootScope.editLocation = '';
         $scope.rightView = 'views/authenticated/locations/newLocation.html';
@@ -24,7 +24,6 @@ app.controller('LocationsCtrl',
 
         // Create new location.
         $scope.newLocationView = function () {
-            $rootScope.editLocation = null;
             $scope.islocationEditable = false;
             $scope.fnOpenNewLocationSwap();
         };
@@ -60,21 +59,21 @@ app.controller('LocationsCtrl',
 
         // Retrieving data from server
 
-        $scope.fnFetchLocationData = function(){
-                $scope.isLocationMsgShow = $scope.isLocationDataNotNull = false;
-                locationService.fetchLocation().then(function (data) {
-                        if (data.length !== 0) {
-                            $scope.isLocationDataNotNull = true;
-                            $scope.isLocationMsgShow = false;
-                            $scope.locationData = data;
-                        } else {
-                            $scope.isLocationDataNotNull = false;
-                            $scope.isLocationMsgShow = true;
-                        }
+        $scope.fnFetchLocationData = function () {
+            $scope.isLocationMsgShow = $scope.isLocationDataNotNull = false;
+            locationService.fetchLocation().then(function (data) {
+                if (data.length !== 0) {
+                    $scope.isLocationDataNotNull = true;
+                    $scope.isLocationMsgShow = false;
+                    $scope.locationData = data;
+                } else {
+                    $scope.isLocationDataNotNull = false;
+                    $scope.isLocationMsgShow = true;
+                }
 
-                    }, function (error) {
-                        toastr.error('Failed retrieving location data.', 'STATUS CODE: ' + error.status);
-                    });
+            }, function (error) {
+                toastr.error('Failed retrieving location data.', 'STATUS CODE: ' + error.status);
+            });
         };
 
 
@@ -97,8 +96,8 @@ app.controller('LocationsCtrl',
             enableRowHeaderSelection: false,
             enableVerticalScrollbar: 0,
             columnDefs: [
-                {field: 'name', displayName: 'Name', minWidth:100, enableHiding: false},
-                {field: 'address', displayName: 'Address', minWidth:100, enableHiding: false},
+                {field: 'name', displayName: 'Name', minWidth: 100, enableHiding: false},
+                {field: 'address', displayName: 'Address', minWidth: 100, enableHiding: false},
                 {field: 'city', displayName: 'City', minWidth: 100, enableHiding: false},
                 {field: 'state', displayName: 'State', minWidth: 100, enableHiding: false},
                 {field: 'zip', displayName: 'Zip', minWidth: 100, enableHiding: false},
@@ -110,12 +109,7 @@ app.controller('LocationsCtrl',
                     enableSorting: false,
                     enableColumnMenu: false
                 }
-            ],
-            onRegisterApi: function (gridApi) {
-                gridApi.selection.on.rowSelectionChanged($scope, function (row) {
-                    row.isSelected = true;
-                });
-            }
+            ]
         };
         /*--------------- End location Grid Options ---------------*/
 
@@ -130,16 +124,15 @@ app.controller('LocationsCtrl',
                 .cancel('Cancel')
                 .targetEvent(event);
             $mdDialog.show(confirm).then(function () {
-                locationService.deleteLocation(row.entity.id).then(function(){
+                locationService.deleteLocation(row.entity.id).then(function () {
                     $scope.fnFetchLocationData();
                 });
-            }, function(){});
+            }, function () {
+            });
         };
-
 
         $scope.fnLocationEdit = function (row) {
             $scope.editLocationName = row.entity.name;
-            $rootScope.editLocation = row.entity;
             locationService.setLocationObj(row.entity);
             $scope.fnOpenLocationManageSwap();
         };
@@ -149,7 +142,6 @@ app.controller('LocationsCtrl',
         $scope.$on('RefreshLocations', function () {
             $scope.fnFetchLocationData();
         });
-
 
         // Initialization
         $scope.fnInitLocations = function () {
