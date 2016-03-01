@@ -1,9 +1,15 @@
 <div id="rs-grid" layout-margin layout-padding>
-    <div ng-if="!isRSDataNotNull && !isRSMsgShow">
-        <div ng-include="'views/loader.html'"></div>
+
+    <div ng-if="!isRSDataNotNull && !isRSMsgShow" layout="column" layout-align="center center"
+         layout-fill flex>
+        <md-progress-circular class="md-accent" md-diameter="100" md-mode="indeterminate"></md-progress-circular>
     </div>
-    <div ng-if="isRSMsgShow"><h1>No recommended service available</h1></div>
-    <div ng-if="isRSDataNotNull" layout-fill flex
+
+    <div ng-if="isRSMsgShow" class="margin-bottom-10">
+        <div class="md-headline text-center">No recommended service available</div>
+    </div>
+
+    <div ng-if="isRSDataNotNull"
          ui-grid-selection ui-grid-auto-resize
          ng-style="$root.fnReturnGridHeight(recommendedServicesData.length)"
          ui-grid="recommendedServiceGridOptions"></div>

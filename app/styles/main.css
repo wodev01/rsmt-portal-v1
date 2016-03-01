@@ -265,3 +265,149 @@
 .comiseo-daterangepicker-left .comiseo-daterangepicker-presets {
     padding: 0;
 }
+
+/*---------- Segments modal ----------*/
+md-dialog#manage-scheduledmsg-dialog .contentViewSection {
+    height: 55vh;
+}
+
+md-dialog#manage-scheduledmsg-dialog md-dialog-content {
+    overflow: hidden;
+}
+
+
+/*------------------------------table-------------------*/
+
+.datagrid {
+    font: inherit;
+    background: #fff;
+    overflow: auto;
+    border: 1px solid #D8D8D8;
+    width: 100%
+}
+
+.datagrid table {
+    border-collapse: collapse;
+    text-align: left;
+    width: 100%;
+}
+
+.datagrid table td, .datagrid table th {
+    padding: 8px 10px;
+}
+
+.datagrid table thead th {
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0.05, #D8D8D8), color-stop(1, #D8D8D8));
+    background: -moz-linear-gradient(center top, #D8D8D8 5%, #D8D8D8 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#D8D8D8', endColorstr='#D8D8D8');
+    background-color: #D8D8D8;
+    color: #000000;
+    font-size: 15px;
+    font-weight: bold;
+    border-left: 1px solid #D8D8D8;
+}
+
+.datagrid table thead th:first-child {
+    border: none;
+}
+
+.datagrid table tbody td {
+    color: #000000;
+    border-left: 0px solid #D8D8D8;
+    font-size: 14px;
+    font-weight: normal;
+}
+
+.datagrid table tbody .alt td {
+    background: #F0F0F0;
+    color: #000000;
+}
+
+.datagrid table tbody td:first-child {
+    border-left: none;
+}
+
+.datagrid table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.datagrid table tfoot td div {
+    border-top: 1px solid #D8D8D8;
+    background: #D8D8D8;
+}
+
+.datagrid table tfoot td {
+    padding: 0;
+    font-size: 12px
+}
+
+.datagrid table tfoot td div {
+    padding: 8px;
+}
+
+.datagrid table tfoot td ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    text-align: right;
+}
+
+.datagrid table tfoot li {
+    display: inline;
+}
+
+.datagrid table tfoot li a {
+    text-decoration: none;
+    display: inline-block;
+    padding: 2px 8px;
+    margin: 1px;
+    color: #FFFFFF;
+    border: 3px solid #337ABB;
+    -webkit-border-radius: 1px;
+    -moz-border-radius: 1px;
+    border-radius: 1px;
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0.05, #337ABB), color-stop(1, #337ABB));
+    background: -moz-linear-gradient(center top, #337ABB 5%, #337ABB 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#337ABB', endColorstr='#337ABB');
+    background-color: #337ABB;
+}
+
+.datagrid table tfoot ul.active,
+.datagrid table tfoot ul a:hover {
+    text-decoration: none;
+    border-color: #005C8A;
+    color: #FFFFFF;
+    background: none;
+    background-color: #005C8A;
+}
+
+.datagrid table tbody tr {
+    cursor: pointer;
+}
+
+.datagrid table tbody tr.selected {
+    background-color: #eaeaea !important;
+}
+
+
+/* Location Color Indicator */
+.checked_item {
+    border: 1px solid gray;
+    border-radius: 13px;
+    height: 26px;
+    margin: 15px;
+    width: 26px;
+}
+
+.checked_item_green {
+    background-color: #00d500;
+}
+
+.checked_item_yellow {
+    background-color: #ffff00;
+}
+
+.checked_item_red {
+    background-color: #dd0000;
+}
+

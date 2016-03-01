@@ -1,30 +1,34 @@
 <div class="tab-pane right-panel" id="segments-pane">
 
-    <h1>Segments</h1>
+    <div class="md-headline">Message Templates</div>
 
-    <div ng-if="!isLocationsData" style="text-align: center">
-        <h1 ng-model="msg">No Locations Available.</h1>
+    <div ng-if="!isLocationsData" class="margin-bottom-10">
+        <div class="md-headline text-center">No Locations Available.</div>
     </div>
 
     <div ng-if="isLocationsData">
-        <select ng-model="locationId" layout-padding layout-margin
-                ng-options="location.id as location.name for location in locationOptions"
-                ng-change="fnChangeLocation(locationId);"
-                style="margin-left: 0;">
-        </select>
 
-        <div ng-if="!isCrmSegmentsData && !isCrmSegmentsMsgShow" style="min-height: 300px;">
-            <div ng-include="'views/loader.html'"></div>
+        <md-input-container >
+            <md-select aria-label="Select location" ng-model="locationId"
+                       ng-change="fnChangeLocation(locationId);">
+                <md-option ng-repeat="location in locationOptions" ng-value="location.id">
+                    {{location.name}}
+                </md-option>
+            </md-select>
+        </md-input-container>
+
+        <div ng-if="!isCrmSegmentsData && !isCrmSegmentsMsgShow" layout="column" layout-align="center center"
+             layout-fill flex>
+            <md-progress-circular class="md-accent" md-diameter="100" md-mode="indeterminate"></md-progress-circular>
         </div>
 
-        <div ng-if="isCrmSegmentsMsgShow" style="text-align: center">
-            <h2>No Segments available.</h2>
+        <div ng-if="isCrmSegmentsMsgShow" class="margin-bottom-10">
+            <div class="md-headline text-center">No Segments available.</div>
         </div>
 
         <!--ngGrid-->
         <div ng-if="isCrmSegmentsData">
-            <div layout-fill flex
-                 ui-grid-selection ui-grid-auto-resize
+            <div ui-grid-selection ui-grid-auto-resize
                  ng-style="$root.fnReturnGridHeight(crmSegmentsData.length)"
                  ui-grid="crmSegmentsGridOptions">
             </div>

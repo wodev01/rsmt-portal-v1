@@ -12,13 +12,16 @@ var app = angular
     .module('rsmtPortalApp', [
         'ngAnimate',
         'ngCookies',
+        'angular.filter',
         'ngSanitize',
         'ui.router',
         'ngMaterial',
         'ui.grid',
         'ui.grid.selection',
         'ui.grid.autoResize',
-        'ngMap'
+        'ngMap',
+        'ui.grid.pagination',
+        'angular-bind-html-compile'
     ])
     .constant('cookieName', 'cargly_rsmt_access_token')
     .constant('localStorage', localStorage)
@@ -191,6 +194,13 @@ app.run(function ($rootScope, $mdSidenav) {
         return {
             'height': (rowHeader + rowContent + rowFooter) + "px"
         };
+    };
+
+    /*----- on cancel search return last view value -----*/
+    $rootScope.fnCancelSearchFilter = function (event, ctrlField) {
+        if (event.keyCode === 27) {
+            ctrlField.searchForm.searchFilter.$rollbackViewValue();
+        }
     };
 
 });

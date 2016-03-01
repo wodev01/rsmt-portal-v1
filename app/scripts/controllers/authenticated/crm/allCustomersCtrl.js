@@ -92,7 +92,7 @@ app.controller('allCustomersCtrl',
             multiSelect: false,
             showColumnMenu:false,
             columnDefs: [
-                {displayName:'', name:'Action',cellTemplate: $scope.customerAction, minWidth:80,width:'80', enableSorting:false},
+                {displayName:'', name:'Action',cellTemplate: $scope.customerAction, minWidth:80,width:'80', enableSorting:false, enableColumnMenu: false},
                 {field: 'first_name', displayName: 'First Name', minWidth: 200},
                 {field: 'last_name', displayName: 'Last Name', minWidth:200},
                 {field: 'company', displayName: 'Company', minWidth: 200},

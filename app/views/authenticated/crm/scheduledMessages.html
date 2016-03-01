@@ -1,88 +1,111 @@
-<div class="tab-pane" id="scheduled-messages-tab">
-    <div ng-if="!isLocationsData" style="text-align: center">
-        <h1 ng-model="msg">No Locations Available.</h1>
+<div id="scheduled-messages-tab" class="md-padding">
+    <div ng-if="!isLocationsData">
+        <div class="md-headline text-center">No Locations Available.</div>
     </div>
+
     <div ng-if="isLocationsData">
         <section layout="row">
             <div flex>
-                <select ng-model="idsObj.locationId" layout-padding layout-margin
-                        ng-options="location.id as location.name for location in locationOptions"
-                        ng-change="fnChangeLocation(idsObj.locationId)"
-                        style="margin-left: 0;">
-                </select>
-                <select ng-model="idsObj.segmentId" layout-padding layout-margin
-                        ng-if="isSegmentsData"
-                        ng-options="segment.id as segment.name for segment in segmentsOptions"
-                        ng-change="fnChangeSegment(idsObj)">
-                </select>
+                <md-input-container >
+                    <md-select aria-label="Select location" ng-model="idsObj.locationId"
+                               ng-change="fnChangeLocation(idsObj.locationId);">
+                        <md-option ng-repeat="location in locationOptions | unique: 'id'" ng-value="location.id">
+                            {{location.name}}
+                        </md-option>
+                    </md-select>
+                </md-input-container>
+
+                <md-input-container >
+                    <md-select aria-label="Select Type" ng-model="idsObj.segmentId"
+                               ng-if="isSegmentsData"
+                               ng-change="fnChangeSegment(idsObj);">
+                        <md-option ng-repeat="segment in segmentsOptions | unique: 'id'" ng-value="segment.id">
+                            {{segment.name}}
+                        </md-option>
+                    </md-select>
+                </md-input-container>
             </div>
         </section>
 
         <div ng-if="!isSegmentsData" style="text-align: center">
-            <h1 ng-model="msg">No Segments Available.</h1>
+            <div class="md-headline text-center">No Segments Available.</div>
         </div>
 
         <div ng-if="isSegmentsData" ng-init="fnCreateDateRangePicker();">
-            <section layout="row" layout-margin layout-fill style="margin-bottom: 5px">
-                <div flex="35" style="margin-left: 0">
+            <section layout="row" layout-sm="column" layout-xs="column"
+                     layout-align="space-between center"
+                     layout-align-sm="space-around start"
+                     layout-align-xs="space-around start">
+                <div layout="row" flex>
                     <input id="pickDateRange" />
                 </div>
-                <div flex>
-                    Status:
-                    <select ng-model="filter.status" ng-change="fnChangeFilter(filter)" layout-padding>
-                        <option value="" selected>All Status</option>
-                        <option value="SCHEDULED">Scheduled</option>
-                        <option value="UNDELIVERED">Undelivered</option>
-                        <option value="DELIVERED">Delivered</option>
-                        <option value="FAILED">Failed</option>
-                        <option value="IGNORED">Ignored</option>
-                        <option value="PREEMPTED">Preempted</option>
-                    </select>
+
+                <div layout="row" layout-align="space-between center" layout-fill flex>
+                    <md-input-container flex>
+                        <md-select-label>Status:</md-select-label>
+                        <md-select ng-model="filter.status"
+                                   ng-change="fnChangeFilter(filter);">
+                            <md-option value="" selected>All Status</md-option><!--ALL STATUS-->
+                            <md-option value="SCHEDULED">Scheduled</md-option>
+                            <md-option value="UNDELIVERED">Undelivered</md-option>
+                            <md-option value="DELIVERED">Delivered</md-option>
+                            <md-option value="FAILED">Failed</md-option>
+                            <md-option value="IGNORED">Ignored</md-option>
+                            <md-option value="PREEMPTED">Preempted</md-option>
+                        </md-select>
+                    </md-input-container>
+
+                    <md-input-container flex>
+                        <md-select-label>Type:</md-select-label>
+                        <md-select ng-model="filter.deliveryType"
+                                   ng-change="fnChangeFilter(filter);">
+                            <md-option value="" selected>All Type</md-option><!--ALL TYPE-->
+                            <md-option value="EMAIL">Email</md-option>
+                            <md-option value="POST">Post</md-option>
+                            <md-option value="SMS">SMS</md-option>
+                        </md-select>
+                    </md-input-container>
                 </div>
-                <div flex>
-                    Type:
-                    <select ng-model="filter.deliveryType" ng-change="fnChangeFilter(filter);" layout-padding>
-                        <option value="" selected>All Type</option>
-                        <option value="EMAIL">Email</option>
-                        <option value="POST">Post</option>
-                        <option value="SMS">SMS</option>
-                    </select>
-                </div>
-                <div layout="row" layout-align="end center">
+
+                <div layout="row" layout-align="end center"
+                     layout-align-sm="space-between center" layout-align-xs="space-between center"
+                     layout-fill flex>
                     <md-button aria-label="Refresh Grid"
-                               class="md-raised btn btnBlue"
-                               ng-click="fnRefreshGrid();">Refresh</md-button>
+                               class="md-raised md-accent"
+                               ng-click="fnRefreshGrid();">Refresh
+                    </md-button>
                     <md-button aria-label="Download CSV"
-                               class="md-raised btn btnBlue"
-                               style="margin-right: 0;"
-                               ng-click="fnDownloadInteractionCSV($event, idsObj);">Export Interaction CSV</md-button>
+                               class="md-raised md-accent"
+                               ng-click="fnDownloadInteractionCSV($event, idsObj);">Export Interaction CSV
+                    </md-button>
                 </div>
             </section>
 
-            <div ng-if="!isCrmInteractionData && !isCrmMsgGridShow" style="min-height: 300px;">
-                <div ng-include="'views/loader.html'"></div>
+            <div ng-if="!isCrmInteractionData && !isCrmMsgGridShow" layout="column" layout-align="center center"
+                 layout-fill flex>
+                <md-progress-circular class="md-accent" md-diameter="100" md-mode="indeterminate"></md-progress-circular>
             </div>
 
-            <div ng-if="isCrmMsgGridShow" style="text-align: center">
-                <h1 ng-model="msg">No CRM Interaction available.</h1>
+            <div ng-if="isCrmMsgGridShow" class="margin-bottom-10">
+                <div class="md-headline text-center">No CRM Interaction available.</div>
             </div>
 
             <!--ngGrid-->
-            <div ng-if="isCrmInteractionData" ui-grid="crmInteractionGridOptions"
-                 layout-fill flex ng-style="$root.fnReturnGridHeight(crmInteractionData.length)"
-                 ui-grid-selection ui-grid-auto-resize
-            ></div>
-            <div ng-if="isCrmInteractionData" layout="row" layout-align="center center"
-                 layout-margin style="margin-top: 18px">
+            <div class="margin-bottom-10" ng-if="isCrmInteractionData"
+                 ui-grid="crmInteractionGridOptions" ui-grid-selection ui-grid-auto-resize
+                 ng-style="$root.fnReturnGridHeight(crmInteractionData.length)">
+            </div>
+
+            <div ng-if="isCrmInteractionData" layout="row" layout-align="center center" layout-margin>
                 <div ng-if="isPagingData">
-                    <md-button aria-label="More Segment Interactions" class="md-raised btn btnBlue"
-                               ng-click="fnLoadMoreCrmInteractions(idsObj)" >
+                    <md-button aria-label="More Segment Interactions" class="md-raised md-accent"
+                               ng-click="fnLoadMoreCrmInteractions(idsObj);" >
                         <span ng-if="isMoreCrmInteractions"> Loading... </span>
                         <span ng-if="!isMoreCrmInteractions">More CRM Interactions </span>
                     </md-button>
                 </div>
                 <div ng-if="!isPagingData">
-                    <h2>... No more results found ...</h2>
+                    <div class="md-title">... No more results found ...</div>
                 </div>
             </div>
         </div>

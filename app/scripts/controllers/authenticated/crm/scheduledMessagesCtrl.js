@@ -1,6 +1,6 @@
 'use strict';
 app.controller('scheduledMessagesCtrl',
-    function ($scope, cookieName, $filter, $cookies, $mdDialog,
+    function ($scope, cookieName, $filter, $cookies, $mdDialog,$timeout,
               encodeParamService, locationService, crmInteractionService) {
 
         $scope.isLocationsData = $scope.isSegmentsData = false;
@@ -19,7 +19,9 @@ app.controller('scheduledMessagesCtrl',
 
         $scope.filter = {
             'page_num' : $scope.pagingOptions.currentPage,
-            'page_size' : $scope.pagingOptions.pageSize
+            'page_size' : $scope.pagingOptions.pageSize,
+            'status': '',
+            'deliveryType': ''
         };
 
         $scope.getPagedDataAsync = function (idsObj, paramsObj) {
@@ -66,7 +68,7 @@ app.controller('scheduledMessagesCtrl',
             enableRowSelection: true,
             enableRowHeaderSelection: false,
             columnDefs: [
-                { name:'Action', cellTemplate: $scope.crmInteractionAction, width: 80, sortable: false},
+                { name:'Action', cellTemplate: $scope.crmInteractionAction, width: 80, enableSorting:false, enableColumnMenu: false},
                 { field: 'due_date', displayName: 'Due Date',
                     cellFilter: 'date:\'MM/dd/yyyy h:mm a\'', minWidth:180 },
                 { name:'name', cellTemplate: $scope.nameTmpl, displayName: 'Customer Name', minWidth:100 },
@@ -230,13 +232,13 @@ app.controller('scheduledMessagesCtrl',
             filter.page_num = 1;
             $scope.isPagingData = true;
 
-            if (filter['status'] === '') {
+           /* if (filter['status'] === '') {
                 delete filter['status'];
             }
 
             if (filter['deliveryType'] === '') {
                 delete filter['deliveryType'];
-            }
+            }*/
 
             $scope.getPagedDataAsync($scope.idsObj, filter);
         };
@@ -256,19 +258,21 @@ app.controller('scheduledMessagesCtrl',
         };
 
         $scope.fnCreateDateRangePicker = function () {
-            setTimeout(function () {
+            $timeout(function () {
                 $('#scheduled-messages-tab #pickDateRange').daterangepicker({
                     datepickerOptions: {
                         numberOfMonths: 2,
                         maxDate: null
                     },
                     presetRanges: [],
-                    initialText: 'Select period...',
+                    initialText: 'Select Date period...',
                     onChange: function () {
-                        fnGetDateRange();
+                        $scope.fnRefreshGrid();
                     }
                 });
             }, 1000);
+
+            $scope.getPagedDataAsync($scope.filter);
         };
 
         $scope.fnInitScheduledMessages = function() {
