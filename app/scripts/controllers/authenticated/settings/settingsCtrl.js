@@ -7,7 +7,7 @@ app.controller('SettingsCtrl', function ($scope, $stateParams) {
     ];
 
     $scope.tabInit = function(){
-        for(var intIndex = 0;intIndex<$scope.tabs.length;intIndex++){
+        for(var intIndex = 0;intIndex<$scope.tabs.length    ;intIndex++){
             if($scope.tabs[intIndex].settingsName === $stateParams.settingsName){
                 $scope.selectedIndex = intIndex;
             }

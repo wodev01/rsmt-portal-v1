@@ -21,6 +21,7 @@ var app = angular
         'ngMap'
     ])
     .constant('cookieName', 'cargly_rsmt_access_token')
+    .constant('localStorage', localStorage)
     .constant('globalTimeZone', ["US/Hawaii", "US/Alaska", "US/Pacific", "US/Arizona", "US/Mountain", "US/Central", "US/Eastern"])
     .constant('toastr', toastr);
 
@@ -106,45 +107,60 @@ app.config(function ($mdThemingProvider, toastr, $urlRouterProvider, $stateProvi
             controller: 'DashboardCtrl',
             templateUrl: "views/authenticated/dashboard/dashboard.html",
             resolve: {
-                checkSubscriptions : function(userSubscriptionService){
-                    return userSubscriptionService.checkSubscriptions(['realtime_dashboard']);
+                GetUser : function(GetUserService){
+                    return GetUserService.fetchUser(['realtime_dashboard']);
                 }
             }
         })
         .state('main.locations', {
             url: "locations",
             controller: 'LocationsCtrl',
-            templateUrl: "views/authenticated/locations/locations.html"
+            templateUrl: "views/authenticated/locations/locations.html",
+            resolve: {
+                GetUser : function(GetUserService){
+                    return GetUserService.fetchUser([]);
+                }
+            }
         })
         .state('main.crm', {
             url: "crm",
             controller: 'CrmCtrl',
             templateUrl: "views/authenticated/crm/crm.html",
             resolve: {
-                checkSubscriptions : function(userSubscriptionService){
-                    return userSubscriptionService.checkSubscriptions(['crm_scheduled']);
+                GetUser : function(GetUserService){
+                    return GetUserService.fetchUser(['crm_scheduled']);
                 }
             }
         })
         .state('main.products', {
             url: "products",
             controller: 'ProductsCtrl',
-            templateUrl: "views/authenticated/products/products.html"
+            templateUrl: "views/authenticated/products/products.html",
+            resolve: {
+                GetUser : function(GetUserService){
+                    return GetUserService.fetchUser([]);
+                }
+            }
         })
         .state('main.locationSetup', {
             url: 'location/setup',
             controller: 'LocationSetupCtrl',
             templateUrl: "views/authenticated/locationSetup/locationSetup.html",
             resolve: {
-                checkSubscriptions : function(userSubscriptionService){
-                    return userSubscriptionService.checkSubscriptions(['realtime_dashboard']);
+                GetUser : function(GetUserService){
+                    return GetUserService.fetchUser(['realtime_dashboard']);
                 }
             }
         })
         .state('main.settings', {
             url: 'settings/:settingsName',
             controller: 'SettingsCtrl',
-            templateUrl: 'views/authenticated/settings/settings.html'
+            templateUrl: 'views/authenticated/settings/settings.html',
+            resolve: {
+                GetUser : function(GetUserService){
+                    return GetUserService.fetchUser([]);
+                }
+            }
         });
 
     /*--------- End of State Management ----------*/

@@ -25,19 +25,21 @@ app.controller('MainCtrl', function ($scope, $mdDialog, $location, $cookies, coo
     $scope.fnInitMain = function () {
         if (localStorage.getItem('userObj')) {
             $scope.userObj = JSON.parse(localStorage.getItem('userObj'));
-            $scope.userSubscriptions = $scope.userObj.subscriptions;
+            $scope.userSubscriptions = JSON.parse($scope.userObj.subscriptions);
         }
     };
 
     $scope.fnCheckSubscription = function (userSubscriptions, subscriptions) {
         var hasSubscriptions = true;
         if(userSubscriptions) {
-            angular.forEach(subscriptions, function (value) {
-                if (hasSubscriptions) {
-                    if (userSubscriptions.indexOf(value) === -1) {
-                        hasSubscriptions = false;
+            angular.forEach(userSubscriptions, function (obj) {
+                angular.forEach(subscriptions, function (value) {
+                    if (hasSubscriptions) {
+                        if (obj.subscriptions.indexOf(value) === -1) {
+                            hasSubscriptions = false;
+                        }
                     }
-                }
+                });
             });
         }
         return hasSubscriptions;

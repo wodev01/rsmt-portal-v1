@@ -98,7 +98,6 @@ app.controller('UsersCtrl',
 
         //Swapping view open function
         $scope.fnOpenSwap = function() {
-            console.log("hello");
             setTimeout(function(){
                 $scope.rightView = '';
                 $scope.$apply();
