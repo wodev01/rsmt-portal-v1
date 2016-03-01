@@ -1,5 +1,7 @@
 'use strict';
-app.controller('CrmCtrl', function () {
+app.controller('CrmCtrl', function ($scope) {
+
+    $scope.selectedCrmTab = 0;
 
 
     });

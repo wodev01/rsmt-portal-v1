@@ -1,6 +1,6 @@
 'use strict';
-app.factory('crmInteractionService',['$q', '$rootScope', 'encodeParamService',
-    function($q, $rootScope, encodeParamService) {
+app.factory('crmInteractionService',['$q', 'encodeParamService','ErrorMsg',
+    function($q, encodeParamService,ErrorMsg) {
 
         var crmInteractionService = {};
 
@@ -13,7 +13,7 @@ app.factory('crmInteractionService',['$q', '$rootScope', 'encodeParamService',
                     defer.resolve(data);
                 },
                 error:function(error) {
-                    $rootScope.fnCheckStatus(error.status);
+                    ErrorMsg.CheckStatusCode(error.status);
                     defer.resolve(error);
                 }
             });
@@ -30,7 +30,7 @@ app.factory('crmInteractionService',['$q', '$rootScope', 'encodeParamService',
                     defer.resolve(data);
                 },
                 error:function(error) {
-                    $rootScope.fnCheckStatus(error.status);
+                    ErrorMsg.CheckStatusCode(error.status);
                     defer.resolve(error);
                 }
             });
@@ -48,7 +48,7 @@ app.factory('crmInteractionService',['$q', '$rootScope', 'encodeParamService',
                     defer.resolve(data);
                 },
                 error:function(error) {
-                    $rootScope.fnCheckStatus(error.status);
+                    ErrorMsg.CheckStatusCode(error.status);
                     defer.resolve(error);
                 }
             });
