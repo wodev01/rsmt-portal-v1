@@ -5,8 +5,7 @@ app.controller('newLocationsCtrl',
         $scope.location = {timezone: 'US/Central'};
 
         $scope.fnSaveLocation = function (location) {
-            console.log(location);
-           /* locationService.saveLocation('',location)
+            locationService.saveLocation('',location)
                 .then(function (response) {
                     toastr.success('Location save successfully.');
                     $scope.location = {timezone: 'US/Central'};
@@ -16,7 +15,7 @@ app.controller('newLocationsCtrl',
                 }, function (error) {
                     toastr.error('Can\'t be saved, repeated email or invalid information.',
                         'STATUS CODE: ' + error.status);
-                });*/
+                });
 
             $scope.closeNewLocationSwap();
         };

@@ -1,6 +1,6 @@
 'use strict';
 app.controller('recommendedServiceCtrl',
-	function ($scope, $http, $timeout, $mdSidenav, $log, $rootScope, $cookies, $state, $mdDialog, userService, locationService) {
+	function ($scope, $http, $timeout, $mdSidenav, $log, $cookies, $state, $mdDialog, userService, locationService) {
 		$scope.recommendedServiceFilterOptions = {
 			filterText: '',
 			useExternalFilter: false
@@ -13,24 +13,15 @@ app.controller('recommendedServiceCtrl',
 			currentPage: 1
 		};
 
-		$scope.setPagingData = function (data, page, pageSize) {
-			var pagedData = data.slice((page - 1) * pageSize, page * pageSize);
-			$scope.recommendedServicesData = pagedData;
-			$scope.recommendedServiceTotalServerItems = data.length;
-			if (!$scope.$$phase) {
-				$scope.$apply();
-			}
-		};
-
 		$scope.getPagedDataAsync = function (pageSize, page) {
 			setTimeout(function () {
-				if($rootScope.editLocation) {
-					$scope.locationID = $rootScope.editLocation.id;
+				if(locationService.getLocationObj().id) {
+					$scope.locationID = locationService.getLocationObj().id;
 					locationService.recommendedService($scope.locationID)
 						.then(function(data) {
 							if (data.length !== 0) {
 								$scope.isDataNotNull = true;
-								$scope.setPagingData(data, page, pageSize);
+                                $scope.recommendedServicesData = data;
 							} else {
 								$scope.isDataNotNull = false;
 								$scope.isMsgShow = true;
@@ -47,24 +38,6 @@ app.controller('recommendedServiceCtrl',
 		});
 
 		$scope.getPagedDataAsync($scope.pagingOptions.pageSize, $scope.pagingOptions.currentPage);
-
-		$scope.$watch('pagingOptions', function (newVal, oldVal) {
-			if (newVal !== oldVal) {
-				//was there a page change? if not make sure to reset the page to 1 because it must have been a size change
-				if (newVal.currentPage === oldVal.currentPage && oldVal.currentPage !== 1) {
-					$scope.pagingOptions.currentPage = 1; //  this will also trigger this same watch
-				} else {
-					// update the grid with new data
-					$scope.getPagedDataAsync($scope.pagingOptions.pageSize, $scope.pagingOptions.currentPage, $scope.recommendedServiceFilterOptions.filterText);
-				}
-			}
-		}, true);
-
-		$scope.$watch('filterOptions', function (newVal, oldVal) {
-			if (newVal !== oldVal) {
-				$scope.getPagedDataAsync($scope.pagingOptions.pageSize, $scope.pagingOptions.currentPage, $scope.recommendedServiceFilterOptions.filterText);
-			}
-		}, true);
 
 		$scope.recommendedServiceGridOptions = {
 			data: 'recommendedServicesData',

@@ -8,33 +8,36 @@
     </md-toolbar>
 
     <md-content md-theme="grey">
-        <md-tabs class="md-primary" md-selected="selectedClientTab" md-dynamic-height ng-if="isTabsLoad">
+        <md-tabs class="md-primary" md-selected="selectedLocationTab" md-dynamic-height ng-if="isTabsLoad">
             <md-tab label="Edit">
                 <div ng-controller="LocationInfoCtrl"
+                     ng-if="selectedLocationTab === 0"
                      ng-include="'views/authenticated/locations/locationsInfo.html'">
                 </div>
             </md-tab>
 
             <md-tab label="Recommended Service">
-                <md-content ng-controller="recommendedServiceCtrl" class="md-padding">
+                <md-content ng-controller="recommendedServiceCtrl" class="md-padding" ng-if="selectedLocationTab === 1">
                     <div layout="row" layout-sm="column" layout-align="center center" ng-if="!isDataNotNull && !isMsgShow">
                         <md-progress-circular  class="md-accent" md-diameter="100" md-mode="indeterminate"></md-progress-circular>
                     </div>
                     <div ng-if="isMsgShow" layout="row" layout-align="center center"><h1>No recommended service available</h1></div>
-                    <div layout-fill flex ng-if="isDataNotNull" ui-grid-selection ui-grid-auto-resize
+                    <div layout-fill flex ng-if="isDataNotNull"
+                         ui-grid-selection ui-grid-auto-resize
                          ng-style="$root.fnReturnGridHeight(recommendedServicesData.length)"
                          ui-grid="recommendedServiceGridOptions"></div>
                 </md-content>
             </md-tab>
 
             <md-tab label="Repair Orders">
-                <md-content ng-controller="repairOrderCtrl" class="md-padding">
+                <md-content ng-controller="repairOrderCtrl" class="md-padding" ng-if="selectedLocationTab === 2">
                     <div layout="row" layout-sm="column" layout-align="center center" ng-if="!isDataNotNull && !isMsgShow">
                         <md-progress-circular  class="md-accent" md-diameter="100" md-mode="indeterminate"></md-progress-circular>
                     </div>
                     <div ng-if="isMsgShow" layout="row" layout-align="center center"><h1>No repair orders available</h1></div>
-                    <div layout-fill flex ng-if="isDataNotNull" ui-grid-selection ui-grid-auto-resize
-                         ng-style="$root.fnReturnGridHeight(repairOrdersData.length)"
+                    <div layout-fill flex ng-if="isDataNotNull"
+                         ui-grid-selection ui-grid-auto-resize ui-grid-pagination
+                         ng-style="$root.fnReturnGridHeight(repairOrderGridOptions.paginationPageSize, 50, true)"
                          ui-grid="repairOrderGridOptions"></div>
                 </md-content>
             </md-tab>
