@@ -9,7 +9,7 @@ app.controller('customerStatisticsCtrl',
         $scope.customersStatData = [];
 
         $scope.pieChartJSON = {};
-        $scope.selectedModel = null;
+        $scope.selectedModel = "";
 
         $scope.mapLabel = 'Loading Map...';
         $scope.searchText = '';

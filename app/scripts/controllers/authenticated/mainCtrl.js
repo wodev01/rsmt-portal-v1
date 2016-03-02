@@ -1,6 +1,6 @@
 'use strict';
 
-app.controller('MainCtrl', function ($scope, $mdDialog, $location, $cookies, cookieName, $state) {
+app.controller('MainCtrl', function ($scope, $mdDialog, $location, $cookies, cookieName, $state, $mdSidenav) {
 
     $scope.fnToggleSideNav = function (componentId) {
         $mdSidenav(componentId).toggle();
