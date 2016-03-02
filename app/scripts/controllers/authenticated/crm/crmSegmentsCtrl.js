@@ -100,6 +100,15 @@ app.controller('crmSegmentsCtrl',
                     .then(function (data) {
                         $scope.rendered_template['html'] = data.rendered_template;
 
+                        var iframe = angular.element('#renderHtml')[0];
+                        iframe.src = 'about:blank';
+                        iframe.contentWindow.document.open('text/htmlreplace');
+                        iframe.contentWindow.document.write($scope.rendered_template.html);
+                        iframe.contentWindow.document.close();
+                        iframe.contentWindow.document.onmousedown = function() {
+                            return false;
+                        }
+
                     }, function (error) {
                         if (error.status !== 401 && error.status !== 500) {
                             Toast.failure('Error interpolating template. Please try again...');

@@ -1,6 +1,6 @@
 'use strict';
 app.controller('customerStatisticsCtrl',
-    function ($scope, $timeout, locationService, allCustomerService, NgMap) {
+    function ($scope, $timeout, $filter, NgMap, locationService, allCustomerService) {
 
         $scope.locationId = '';
         $scope.locationOptions = [];
@@ -9,12 +9,20 @@ app.controller('customerStatisticsCtrl',
         $scope.customersStatData = [];
 
         $scope.pieChartJSON = {};
+        $scope.selectedModel = null;
 
-        var map, markers = [];
+        $scope.mapLabel = 'Loading Map...';
+        $scope.searchText = '';
+        $scope.totalCustomersFound = 0;
+
+        var count = 0;
+        var markersArr = [];
         var infowindow = new google.maps.InfoWindow();
         var geocoder = new google.maps.Geocoder();
+        $scope.timer = {};
+        $scope.ngMap = {};
 
-        /*--------------------Pie Chart----------------*/
+        /*-------------------- Pie Chart ----------------*/
         $scope.fnGeneratePieChart = function () {
             c3.generate({
                 bindto: '#pie-chart',
@@ -52,6 +60,7 @@ app.controller('customerStatisticsCtrl',
             });
         };
 
+        /*-------------------- Filter email data with/without ----------------*/
         $scope.fnGetEmailData = function (data) {
             $scope.pieChartJSON = {
                 'Email': 0,
@@ -68,123 +77,179 @@ app.controller('customerStatisticsCtrl',
             });
         };
 
-        /*function geocodeAddress(location) {
-         geocoder.geocode({'address': location[1]}, function (results, status) {
-         //alert(status);
-         if (status == google.maps.GeocoderStatus.OK) {
+        /*-------------------- Clear all markers on the map ----------------*/
+        function clearMarkers() {
+            $timeout.cancel($scope.timer);
+            for (var i = 0; i < markersArr.length; i++) {
+                markersArr[i].setMap(null);
+            }
+            markersArr = [];
+        }
 
-         //alert(results[0].geometry.location);
-         map.setCenter(results[0].geometry.location);
-         createMarker(results[0].geometry.location, location[0] + "<br>" + location[1]);
-         }
-         else {
-         alert("some problem in geocode" + status);
-         }
-         });
-         }*/
+        /*-------------------- Set markers on the map by lat lng ----------------*/
+        function setMarkerOnMap(latlng, custObj) {
+            $timeout(function () {
+                $scope.totalCustomersFound += 1;
+                $scope.$apply();
+            });
 
-        function createMarker(latlng, custDetails) {
             var marker = new google.maps.Marker({
                 position: latlng,
-                map: map,
+                map: $scope.ngMap,
                 animation: google.maps.Animation.DROP
             });
-            markers.push(marker);
+            markersArr.push(marker);
 
-            var html = '<div><h4>' + custDetails.custName + '</h4>' +
-                '<div>' + custDetails.address + '</div>' +
-                '<div><table class="mapTable"><thead>' +
+            var html = '<div><h4>' + custObj._fullName + '</h4>' +
+                '<div>' + custObj._formattedAddress + '</div>' +
+                '<div><span class="leftLabel">Last Visit: </span>'
+                + $filter('date')(custObj.last_seen, 'MM/dd/yyyy h:mm a') + '</div>' +
+                '<div><table class="mapTable" style="width: 300px;"><thead>' +
                 '<tr><th colspan="4">Vehicles Info</th></tr>' +
-                '<tr><th>Model</th><th>Make</th><th>License</th><th>Year</th></tr></thead>' +
-                '<tbody><tr><td>' + custDetails.vehicles[0].model + '</td>' +
-                '<td>' + custDetails.vehicles[0].make + '</td>' +
-                '<td>' + custDetails.vehicles[0].license + '</td>' +
-                '<td>' + custDetails.vehicles[0].year + '</td>' +
-                '</tbody></table></div>';
+                '<tr><th>Model</th><th>Make</th><th>License</th><th>Year</th></tr></thead<tbody>';
 
-                /*'<div><span class="leftLabel">Model:</span>' + custDetails.vehicles[0].model + '</div>' +
-                '<div><span class="leftLabel">Make:</span>' + custDetails.vehicles[0].make + '</div>' +
-                '<div><span class="leftLabel">License:</span>' + custDetails.vehicles[0].license + '</div>' +
-                '<div><span class="leftLabel">Year:</span>' + custDetails.vehicles[0].year + '</div>' +
-                '</div>';*/
+            for (var i = 0; i < custObj.vehicles.length; i++) {
+                html += '<tr><td>' + custObj.vehicles[i].model + '</td>' +
+                    '<td>' + custObj.vehicles[i].make + '</td>' +
+                    '<td>' + custObj.vehicles[i].license + '</td>' +
+                    '<td>' + custObj.vehicles[i].year + '</td></tr>';
+            }
+
+            html += '</tbody></table></div>';
 
             google.maps.event.addListener(marker, 'mouseover', function () {
                 infowindow.setContent(html);
-                infowindow.open(map, marker);
-            });
-
-            google.maps.event.addListener(marker, 'mouseout', function () {
-                infowindow.close();
+                infowindow.open($scope.ngMap, marker);
             });
         }
 
-        $scope.$on('mapInitialized', function (event, map) {
-            $scope.objMapa = map;
-        });
+        /*-------------------- Filter vehicle by model name ----------------*/
+        function filterVehicleByModelName(custObj) {
+            var filterVehArr = [];
+            angular.forEach(custObj.vehicles, function (vObj) {
+                if (vObj.model == $scope.selectedModel.model) {
+                    filterVehArr.push(vObj);
+                }
+            });
 
-        $scope.showInfoWindow = function (event, cust) {
-            var custDetails = cust.custDetails;
-            var html = '<div><h4>' + custDetails.custName + '</h4>' +
-                '<div>' + custDetails.address + '</div>' +
-                '<div><table class="mapTable"><thead>' +
-                '<tr><th colspan="4">Vehicles Info</th></tr>' +
-                '<tr><th>Model</th><th>Make</th><th>License</th><th>Year</th></tr></thead>' +
-                '<tbody><tr><td>' + custDetails.vehicles[0].model + '</td>' +
-                '<td>' + custDetails.vehicles[0].make + '</td>' +
-                '<td>' + custDetails.vehicles[0].license + '</td>' +
-                '<td>' + custDetails.vehicles[0].year + '</td>' +
-                '</tbody></table></div>';
+            return filterVehArr;
+        }
 
-            var infowindow = new google.maps.InfoWindow();
-            var center = new google.maps.LatLng(cust.latLang.lat,cust.latLang.lng);
+        /*-------------------- Filter markers by customer name | address | vehicle model ----------------*/
+        function createMarker(latlng, custObj) {
+            if ($scope.searchText !== '' && ($scope.selectedModel && $scope.selectedModel.model !== '')) {
+                custObj.vehicles = filterVehicleByModelName(custObj);
 
-            infowindow.setContent(html);
-
-            infowindow.setPosition(center);
-            infowindow.open($scope.objMapa);
-        };
-
-        $scope.fnInitMarkers = function (data) {
-            angular.forEach(data, function (obj) {
-                var address = obj.address1 + " " + obj.city + " " + obj.postal_code + " " + obj.state;
-                $.getJSON('http://maps.googleapis.com/maps/api/geocode/json?sensor=false&address='
-                    + address, null, function (data) {
-                    if(data.status === 'OK') {
-                        console.log(address);
-                        obj.address = data.results[0].formatted_address;
-                        if (data.results.length !== 0) {
-                            console.log(data.results.length);
-                            console.log(data.results);
-                            obj.latLang = data.results[0].geometry.location;
-                            obj.custDetails = {
-                                custName: obj.first_name + " " + obj.last_name,
-                                address: data.results[0].formatted_address,
-                                vehicles: obj.vehicles
-                            };
-                        }
+                var foundByName = custObj._fullName.search(new RegExp($scope.searchText, "i"));
+                var foundByAddress = custObj._formattedAddress.search(new RegExp($scope.searchText, "i"));
+                if (foundByName != -1 || foundByAddress != -1) {
+                    if (custObj.vehicles.length != 0) {
+                        setMarkerOnMap(latlng, custObj);
                     }
-                });
+                }
+            } else if ($scope.searchText !== '') {
+                var foundByName = custObj._fullName.search(new RegExp($scope.searchText, "i"));
+                var foundByAddress = custObj._formattedAddress.search(new RegExp($scope.searchText, "i"));
+                if (foundByName != -1 || foundByAddress != -1) {
+                    if (custObj.vehicles.length != 0) {
+                        setMarkerOnMap(latlng, custObj);
+                    }
+                }
+            } else if ($scope.selectedModel && $scope.selectedModel.model !== '') {
+                custObj.vehicles = filterVehicleByModelName(custObj);
+
+                if (custObj.vehicles.length != 0) {
+                    setMarkerOnMap(latlng, custObj);
+                }
+            } else {
+                setMarkerOnMap(latlng, custObj);
+            }
+        }
+
+        /*-------------------- Get geo-location by address ----------------*/
+        function geocodeAddress(custObj) {
+            geocoder.geocode({'address': custObj._fullAddress}, function (results, status) {
+                if (status === google.maps.GeocoderStatus.OK) {
+                    $scope.ngMap.setCenter(results[0].geometry.location);
+                    custObj._formattedAddress = results[0].formatted_address;
+                    custObj._position = results[0].geometry.location;
+
+                    $scope.customersStatData.filter(function (obj) {
+                        if (custObj.id === obj.id) {
+                            obj['_fullName'] = custObj._fullName;
+                            obj['_fullAddress'] = custObj._fullAddress;
+                            obj['_formattedAddress'] = custObj._formattedAddress;
+                            obj['_position'] = custObj._position;
+                            return false;
+                        }
+                    });
+                    createMarker(results[0].geometry.location, angular.copy(custObj));
+                } else {
+                    console.log('Geocode was not successful for the following reason: ' + status);
+                }
+            });
+        }
+
+        /*------ Map Initialization ------*/
+        $scope.fnInitMarkers = function (tempData, customersStatData) {
+            if (count >= customersStatData.length) {
+                $scope.mapLabel = 'Completed...';
+                return;
+            }
+            var len = tempData.length > 5 ? 5 : tempData.length;
+            for (var i = 0; i < len; i++, count++) {
+                if (customersStatData[count]._position) {
+                    createMarker(customersStatData[count]._position, angular.copy(customersStatData[count]));
+                } else {
+                    var tmpObj = tempData[i];
+                    var tmpAddress = tmpObj.address1 + " " + tmpObj.city + " " + tmpObj.postal_code + " " + tmpObj.state;
+                    tmpAddress = tmpAddress.replace(/#/g, '');
+                    tmpObj._fullName = tmpObj.first_name + " " + tmpObj.last_name;
+                    tmpObj._fullAddress = tmpAddress;
+                    geocodeAddress(tmpObj);
+                }
+            }
+
+            tempData.splice(0, len);
+            if (tempData.length == 0) {
+                $scope.mapLabel = 'Completed...';
+                return;
+            }
+
+            $scope.timer = $timeout(function () {
+            }, 5000).then(function () {
+                $scope.fnInitMarkers(tempData, customersStatData);
             });
         };
 
-        function clearMarkers() {
-            for (var i = 0; i < markers.length; i++) {
-                markers[i].setMap(null);
-            }
-            markers = [];
-        }
+        /*------ Map Initialization ------*/
+        $scope.fnInitMap = function () {
+            count = 0;
+            $scope.mapLabel = 'Locating customers...';
+            $scope.totalCustomersFound = 0;
+            NgMap.getMap().then(function (map) {
+                $scope.ngMap = map;
+                var tempData = angular.copy($scope.customersStatData);
+                $scope.fnInitMarkers(tempData, $scope.customersStatData);
+            }, function (error) {
+                console.log(error);
+                $scope.mapLabel = 'Completed...';
+            });
+        };
 
+        /*------ Get the data from server ------*/
         $scope.getPagedDataAsync = function () {
             $scope.isDataNotNull = $scope.isMsgShow = false;
+            $scope.customersStatData = [];
 
             if ($scope.locationId) {
-                clearMarkers();
                 allCustomerService.customersData($scope.locationId).then(function (data) {
                     if (data.length !== 0) {
                         $scope.isDataNotNull = true;
                         $scope.isMsgShow = false;
                         $scope.customersStatData = data;
-                        $scope.fnInitMarkers($scope.customersStatData);
+                        $scope.fnCreateVehicleDD(data);
+                        $scope.fnInitMap();
                         $scope.fnGetEmailData(data);
                     } else {
                         $scope.isDataNotNull = false;
@@ -193,6 +258,53 @@ app.controller('customerStatisticsCtrl',
                 });
             }
         };
+
+        /*------ Set markers on model drop-down change ------*/
+        $scope.locateMarkers = function (model) {
+            $scope.selectedModel = model;
+            clearMarkers();
+            $scope.fnInitMap();
+        };
+
+        /*------ Create vehicle drop-down ------*/
+        $scope.fnCreateVehicleDD = function (customerStatData) {
+            $scope.vehicleDD = [];
+
+            var tempData = angular.copy(customerStatData);
+            angular.forEach(tempData, function (custObj) {
+                angular.forEach(custObj.vehicles, function (vehObj) {
+                    if (vehObj.model !== '') {
+                        $scope.vehicleDD.push(vehObj);
+                    }
+                });
+            });
+
+            $scope.vehicleDD = $filter('unique')($scope.vehicleDD, 'model');
+            $scope.selectedModel = null;
+        };
+
+        /*------ Search customer by name or address ------*/
+        $scope.fnSearchCustomer = function (searchText) {
+            if (searchText) {
+                $scope.searchText = searchText;
+                searchText += '';
+                if (searchText.trim().length >= 5) {
+                    $scope.searchText = searchText;
+                    clearMarkers();
+                    $scope.fnInitMap();
+                }
+            } else if (searchText || searchText === '') {
+                $scope.searchText = searchText;
+                clearMarkers();
+                $scope.fnInitMap();
+            }
+        };
+
+        /*------ On scope destroy, cancel timeout  ------*/
+        $scope.$on("$destroy", function (event) {
+            $scope.mapLabel = 'Completed...';
+            $timeout.cancel($scope.timer);
+        });
 
         /*--------------- Locations Filter --------------------------*/
         $scope.fnGetLocationDetails = function () {
@@ -216,20 +328,13 @@ app.controller('customerStatisticsCtrl',
         };
 
         $scope.fnChangeLocation = function (locationId) {
+            clearMarkers();
             $scope.locationId = locationId;
             $scope.getPagedDataAsync();
-        };
-
-        $scope.fnInitMap = function () {
-            var mapProp = {
-                center: new google.maps.LatLng(0, 0),
-                zoom: 1,
-                mapTypeId: google.maps.MapTypeId.ROADMAP
-            };
-            map = new google.maps.Map(document.getElementById("googleMap"), mapProp);
         };
 
         $scope.fnInitCustomerStatistics = function () {
             $scope.fnGetLocationDetails();
         };
+
     });
