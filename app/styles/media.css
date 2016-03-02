@@ -17,8 +17,12 @@
     }
 
     /*---------- Segments modal ----------*/
-    md-dialog#manage-scheduledmsg-dialog {
+    md-dialog#manage-scheduledmsg-dialog md-dialog#crmSegmentDialog{
         min-width: 600px;
+    }
+
+    md-toolbar .md-toolbar-tools .text-small-959 {
+        font-size: 16px;
     }
 }
 

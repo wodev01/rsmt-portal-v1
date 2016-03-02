@@ -1,6 +1,6 @@
 'use strict';
-app.factory('crmTemplateService', ['$q', '$rootScope',
-    function ($q, $rootScope) {
+app.factory('crmTemplateService', ['$q','ErrorMsg',
+    function ($q, ErrorMsg) {
         var crmTemplateService = {};
 
         // Fetch client templates
@@ -13,7 +13,7 @@ app.factory('crmTemplateService', ['$q', '$rootScope',
                     defer.resolve(data);
                 },
                 error: function (error) {
-                    $rootScope.fnCheckStatus(error.status);
+                    ErrorMsg.CheckStatusCode(error.status);
                     defer.resolve(error);
                 }
             });
@@ -32,7 +32,7 @@ app.factory('crmTemplateService', ['$q', '$rootScope',
                     defer.resolve(data);
                 },
                 error: function (error) {
-                    $rootScope.fnCheckStatus(error.status);
+                    ErrorMsg.CheckStatusCode(error.status);
                     defer.reject(error);
                 }
             });

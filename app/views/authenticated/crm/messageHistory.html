@@ -8,7 +8,7 @@
                 <md-input-container >
                     <md-select aria-label="Select location" ng-model="idsObj.locationId"
                                ng-change="fnChangeLocation(idsObj.locationId);">
-                        <md-option ng-repeat="location in locationOptions | unique: 'id'" ng-value="location.id">
+                        <md-option ng-repeat="location in locationOptions" ng-value="location.id">
                             {{location.name}}
                         </md-option>
                     </md-select>
@@ -18,19 +18,21 @@
                     <md-select aria-label="Select Type" ng-model="idsObj.segmentId"
                                ng-if="isSegmentsData"
                                ng-change="fnChangeSegment(idsObj);">
-                        <md-option ng-repeat="segment in segmentsOptions | unique: 'id'" ng-value="segment.id">
+                        <md-option ng-repeat="segment in segmentsOptions" ng-value="segment.id">
                             {{segment.name}}
                         </md-option>
                     </md-select>
                 </md-input-container>
             </div>
             <div ng-if="isSegmentsData">
-                <div layout="row" layout-align="end center">
+                <div layout="column" layout-gt-sm="row" layout-align="end center">
                     <md-button aria-label="Refresh Grid"
                                class="md-raised md-accent"
+                               ng-disabled="!isCrmInteractionData"
                                ng-click="fnRefreshGrid(idsObj)">Refresh</md-button>
                     <md-button aria-label="Download CSV"
                                class="md-raised md-accent"
+                               ng-disabled="!isCrmInteractionData"
                                ng-click="fnDownloadInteractionCSV($event, idsObj)">Export Interaction CSV</md-button>
                 </div>
             </div>
@@ -53,7 +55,7 @@
             <!--ngGrid-->
             <div class="margin-bottom-10" ng-if="isCrmInteractionData"
                  ui-grid="crmInteractionGridOptions" ui-grid-selection ui-grid-auto-resize
-                 ng-style="$root.fnReturnGridHeight(crmInteractionData.length);">
+                 ng-style="$root.fnReturnGridHeight(crmInteractionData.length,crmInteractionGridOptions.rowHeight);">
             </div>
 
             <div ng-if="isCrmInteractionData" layout="row" layout="row" layout-align="center center" layout-margin>

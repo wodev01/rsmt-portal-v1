@@ -127,6 +127,7 @@
 
 .breadcrumb li {
     float: left;
+    outline: none;
 }
 
 .breadcrumb li a {
@@ -409,5 +410,37 @@ md-dialog#manage-scheduledmsg-dialog md-dialog-content {
 
 .checked_item_red {
     background-color: #dd0000;
+}
+
+md-dialog#crmSegmentDialog md-content.template-view{
+    height: 40vh;
+}
+
+/*---------------- CRM Customer Statistics ----------------*/
+#customer-statistics-tab .leftLabel {
+    font-weight: bold;
+    padding-right: 3px;
+}
+
+#customer-statistics-tab .mapTable, #customer-statistics-tab .mapTable tr td, #customer-statistics-tab .mapTable tr th {
+    border: 1px solid;
+    border-collapse: collapse;
+}
+
+#customer-statistics-tab .ngMapContainer {
+    height: 400px;
+}
+
+#customer-statistics-tab .ngMapContainer ng-map {
+    height: 100%;
+}
+
+#customer-statistics-tab .subHeader {
+    background-color: #e0e0e0 !important;
+    color: #000000 !important;
+}
+
+#customer-statistics-tab .border {
+    border: solid thin #CCCCCC;
 }
 

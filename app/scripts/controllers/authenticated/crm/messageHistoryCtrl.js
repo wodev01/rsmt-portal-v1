@@ -11,6 +11,7 @@ app.controller('messageHistoryCtrl',
         $scope.idsObj = {locationId: '', segmentId: ''};
         $scope.isPagingData = true;
 
+
         $scope.pagingOptions = {
             pageSize: 20,
             currentPage: 1
