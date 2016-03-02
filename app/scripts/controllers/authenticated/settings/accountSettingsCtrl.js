@@ -74,7 +74,7 @@ app.controller('AccountSettingsCtrl',
         $scope.openUserPaymentInfo = function (ev) {
             $mdDialog.show({
                 controller: 'paymentInfoCtrl',
-                templateUrl: 'views/authenticated/updatePaymentInfo.html',
+                templateUrl: 'views/authenticated/settings/modals/updatePaymentInfo.html',
                 targetEvent: ev
             });
         };

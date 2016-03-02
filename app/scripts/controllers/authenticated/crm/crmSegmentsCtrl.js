@@ -1,6 +1,6 @@
 'use strict';
 app.controller('crmSegmentsCtrl',
-    function ($scope, $mdDialog, Toast, locationService, crmInteractionService, crmTemplateService) {
+    function ($scope, $mdDialog, Toast, locationService, crmInteractionService, crmTemplateService, $timeout) {
 
         $scope.locationOptions = [];
         $scope.isLocationsData = false;
@@ -76,14 +76,37 @@ app.controller('crmSegmentsCtrl',
             '</div>';
         $scope.crmSegmentsGridOptions = {
             data: 'crmSegmentsData',
+            enableSorting: false,
             rowHeight: 50,
             multiSelect: false,
             enableRowSelection: true,
             enableRowHeaderSelection: false,
+            enableVerticalScrollbar: 0,
+            enableColumnMenus: false,
+
             columnDefs: [
                 {field: 'name', displayName: 'Segment Name', minWidth: 100},
-                {name:'action', displayName:'', cellTemplate: $scope.crmSegmentsAction, width: 100, enableSorting:false, enableColumnMenu: false}
-            ]
+                {name:'action', displayName:'', cellTemplate: $scope.crmSegmentsAction, width: 50, enableSorting:false, enableColumnMenu: false}
+            ],
+            onRegisterApi: function (gridApi) {
+                gridApi.selection.on.rowSelectionChanged($scope, function (row) {
+                    row.isSelected = true;
+                });
+            }
+        };
+
+        $scope.fnGenerateIframe =  function(){
+
+            $timeout(function(){
+                var iframe = angular.element('#renderHtml')[0];
+                iframe.src = 'about:blank';
+                iframe.contentWindow.document.open('text/htmlreplace');
+                iframe.contentWindow.document.write($scope.rendered_template.html);
+                iframe.contentWindow.document.close();
+                iframe.contentWindow.document.onmousedown = function() {
+                    return false;
+                }
+            },1000);
         };
 
         /*---------- Call for interpolation API for interpolating template variable ----------*/
@@ -99,15 +122,7 @@ app.controller('crmSegmentsCtrl',
                 crmTemplateService.interpolateClientTemplate(interpolateObj)
                     .then(function (data) {
                         $scope.rendered_template['html'] = data.rendered_template;
-
-                        var iframe = angular.element('#renderHtml')[0];
-                        iframe.src = 'about:blank';
-                        iframe.contentWindow.document.open('text/htmlreplace');
-                        iframe.contentWindow.document.write($scope.rendered_template.html);
-                        iframe.contentWindow.document.close();
-                        iframe.contentWindow.document.onmousedown = function() {
-                            return false;
-                        }
+                        $scope.fnGenerateIframe();
 
                     }, function (error) {
                         if (error.status !== 401 && error.status !== 500) {
@@ -116,6 +131,7 @@ app.controller('crmSegmentsCtrl',
                     });
             } else {
                 $scope.rendered_template['html'] = 'No template found.';
+                $scope.fnGenerateIframe();
             }
 
             $mdDialog.show({

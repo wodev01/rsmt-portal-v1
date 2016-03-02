@@ -69,12 +69,16 @@ app.controller('messageHistoryCtrl',
 
         $scope.crmInteractionGridOptions = {
             data: 'crmInteractionData',
+            enableSorting: false,
             rowHeight: 80,
             multiSelect: false,
             enableRowSelection: true,
             enableRowHeaderSelection: false,
+            enableVerticalScrollbar: 0,
+            enableColumnMenus: false,
+
             columnDefs: [
-                {name:'Action', cellTemplate: $scope.crmInteractionAction, width: 80, enableSorting: false},
+                {name:'Action', displayName:'', cellTemplate: $scope.crmInteractionAction, width: 50, enableSorting: false},
                 {
                     field: 'due_date', displayName: 'Due Date',
                     cellFilter: 'date:\'MM/dd/yyyy h:mm a\'', minWidth: 180
@@ -87,7 +91,12 @@ app.controller('messageHistoryCtrl',
                     field: 'repair_order.closed', displayName: 'Closed',
                     cellFilter: 'date:\'MM/dd/yyyy h:mm a\'', minWidth: 180
                 }
-            ]
+            ],
+            onRegisterApi: function (gridApi) {
+                gridApi.selection.on.rowSelectionChanged($scope, function (row) {
+                    row.isSelected = true;
+                });
+            }
         };
 
         $scope.fnRefreshGrid = function (idsObj) {

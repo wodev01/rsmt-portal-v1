@@ -337,7 +337,7 @@ app.directive('repairOrderGrid', function($mdDialog,allCustomerService) {
                     $scope.laborTmpl = '<div layout="column" add-description arr="row.entity.labor"></div>';
                     $scope.partsTmpl = '<div layout="column" add-description arr="row.entity.parts"></div>';
                     colDffArr = [
-                        {name:'action', cellTemplate: $scope.roAction, minWidth: 80,groupable:false, sortable:false},
+                        {name:'action', displayName: '',cellTemplate: $scope.roAction, minWidth: 50,groupable:false, sortable:false},
                         {field: 'closed', displayName: 'Closed', cellFilter: 'date:\'MM/dd/yyyy h:mm a\'', minWidth: 200,groupable:false},
                         {field: 'inspection', displayName: 'Inspection', cellFilter: 'inspection', minWidth: 110,groupable:false},
                         {field: 'order_number', displayName: 'RO #', minWidth: 100,groupable:false},
@@ -349,7 +349,7 @@ app.directive('repairOrderGrid', function($mdDialog,allCustomerService) {
                     ];
                 }else{
                     colDffArr =  [
-                        {name:'action', cellTemplate: $scope.roAction, minWidth: 80,groupable:false, sortable:false},
+                        {name:'action', displayName: '',cellTemplate: $scope.roAction, minWidth: 50,groupable:false, sortable:false},
                         {field: 'closed', displayName: 'Closed', cellFilter: 'date:\'MM/dd/yyyy h:mm a\'', minWidth: 200,groupable:false},
                         {field: 'inspection', displayName: 'Inspection', cellFilter: 'inspection', minWidth: 110,groupable:false},
                         {field: 'order_number', displayName: 'RO #', minWidth: 100,groupable:false},
