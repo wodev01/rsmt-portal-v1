@@ -60,8 +60,7 @@ app.controller('messageHistoryCtrl',
             + '</div></div>';
 
         $scope.crmInteractionAction = '<div layout="row">' +
-            '<md-button class="md-icon-button md-accent"' +
-            'ng-click="fnOpenCrmInteraction(row)">' +
+            '<md-button class="md-icon-button md-accent" ng-click="grid.appScope.fnOpenCrmInteraction(row)">' +
             '<md-icon md-font-set="material-icons">visibility</md-icon>' +
             '<md-tooltip md-direction="top">Open</md-tooltip></md-button>' +
             '</div>';
@@ -97,7 +96,7 @@ app.controller('messageHistoryCtrl',
         };
 
         $scope.fnDownloadInteractionCSV = function (event, idsObj) {
-            var token = $cookies[cookieName];
+            var token = $cookies.get(cookieName);
 
             var DialogController = ['$scope', '$window', 'locationId', 'segmentId',
                 function ($scope, $window, locationId, segmentId) {
@@ -123,8 +122,7 @@ app.controller('messageHistoryCtrl',
                 '      This could take some time. Are you sure..?' +
                 '  </md-content>' +
                 '  <div class="md-actions">' +
-                '       <md-button aria-label="download" ' +
-                '           class="md-raised btn btnBlue" ng-click="fnDownload()">Download</md-button>' +
+                '       <md-button aria-label="download" class="md-raised md-accent" ng-click="fnDownload()">Download</md-button>' +
                 '       <md-button aria-label="cancel" class="md-raised" ng-click="fnHide()">Cancel</md-button>' +
                 '  </div>' +
                 '</md-dialog>',
@@ -142,7 +140,7 @@ app.controller('messageHistoryCtrl',
         $scope.fnOpenCrmInteractionModal = function (obj) {
             $mdDialog.show({
                 controller: 'manageScheduledMessagesCtrl',
-                templateUrl: 'views/authenticated/CRM/manageScheduledMessages.html',
+                templateUrl: 'views/authenticated/crm/manageScheduledMessages.html',
                 resolve: {
                     crmInteractionObj: function () {
                         return obj;

@@ -58,14 +58,14 @@
 
             <div ng-if="isCrmInteractionData" layout="row" layout="row" layout-align="center center" layout-margin>
                 <div ng-if="isPagingData">
-                    <md-button aria-label="More Segment Interactions" class="md-raised btn btnBlue"
+                    <md-button aria-label="More Segment Interactions" class="md-raised md-accent"
                                ng-click="fnLoadMoreCrmInteractions(idsObj)" >
                         <span ng-if="isMoreCrmInteractions"> Loading... </span>
                         <span ng-if="!isMoreCrmInteractions">More CRM Interactions </span>
                     </md-button>
                 </div>
                 <div ng-if="!isPagingData">
-                    <h2>... No more results found ...</h2>
+                    <div class="md-title">... No more results found ...</div>
                 </div>
             </div>
         </div>
