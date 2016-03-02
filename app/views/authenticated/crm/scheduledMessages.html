@@ -27,7 +27,7 @@
             </div>
         </section>
 
-        <div ng-if="!isSegmentsData" style="text-align: center">
+        <div ng-if="!isSegmentsData">
             <div class="md-headline text-center">No Segments Available.</div>
         </div>
 
@@ -43,7 +43,7 @@
                 <div layout="row" layout-align="space-between center" layout-fill flex>
                     <md-input-container flex>
                         <md-select-label>Status:</md-select-label>
-                        <md-select ng-model="filter.status"
+                        <md-select aria-label="Select status"  ng-model="filter.status"
                                    ng-change="fnChangeFilter(filter);">
                             <md-option value="" selected>All Status</md-option><!--ALL STATUS-->
                             <md-option value="SCHEDULED">Scheduled</md-option>
@@ -57,7 +57,7 @@
 
                     <md-input-container flex>
                         <md-select-label>Type:</md-select-label>
-                        <md-select ng-model="filter.deliveryType"
+                        <md-select aria-label="Select type"  ng-model="filter.deliveryType"
                                    ng-change="fnChangeFilter(filter);">
                             <md-option value="" selected>All Type</md-option><!--ALL TYPE-->
                             <md-option value="EMAIL">Email</md-option>
@@ -72,10 +72,12 @@
                      layout-fill flex>
                     <md-button aria-label="Refresh Grid"
                                class="md-raised md-accent"
+                               ng-disabled="!isCrmInteractionData"
                                ng-click="fnRefreshGrid();">Refresh
                     </md-button>
                     <md-button aria-label="Download CSV"
                                class="md-raised md-accent"
+                               ng-disabled="!isCrmInteractionData"
                                ng-click="fnDownloadInteractionCSV($event, idsObj);">Export Interaction CSV
                     </md-button>
                 </div>
@@ -93,7 +95,7 @@
             <!--ngGrid-->
             <div class="margin-bottom-10" ng-if="isCrmInteractionData"
                  ui-grid="crmInteractionGridOptions" ui-grid-selection ui-grid-auto-resize
-                 ng-style="$root.fnReturnGridHeight(crmInteractionData.length)">
+                 ng-style="$root.fnReturnGridHeight(crmInteractionData.length, crmInteractionGridOptions.rowHeight)">
             </div>
 
             <div ng-if="isCrmInteractionData" layout="row" layout-align="center center" layout-margin>

@@ -41,15 +41,15 @@ app.controller('scheduledMessagesCtrl',
                 });
         };
 
-        $scope.nameTmpl = '<div layout="row">'
-            + '<span style="margin: 15px 0 !important;">'
+        $scope.nameTmpl = '<div layout="row" class="md-padding">'
+            + '<span>'
             + '{{row.entity.customer.first_name}}&nbsp;{{ row.entity.customer.last_name}}'
             + '</span></div>';
 
-        $scope.infoTmpl = '<div layout="row">'
-            + '<div style="margin: 15px 5px !important;">'
+        $scope.infoTmpl = '<div layout="row" class="md-padding">'
+            + '<div>'
             + '     <div> Email: {{row.entity.customer.email_addresses | joinArray}} </div>'
-            + '     <div style="width: 200px"> Phone: {{row.entity.customer.phone_numbers | tel | joinTelArray}} </div>'
+            + '     <div> Phone: {{row.entity.customer.phone_numbers | tel | joinTelArray}} </div>'
             + '     <div> Address: {{row.entity.customer.address1}} </div>'
             + '</div></div>';
 
@@ -67,14 +67,15 @@ app.controller('scheduledMessagesCtrl',
             multiSelect: false,
             enableRowSelection: true,
             enableRowHeaderSelection: false,
+            enableVerticalScrollbar: 0,
             columnDefs: [
-                { name:'Action', cellTemplate: $scope.crmInteractionAction, width: 80, enableSorting:false, enableColumnMenu: false},
+                { name:'Action', displayName:'', cellTemplate: $scope.crmInteractionAction, width: 50, enableSorting:false, enableColumnMenu: false},
                 { field: 'due_date', displayName: 'Due Date',
-                    cellFilter: 'date:\'MM/dd/yyyy h:mm a\'', minWidth:180 },
-                { name:'name', cellTemplate: $scope.nameTmpl, displayName: 'Customer Name', minWidth:100 },
-                { name:'customerInfo', cellTemplate: $scope.infoTmpl, displayName: 'Customer Info', minWidth:200, width: 250 },
-                { field: 'delivery_type', displayName: 'Delivery' },
-                { field: 'status', displayName: 'Status' },
+                    cellFilter: 'date:\'MM/dd/yyyy h:mm a\'', minWidth:150 },
+                { name:'name', cellTemplate: $scope.nameTmpl, displayName: 'Customer Name', minWidth:150 },
+                { name:'customerInfo', cellTemplate: $scope.infoTmpl, displayName: 'Customer Info', minWidth:250 },
+                { field: 'delivery_type', displayName: 'Delivery', width: 100 },
+                { field: 'status', displayName: 'Status', width: 120 },
                 { field: 'repair_order.closed', displayName: 'Closed',
                     cellFilter: 'date:\'MM/dd/yyyy h:mm a\'', minWidth:180 }
             ]
@@ -85,7 +86,7 @@ app.controller('scheduledMessagesCtrl',
         };
 
         $scope.fnDownloadInteractionCSV = function (event, idsObj) {
-            var token = $cookies[cookieName];
+            var token = $cookies.get(cookieName);
 
                 var DialogController = ['$scope', '$window', 'idsObj', 'filterObj',
                 function ($scope, $window, idsObj, filterObj) {
@@ -119,11 +120,11 @@ app.controller('scheduledMessagesCtrl',
                 '      <h3> Download Interaction CSV </h3>' +
                 '      This could take some time. Are you sure..?' +
                 '  </md-content>' +
-                '  <div class="md-actions">' +
+                '  <md-dialog-actions>' +
                 '       <md-button aria-label="download" ' +
-                '           class="md-raised btn btnBlue" ng-click="fnDownload();">Download</md-button>' +
+                '           class="md-raised md-accent" ng-click="fnDownload();">Download</md-button>' +
                 '       <md-button aria-label="cancel" class="md-raised" ng-click="fnHide();">Cancel</md-button>' +
-                '  </div>' +
+                '  </md-dialog-actions>' +
                 '</md-dialog>',
                 targetEvent: event
             }).then(function () {},
@@ -172,8 +173,9 @@ app.controller('scheduledMessagesCtrl',
             $scope.isPagingData = true;
             delete $scope.filter['from'];
             delete $scope.filter['to'];
-            delete $scope.filter['status'];
-            delete $scope.filter['deliveryType'];
+            $scope.filter['status'] = '';
+            $scope.filter['deliveryType'] = '';
+            $("#scheduled-messages-tab #pickDateRange").daterangepicker("clearRange");
             $scope.fnGetSegmentsDetails(locationId);
         };
         /*--------------- Locations Filter End --------------------------*/
@@ -204,8 +206,9 @@ app.controller('scheduledMessagesCtrl',
             $scope.isPagingData = true;
             delete $scope.filter['from'];
             delete $scope.filter['to'];
-            delete $scope.filter['status'];
-            delete $scope.filter['deliveryType'];
+            $scope.filter['status'] = '';
+            $scope.filter['deliveryType'] = '';
+            $("#scheduled-messages-tab #pickDateRange").daterangepicker("clearRange");
             $scope.getPagedDataAsync(idsObj, $scope.filter);
         };
         /*--------------- Segments Filter End --------------------------*/
@@ -255,7 +258,7 @@ app.controller('scheduledMessagesCtrl',
             }
 
             $scope.fnChangeFilter($scope.filter);
-        };
+        }
 
         $scope.fnCreateDateRangePicker = function () {
             $timeout(function () {
@@ -272,7 +275,7 @@ app.controller('scheduledMessagesCtrl',
                 });
             }, 1000);
 
-            $scope.getPagedDataAsync($scope.filter);
+            $scope.getPagedDataAsync($scope.idsObj, $scope.filter);
         };
 
         $scope.fnInitScheduledMessages = function() {
