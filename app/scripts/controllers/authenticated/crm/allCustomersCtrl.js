@@ -91,14 +91,20 @@ app.controller('allCustomersCtrl',
             showFilter: true,
             multiSelect: false,
             showColumnMenu:false,
+
             columnDefs: [
-                {displayName:'', name:'Action',cellTemplate: $scope.customerAction, minWidth:80,width:'80', enableSorting:false, enableColumnMenu: false},
-                {field: 'first_name', displayName: 'First Name', minWidth: 200},
-                {field: 'last_name', displayName: 'Last Name', minWidth:200},
-                {field: 'company', displayName: 'Company', minWidth: 200},
-                {field: 'phone_numbers', displayName: 'Phone', cellFilter: 'joinTelArray', minWidth: 200},
-                {field: 'email_addresses', displayName: 'Email', cellFilter: 'joinArray', minWidth: 200}
-            ]
+                {displayName:'', name:'Action',cellTemplate: $scope.customerAction, minWidth:50,width:'50', enableSorting:false, enableColumnMenu: false},
+                {field: 'first_name', displayName: 'First Name', minWidth: 200,enableHiding:false},
+                {field: 'last_name', displayName: 'Last Name', minWidth:200,enableHiding:false},
+                {field: 'company', displayName: 'Company', minWidth: 200,enableHiding:false},
+                {field: 'phone_numbers', displayName: 'Phone', cellFilter: 'joinTelArray', minWidth: 200,enableHiding:false},
+                {field: 'email_addresses', displayName: 'Email', cellFilter: 'joinArray', minWidth: 200,enableHiding:false}
+            ],
+            onRegisterApi: function (gridApi) {
+                gridApi.selection.on.rowSelectionChanged($scope, function (row) {
+                    row.isSelected = true;
+                });
+            }
         };
 
         $scope.$on('ngGridEventData', function(event) {

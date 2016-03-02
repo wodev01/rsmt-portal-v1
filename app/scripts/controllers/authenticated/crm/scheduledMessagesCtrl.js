@@ -68,6 +68,8 @@ app.controller('scheduledMessagesCtrl',
             enableRowSelection: true,
             enableRowHeaderSelection: false,
             enableVerticalScrollbar: 0,
+            enableColumnMenus: false,
+
             columnDefs: [
                 { name:'Action', displayName:'', cellTemplate: $scope.crmInteractionAction, width: 50, enableSorting:false, enableColumnMenu: false},
                 { field: 'due_date', displayName: 'Due Date',
@@ -77,8 +79,13 @@ app.controller('scheduledMessagesCtrl',
                 { field: 'delivery_type', displayName: 'Delivery', width: 100 },
                 { field: 'status', displayName: 'Status', width: 120 },
                 { field: 'repair_order.closed', displayName: 'Closed',
-                    cellFilter: 'date:\'MM/dd/yyyy h:mm a\'', minWidth:180 }
-            ]
+                    cellFilter: 'date:\'MM/dd/yyyy h:mm a\'', minWidth:180  }
+            ],
+            onRegisterApi: function (gridApi) {
+                gridApi.selection.on.rowSelectionChanged($scope, function (row) {
+                    row.isSelected = true;
+                });
+            }
         };
 
         $scope.fnRefreshGrid = function() {
