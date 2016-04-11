@@ -1,18 +1,18 @@
 <md-content id="customerTab">
-        <md-input-container >
-            <md-select aria-label="Select location" ng-model="idsObj.locationId"
-                       ng-change="fnChangeLocation(idsObj.locationId);">
-                <md-option ng-repeat="location in locationOptions | unique: 'id'" ng-value="location.id">
-                    {{location.name}}
-                </md-option>
-            </md-select>
-        </md-input-container>
+    <md-input-container>
+        <md-select aria-label="Select location" ng-model="idsObj.locationId"
+                   ng-change="fnChangeLocation(idsObj.locationId);">
+            <md-option ng-repeat="location in locationOptions | unique: 'id'" ng-value="location.id">
+                {{location.name}}
+            </md-option>
+        </md-select>
+    </md-input-container>
 
-        <ul class="breadcrumb">
-            <li ng-repeat="breadcrumb in breadcrumbArr" ng-click="fnOnSelectBreadcrumb($index)">
-                <a href="javascript:void(0);">{{breadcrumb.name}}</a>
-            </li>
-        </ul>
+    <ul class="breadcrumb">
+        <li ng-repeat="breadcrumb in breadcrumbArr" ng-click="fnOnSelectBreadcrumb($index)">
+            <a href="javascript:void(0);">{{breadcrumb.name}}</a>
+        </li>
+    </ul>
 
     <div ng-if="customerIndex == 0">
         <form name="searchForm" class="margin-bottom-10">
@@ -210,7 +210,7 @@
                     <span class="md-title">Recommended Items</span>
                 </div>
             </md-toolbar>
-            <recommended-grid vehicle-id="vehicleObj.id" ></recommended-grid>
+            <recommended-grid vehicle-id="vehicleObj.id"></recommended-grid>
         </div>
 
         <div class="md-whiteframe-10dp margin-bottom-10">

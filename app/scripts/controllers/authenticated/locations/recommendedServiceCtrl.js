@@ -46,14 +46,18 @@ app.controller('recommendedServiceCtrl',
             enableRowSelection: true,
             enableRowHeaderSelection: false,
             enableVerticalScrollbar: 0,
-			totalServerItems: 'recommendedServiceTotalServerItems',
 			columnDefs: [
-				{field: 'text', displayName: 'Service', minWidth:'250'},
-                {field: 'recommended_date', displayName: 'Date', cellFilter: 'date:\'MM/dd/yyyy, h:mm a\'', minWidth:'170'},
-				{field: 'due_date', displayName: 'Due Date', cellFilter: 'date:\'MM/dd/yyyy, h:mm a\'', minWidth:'170'},
-				{field: 'recommendation_type', displayName: 'Type', width:'100'},
-				{field: 'customer.first_name', displayName: 'Customer Name',cellTemplate: '<div class="md-padding">{{row.entity.customer.first_name}} {{row.entity.customer.last_name}}</div>', minWidth:'200'},
-				{field: 'customer.phone_numbers', displayName: 'Phone Numbers',cellFilter: 'joinTelArray', minWidth:'190'}
-			]
+				{field: 'text', displayName: 'Service', minWidth:'250', enableHiding: false},
+                {field: 'recommended_date', displayName: 'Date', cellFilter: 'date:\'MM/dd/yyyy, h:mm a\'', minWidth:'170', enableHiding: false},
+				{field: 'due_date', displayName: 'Due Date', cellFilter: 'date:\'MM/dd/yyyy, h:mm a\'', minWidth:'170', enableHiding: false},
+				{field: 'recommendation_type', displayName: 'Type', width:'100', enableHiding: false},
+				{field: 'customer.first_name', displayName: 'Customer Name',cellTemplate: '<div class="md-padding">{{row.entity.customer.first_name}} {{row.entity.customer.last_name}}</div>', minWidth:'200', enableHiding: false},
+				{field: 'customer.phone_numbers', displayName: 'Phone Numbers',cellFilter: 'joinTelArray', minWidth:'190', enableHiding: false}
+			],
+			onRegisterApi: function (gridApi) {
+				gridApi.selection.on.rowSelectionChanged($scope, function (row) {
+					row.isSelected = true;
+				});
+			}
 		};
 	});

@@ -1,6 +1,9 @@
 'use strict';
 app.controller('repairOrderCtrl',
     function ($scope, $http, $timeout, $mdSidenav, $log, $cookies, $state, $mdDialog, userService, locationService) {
+
+        var _paginationPageSize = 5;
+
         $scope.repairOrderFilterOptions = {
             filterText: '',
             useExternalFilter: false
@@ -23,6 +26,12 @@ app.controller('repairOrderCtrl',
                             $scope.isDataNotNull = true;
                             $scope.isMsgShow = false;
                             $scope.repairOrdersData =  data;
+                            var tempData = angular.copy(data);
+                            if ($scope.gridApi) {
+                                $scope.filteredData = $scope.gridApi.core.getVisibleRows($scope.gridApi.grid);
+                            } else {
+                                $scope.filteredData = tempData.slice(0, _paginationPageSize);
+                            }
                         } else {
                             $scope.isDataNotNull = false;
                             $scope.isMsgShow = true;
@@ -46,13 +55,12 @@ app.controller('repairOrderCtrl',
             data: 'repairOrdersData',
             rowHeight: 50,
             multiSelect:false,
-            paginationPageSizes: [5, 10, 25, 50],
-            paginationPageSize: 5,
             enableRowSelection: true,
             enableRowHeaderSelection: false,
             enableGridMenu:true,
             enableVerticalScrollbar: 0,
-            totalServerItems: 'repairOrderTotalServerItems',
+            paginationPageSize: 5,
+            paginationPageSizes: [5, 10, 25, 50],
             columnDefs: [
                 {displayName:'',"name":"Action", cellTemplate: $scope.roAction, width:50, enableSorting:false, enableColumnMenu: false},
                 {field: 'closed', displayName: 'Closed', cellFilter: 'date:\'MM/dd/yyyy h:mm a\'', minWidth: 180},
@@ -68,7 +76,17 @@ app.controller('repairOrderCtrl',
                 {field: 'total_sold_price_cents', displayName: 'Total RO $', cellFilter: 'CentToDollar',  minWidth: 100},
                 {field: 'labor', displayName: 'Sold', cellFilter: 'sumOfValue:"sold_seconds" | toHHMMSS', visible: false, minWidth: 100},
                 {field: 'labor', displayName: 'Actual', cellFilter: 'sumOfValue:"actual_seconds" | toHHMMSS', visible: false, minWidth: 100}
-            ]
+            ],
+            onRegisterApi: function (gridApi) {
+                $scope.gridApi = gridApi;
+                gridApi.selection.on.rowSelectionChanged($scope, function (row) {
+                    row.isSelected = true;
+                });
+
+                gridApi.pagination.on.paginationChanged($scope, function (newPage, pageSize) {
+                    $scope.filteredData = $scope.gridApi.core.getVisibleRows($scope.gridApi.grid);
+                });
+            }
         };
 
         $scope.fnViewRODetails = function (ev, row) {
@@ -92,5 +110,10 @@ app.controller('repairOrderCtrl',
             });
         };
         /*---------------------- End Repair Orders -----------------------------*/
+
+        $scope.setClickedRow = function (groupIndex, rowIndex) {
+            $scope.selectedGroup = groupIndex;
+            $scope.selectedRow = rowIndex;
+        };
 
     });

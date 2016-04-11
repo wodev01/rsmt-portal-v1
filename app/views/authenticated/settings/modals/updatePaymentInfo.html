@@ -1,4 +1,4 @@
-<md-dialog aria-label="Update Payment Info" id="updatePaymentInfo">
+<md-dialog aria-label="Update Payment Info" id="updatePaymentInfo" flex-gt-sm="30" flex-sm="60" flex-xs="70">
 
     <md-toolbar class="light-black-bg-1">
         <div class="md-toolbar-tools" layout="row" layout-align="space-between center">
@@ -20,17 +20,16 @@
                 </md-input-container>
                 <label style="color: rgba(0, 0, 0, 0.40); margin-left:2px;">Expiration (MM/YYYY)</label>
 
-                <div layout layout-sm="column">
-                    <md-input-container  class="remove-error-space">
+                <div layout="row" layout-sm="column">
+                    <md-input-container  class="remove-error-space" flex>
                         <label>Month</label>
-                        <input name="exp_month" ng-model="paymentInfo.exp_month"
-                                                                   maxlength="2" required
-                                                                   ng-pattern="/^(0?[1-9]|1[012])$/"/>
+                        <input name="exp_month" type="number" min="1" max="12"
+                               ng-model="paymentInfo.exp_month" required/>
                     </md-input-container>
-                    <md-input-container class="remove-error-space">
+                    <md-input-container class="remove-error-space" flex>
                         <label>Year</label>
-                        <input name="exp_year" ng-model="paymentInfo.exp_year"
-                                                                  maxlength="4" required ng-pattern="/^[20][0-9]{3}$/"/>
+                        <input name="exp_year" type="number" min="1000" max="9999"
+                               ng-model="paymentInfo.exp_year" required/>
                     </md-input-container>
                 </div>
 

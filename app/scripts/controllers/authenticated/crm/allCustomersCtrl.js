@@ -88,10 +88,7 @@ app.controller('allCustomersCtrl',
             enableRowHeaderSelection: false,
             totalServerItems: 'customersTotalServerItems',
             filterOptions: $scope.customersFilterOptions,
-            showFilter: true,
             multiSelect: false,
-            showColumnMenu:false,
-
             columnDefs: [
                 {displayName:'', name:'Action',cellTemplate: $scope.customerAction, minWidth:50,width:'50', enableSorting:false, enableColumnMenu: false},
                 {field: 'first_name', displayName: 'First Name', minWidth: 200,enableHiding:false},

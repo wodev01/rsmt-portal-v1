@@ -28,7 +28,7 @@
                 <md-input-container class="md-block" flex>
                     <label>Business Timezone</label>
                     <md-select ng-model="user.businessTimezone">
-                        <md-option ng-repeat="timezone in timeZoneDDOptions" ng-value="{{timezone}}">
+                        <md-option ng-repeat="timezone in timeZoneDDOptions" ng-value="timezone">
                             {{timezone}}
                         </md-option>
                     </md-select>
@@ -56,18 +56,18 @@
                     <input name="confirmPassword" type="password" ng-model="user.confirmPassword" required
                            minlength="5">
                 </md-input-container>
-                <md-checkbox md-no-ink aria-label="Checkbox No Ink" ng-model="agreed" class="md-primary" required>
+                <md-checkbox md-no-ink aria-label="Checkbox No Ink" ng-model="agreed" class="md-accent" required>
                     <a ng-click="fnOpenTermsOfServiceModal($event)" href="javascript:void(0)">Agree to Terms</a>
                 </md-checkbox>
-                <div><span style="color:red"> {{ error }}</span></div>
+                <div><span class="text-danger"> {{ error }}</span></div>
 
             </div>
         </md-dialog-content>
         <md-dialog-actions layout="row">
-            <md-button class="md-raised btn btnBlue" ng-disabled="businessForm.$invalid" ng-click="registerUser()">
-                Create Patner Account
+            <md-button class="md-raised md-accent" ng-disabled="businessForm.$invalid" ng-click="registerUser()">
+                Create Partner Account
             </md-button>
-            <md-button class="md-raised btn btnWhite" ng-click="hide()">Cancel</md-button>
+            <md-button class="md-warn md-raised md-hue-2" ng-click="hide()">Cancel</md-button>
         </md-dialog-actions>
     </form>
 </md-dialog>

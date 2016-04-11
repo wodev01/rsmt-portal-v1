@@ -86,7 +86,7 @@
                             <fieldset flex="30" flex-sm="100">
                                 <legend>Car Model:</legend>
                                 <md-input-container flex layout-fill>
-                                    <md-select aria-label="Selected model" ng-model="selectedModel">
+                                    <md-select aria-label="Selected model" ng-model="selectedModel" ng-change="locateMarkers(selectedModel);">
                                         <md-option value="">All Models</md-option>
                                         <md-optgroup label="{{vehicle.make}}" ng-repeat="vehicle in vehicleDD | orderBy: ['make']">
                                             <md-option ng-value="v.model" ng-repeat="v in vehicleDD | filter: {make: vehicle.make } | orderBy: 'model'">{{v.model}}</md-option>

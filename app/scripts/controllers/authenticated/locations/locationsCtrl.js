@@ -109,7 +109,12 @@ app.controller('LocationsCtrl',
                     enableSorting: false,
                     enableColumnMenu: false
                 }
-            ]
+            ],
+            onRegisterApi: function (gridApi) {
+                gridApi.selection.on.rowSelectionChanged($scope, function (row) {
+                    row.isSelected = true;
+                });
+            }
         };
         /*--------------- End location Grid Options ---------------*/
 

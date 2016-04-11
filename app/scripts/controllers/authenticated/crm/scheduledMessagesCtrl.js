@@ -62,24 +62,21 @@ app.controller('scheduledMessagesCtrl',
 
         $scope.crmInteractionGridOptions = {
             data: 'crmInteractionData',
-            enableSorting: false,
             rowHeight: 80,
             multiSelect: false,
             enableRowSelection: true,
             enableRowHeaderSelection: false,
             enableVerticalScrollbar: 0,
-            enableColumnMenus: false,
-
             columnDefs: [
                 { name:'Action', displayName:'', cellTemplate: $scope.crmInteractionAction, width: 50, enableSorting:false, enableColumnMenu: false},
                 { field: 'due_date', displayName: 'Due Date',
-                    cellFilter: 'date:\'MM/dd/yyyy h:mm a\'', minWidth:150 },
-                { name:'name', cellTemplate: $scope.nameTmpl, displayName: 'Customer Name', minWidth:150 },
-                { name:'customerInfo', cellTemplate: $scope.infoTmpl, displayName: 'Customer Info', minWidth:250 },
-                { field: 'delivery_type', displayName: 'Delivery', width: 100 },
-                { field: 'status', displayName: 'Status', width: 120 },
+                    cellFilter: 'date:\'MM/dd/yyyy h:mm a\'', minWidth:150, enableHiding:false },
+                { name:'name', cellTemplate: $scope.nameTmpl, displayName: 'Customer Name', minWidth:150, enableHiding:false },
+                { name:'customerInfo', cellTemplate: $scope.infoTmpl, displayName: 'Customer Info', minWidth:250, enableHiding:false },
+                { field: 'delivery_type', displayName: 'Delivery', width: 100, enableHiding:false },
+                { field: 'status', displayName: 'Status', width: 120, enableHiding:false },
                 { field: 'repair_order.closed', displayName: 'Closed',
-                    cellFilter: 'date:\'MM/dd/yyyy h:mm a\'', minWidth:180  }
+                    cellFilter: 'date:\'MM/dd/yyyy h:mm a\'', minWidth:180, enableHiding:false }
             ],
             onRegisterApi: function (gridApi) {
                 gridApi.selection.on.rowSelectionChanged($scope, function (row) {

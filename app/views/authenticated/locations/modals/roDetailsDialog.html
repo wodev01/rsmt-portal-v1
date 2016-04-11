@@ -34,7 +34,7 @@
     <md-content class="md-padding" md-theme="grey">
         <section class="md-whiteframe-10dp margin-bottom-10" layout="column">
             <md-toolbar class="md-primary md-hue-1">
-                <div class="md-toolbar-tools" layout="row" layout-align="center">
+                <div class="md-toolbar-tools" layout="row" layout-align="center center">
                     <span>Summary</span>
                 </div>
             </md-toolbar>
@@ -113,7 +113,7 @@
 
         <section class="md-whiteframe-10dp margin-bottom-10" layout="column">
             <md-toolbar class="md-primary md-hue-1">
-                <div class="md-toolbar-tools" layout="row" layout-align="center">
+                <div class="md-toolbar-tools" layout="row" layout-align="center center">
                     <span>Customer Info</span>
                 </div>
             </md-toolbar>
@@ -172,7 +172,7 @@
 
         <section class="md-whiteframe-10dp margin-bottom-10" layout="column">
             <md-toolbar class="md-primary md-hue-1">
-                <div class="md-toolbar-tools" layout="row" layout-align="center">
+                <div class="md-toolbar-tools" layout="row" layout-align="center center">
                     <span>Vehicles Info</span>
                 </div>
             </md-toolbar>
@@ -209,7 +209,7 @@
 
         <section class="md-whiteframe-10dp margin-bottom-10" layout="column">
             <md-toolbar class="md-primary md-hue-1">
-                <div class="md-toolbar-tools" layout="row" layout-align="center">
+                <div class="md-toolbar-tools" layout="row" layout-align="center center">
                     <span>Service Details</span>
                 </div>
             </md-toolbar>
@@ -386,7 +386,7 @@
         <!--Inspection Details Section-->
         <section class="md-whiteframe-10dp" layout="column">
             <md-toolbar class="md-primary md-hue-1">
-                <div class="md-toolbar-tools" layout-align="center">
+                <div class="md-toolbar-tools" layout-align="center center">
                     <span>Inspection</span>
                 </div>
             </md-toolbar>
@@ -411,7 +411,7 @@
                 <div>
                     <div ng-repeat="(key, value) in
                             repairOrder.inspection.inspectionDefinition.inspectedItemDefinitions | groupBy: 'category'"
-                         layout="column" layout-sm="column">
+                         layout="column" layout-sm="column" ng-init="groupIndex = $index">
                         <div ng-repeat="(locKey, locVal) in value | groupBy: 'location'" layout="column"
                              layout-sm="column">
                             <h3><span>{{ key }}&nbsp;</span><span ng-if="locKey">-&nbsp;{{locKey}}</span></h3>
@@ -433,7 +433,11 @@
                                         </thead>
                                         <tbody>
                                         <tr ng-repeat="val in locVal"
-                                            ng-init="fnInitInspectedItems(val.name,repairOrder.inspection.inspectedItems)">
+                                            ng-init="fnInitInspectedItems(val.name,repairOrder.inspection.inspectedItems);
+                                                        rowIndex = $index;"
+                                            ng-class="groupIndex == selectedGroup && rowIndex == selectedRow ?
+                                                            'selected' : ''"
+                                            ng-click="setClickedRow(groupIndex, $index);">
                                             <td>{{item[val.name].description}}</td>
                                             <td>{{locKey}}</td>
                                             <td>

@@ -368,3 +368,67 @@ md-dialog[aria-label=Delete] button[aria-label=Delete] {
 #terms-of-service p {
     line-height: 1.846;
 }
+
+/*---------- md-tabs tab container size ----------*/
+div.settings-tab-container md-tabs md-tabs-content-wrapper > md-tab-content > div[md-tabs-template] {
+    min-height: 550px;
+}
+
+/*---------- Data-Grid ----------*/
+.datagrid {
+    font: inherit;
+    background: #FFFFFF;
+    overflow: auto;
+    border: 1px solid #CCCCCC;
+    width: 100%;
+}
+
+.datagrid table {
+    border-collapse: collapse;
+    text-align: left;
+    width: 100%;
+}
+
+.datagrid table td, .datagrid table th {
+    padding: 10px 10px;
+}
+
+.datagrid table thead th {
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0.05, #D8D8D8), color-stop(1, #D8D8D8));
+    background: -moz-linear-gradient(center top, #D8D8D8 5%, #D8D8D8 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#D8D8D8', endColorstr='#D8D8D8');
+    background-color: #D8D8D8;
+    color: #000000;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.datagrid table thead th:first-child {
+    border: none;
+}
+
+.datagrid table tbody tr {
+    cursor: pointer;
+}
+
+.datagrid tr:hover {
+    background-color: #EDEDED;
+}
+
+.datagrid table tbody tr.selected {
+    background-color: #E5E3E3 !important;
+}
+
+.datagrid table tbody td {
+    color: #000000;
+    font-size: 14px;
+    font-weight: normal;
+}
+
+.datagrid table tbody td:first-child {
+    border-left: none;
+}
+
+.datagrid table tbody tr:last-child td {
+    border-bottom: none;
+}

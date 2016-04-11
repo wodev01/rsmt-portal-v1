@@ -192,10 +192,10 @@ app.directive('recommendedGrid', function($mdDialog, allCustomerService) {
             };
 
             $scope.fnSetGridOptions = function(id) {
-                var colDffArr = [{field: 'text', displayName: 'Service', minWidth: 200},
-                    {field: 'recommended_date',displayName: 'Date',cellFilter: 'date:\'MM/dd/yyyy h:mm a\'',minWidth: 200},
-                    {field: 'due_date',displayName: 'Due Date',cellFilter: 'date:\'MM/dd/yyyy h:mm a\'',minWidth: 200},
-                    {field: 'recommendation_type', displayName: 'Type', minWidth: 100}
+                var colDffArr = [{field: 'text', displayName: 'Service', minWidth: 200, enableHiding: false},
+                    {field: 'recommended_date',displayName: 'Date',cellFilter: 'date:\'MM/dd/yyyy h:mm a\'',minWidth: 200, enableHiding: false},
+                    {field: 'due_date',displayName: 'Due Date',cellFilter: 'date:\'MM/dd/yyyy h:mm a\'',minWidth: 200, enableHiding: false},
+                    {field: 'recommendation_type', displayName: 'Type', minWidth: 100, enableHiding: false}
                 ];
                 $scope.tooltip = '<div class="grid-tooltip custom-table" add-tooltip obj="row"></div>';
                 if(!id) {
@@ -203,24 +203,25 @@ app.directive('recommendedGrid', function($mdDialog, allCustomerService) {
                     colDffArr.push(
                         {field: 'customer.first_name',displayName: 'Customer Name',
                             cellTemplate: '<div class="ngCellText">' +
-                            '{{row.getProperty(col.field)}} {{row.entity.customer.last_name}}</div>',minWidth: 220},
+                            '{{row.getProperty(col.field)}} {{row.entity.customer.last_name}}</div>',minWidth: 220, enableHiding: false},
                         {field: 'customer.phone_numbers',displayName: 'Phone Numbers',
-                            cellFilter: 'joinArray',minWidth: 100}
+                            cellFilter: 'joinArray',minWidth: 100, enableHiding: false}
                     );
                 }
                 $scope.recommendedServiceGridOptions = {
                     data: 'recommendedServicesData',
                     rowHeight: 50,
-                    enablePaging: (id ? true : false),
-                    showFooter: (id ? true : false),
-                    totalServerItems: 'recommendedServiceTotalServerItems',
                     enableRowSelection: true,
                     enableRowHeaderSelection: false,
                     enableVerticalScrollbar: 0,
                     filterOptions: $scope.recommendedServiceFilterOptions,
-                    showFilter: (id ? true : false),
                     multiSelect: false,
-                    columnDefs: colDffArr
+                    columnDefs: colDffArr,
+                    onRegisterApi: function (gridApi) {
+                        gridApi.selection.on.rowSelectionChanged($scope, function (row) {
+                            row.isSelected = true;
+                        });
+                    }
                 };
             };
         }
@@ -378,7 +379,12 @@ app.directive('repairOrderGrid', function($mdDialog,allCustomerService) {
                     showFilter: (id ? true : false),
                     multiSelect: false,
                     showColumnMenu: true,
-                    columnDefs: colDffArr
+                    columnDefs: colDffArr,
+                    onRegisterApi: function (gridApi) {
+                        gridApi.selection.on.rowSelectionChanged($scope, function (row) {
+                            row.isSelected = true;
+                        });
+                    }
                 };
             };
 

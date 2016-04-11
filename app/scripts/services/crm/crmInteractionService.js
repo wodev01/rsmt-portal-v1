@@ -31,7 +31,7 @@ app.factory('crmInteractionService',['$q', 'encodeParamService','ErrorMsg',
                 },
                 error:function(error) {
                     ErrorMsg.CheckStatusCode(error.status);
-                    defer.resolve(error);
+                    defer.reject(error);
                 }
             });
             return defer.promise;

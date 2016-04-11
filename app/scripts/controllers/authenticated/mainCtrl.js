@@ -3,7 +3,12 @@
 app.controller('MainCtrl', function ($scope, $mdDialog, $location, $cookies, cookieName, $state, $mdSidenav, localStorage, userObjKey) {
 
     $scope.fnToggleSideNav = function (componentId) {
-        $mdSidenav(componentId).toggle();
+        $mdSidenav(componentId).toggle().then(function () {
+            if ($mdSidenav(componentId).isOpen()) {
+                var leftNavElem = $('.left-side-nav').parent().find('md-backdrop').first();
+                $(leftNavElem).css('z-index', '61');
+            }
+        });
     };
 
     $scope.fnIsActive = function (viewLocation) {

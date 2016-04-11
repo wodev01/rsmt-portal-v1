@@ -57,4 +57,10 @@ app.controller('repairOrderModalCtrl',
                     return e.name === itemName;
                 })[0];
             };
+
+            $scope.setClickedRow = function (groupIndex, rowIndex) {
+                $scope.selectedGroup = groupIndex;
+                $scope.selectedRow = rowIndex;
+            };
+
         });
