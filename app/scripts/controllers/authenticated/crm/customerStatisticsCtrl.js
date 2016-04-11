@@ -15,12 +15,14 @@ app.controller('customerStatisticsCtrl',
         $scope.searchText = '';
         $scope.totalCustomersFound = 0;
 
+        $scope.isProcessing = false;
+
         var count = 0;
         var markersArr = [];
         var infowindow = new google.maps.InfoWindow();
         var geocoder = new google.maps.Geocoder();
-        $scope.timer = {};
-        $scope.ngMap = {};
+        $scope.timer;
+        $scope.ngMap;
 
         /*-------------------- Pie Chart ----------------*/
         $scope.fnGeneratePieChart = function () {
@@ -241,18 +243,19 @@ app.controller('customerStatisticsCtrl',
         $scope.getPagedDataAsync = function () {
             $scope.isDataNotNull = $scope.isMsgShow = false;
             $scope.customersStatData = [];
+            $scope.isProcessing = true;
 
             if ($scope.locationId) {
                 allCustomerService.customersData($scope.locationId).then(function (data) {
                     if (data.length !== 0) {
                         $scope.isDataNotNull = true;
-                        $scope.isMsgShow = false;
+                        $scope.isProcessing = $scope.isMsgShow = false;
                         $scope.customersStatData = data;
                         $scope.fnCreateVehicleDD(data);
                         $scope.fnInitMap();
                         $scope.fnGetEmailData(data);
                     } else {
-                        $scope.isDataNotNull = false;
+                        $scope.isProcessing = $scope.isDataNotNull = false;
                         $scope.isMsgShow = true;
                     }
                 });
@@ -260,7 +263,7 @@ app.controller('customerStatisticsCtrl',
         };
 
         /*------ Set markers on model drop-down change ------*/
-        $scope.locateMarkers = function (model) {
+        $scope.fnLocateMarkers = function (model) {
             $scope.selectedModel = model;
             clearMarkers();
             $scope.fnInitMap();
@@ -280,7 +283,7 @@ app.controller('customerStatisticsCtrl',
             });
 
             $scope.vehicleDD = $filter('unique')($scope.vehicleDD, 'model');
-            $scope.selectedModel = null;
+            $scope.selectedModel = "";
         };
 
         /*------ Search customer by name or address ------*/
@@ -301,7 +304,7 @@ app.controller('customerStatisticsCtrl',
         };
 
         /*------ On scope destroy, cancel timeout  ------*/
-        $scope.$on("$destroy", function (event) {
+        $scope.$on("$destroy", function () {
             $scope.mapLabel = 'Completed...';
             $timeout.cancel($scope.timer);
         });

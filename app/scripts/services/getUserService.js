@@ -48,7 +48,7 @@ app.factory('GetUserService', ['$q', '$state','$cookies', 'paymentService', 'coo
             return defer.promise;
         };
 
-        GetUserService.fnIsVerified = function () {
+        GetUserService.fnUserVerified = function () {
             var token = $cookies.get(cookieName);
             var defer = $q.defer();
             CarglyPartner._getUser(token, function (response) {

@@ -338,15 +338,15 @@ app.directive('repairOrderGrid', function($mdDialog,allCustomerService) {
                     $scope.laborTmpl = '<div layout="column" add-description arr="row.entity.labor"></div>';
                     $scope.partsTmpl = '<div layout="column" add-description arr="row.entity.parts"></div>';
                     colDffArr = [
-                        {name:'action', displayName: '',cellTemplate: $scope.roAction, minWidth: 50,groupable:false, sortable:false},
-                        {field: 'closed', displayName: 'Closed', cellFilter: 'date:\'MM/dd/yyyy h:mm a\'', minWidth: 200,groupable:false},
-                        {field: 'inspection', displayName: 'Inspection', cellFilter: 'inspection', minWidth: 110,groupable:false},
-                        {field: 'order_number', displayName: 'RO #', minWidth: 100,groupable:false},
-                        {name:'labor', cellTemplate: $scope.laborTmpl, displayName: 'Labor', minWidth: 400,groupable:false},
-                        {name:'parts', cellTemplate: $scope.partsTmpl, displayName: 'Parts', minWidth: 400,groupable:false},
-                        {field: 'total_sold_price_cents', displayName: 'Total RO $', minWidth: 100,groupable:false},
-                        {field: 'labor', displayName: 'Sold', cellFilter: 'sumOfValue:"sold_seconds" | toHHMMSS', visible: false, minWidth: 100, groupable:false},
-                        {field: 'labor', displayName: 'Actual', cellFilter: 'sumOfValue:"actual_seconds" | toHHMMSS', visible: false, minWidth: 100, groupable:false}
+                        {name:'action', displayName: '',cellTemplate: $scope.roAction, minWidth: 50, enableSorting: false, enableColumnMenu: false},
+                        {field: 'closed', displayName: 'Closed', cellFilter: 'date:\'MM/dd/yyyy h:mm a\'', minWidth: 200},
+                        {field: 'inspection', displayName: 'Inspection', cellFilter: 'inspection', minWidth: 110},
+                        {field: 'order_number', displayName: 'RO #', minWidth: 100},
+                        {name:'labor', cellTemplate: $scope.laborTmpl, displayName: 'Labor', minWidth: 400},
+                        {name:'parts', cellTemplate: $scope.partsTmpl, displayName: 'Parts', minWidth: 400},
+                        {field: 'total_sold_price_cents', displayName: 'Total RO $', minWidth: 100},
+                        {field: 'labor', displayName: 'Sold', cellFilter: 'sumOfValue:"sold_seconds" | toHHMMSS', visible: false, minWidth: 100},
+                        {field: 'labor', displayName: 'Actual', cellFilter: 'sumOfValue:"actual_seconds" | toHHMMSS', visible: false, minWidth: 100}
                     ];
                 }else{
                     colDffArr =  [
@@ -369,16 +369,11 @@ app.directive('repairOrderGrid', function($mdDialog,allCustomerService) {
                 $scope.repairOrderGridOptions = {
                     data: 'repairOrdersData',
                     rowHeight: intRowHeight,
-                    enablePaging: (id ? true : false),
-                    showFooter: (id ? true : false),
-                    totalServerItems: 'repairOrderTotalServerItems',
                     enableRowSelection: true,
                     enableRowHeaderSelection: false,
                     enableVerticalScrollbar: 0,
-                    filterOptions: $scope.repairOrderFilterOptions,
-                    showFilter: (id ? true : false),
                     multiSelect: false,
-                    showColumnMenu: true,
+                    enableGridMenu: true,
                     columnDefs: colDffArr,
                     onRegisterApi: function (gridApi) {
                         gridApi.selection.on.rowSelectionChanged($scope, function (row) {

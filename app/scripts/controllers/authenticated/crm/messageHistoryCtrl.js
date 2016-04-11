@@ -150,7 +150,7 @@ app.controller('messageHistoryCtrl',
         $scope.fnOpenCrmInteractionModal = function (obj) {
             $mdDialog.show({
                 controller: 'manageScheduledMessagesCtrl',
-                templateUrl: 'views/authenticated/crm/manageScheduledMessages.html',
+                templateUrl: 'views/authenticated/crm/modals/manageScheduledMessages.html',
                 resolve: {
                     crmInteractionObj: function () {
                         return obj;

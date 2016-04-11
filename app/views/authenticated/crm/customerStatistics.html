@@ -6,9 +6,10 @@
 
     <div ng-if="isLocationsData" layout="column">
         <div layout="row">
-            <md-input-container >
+            <md-input-container>
                 <md-select aria-label="Select location" ng-model="locationId"
-                           ng-change="fnChangeLocation(idsObj.locationId);">
+                           ng-change="fnChangeLocation(idsObj.locationId);"
+                           ng-disabled="isProcessing">
                     <md-option ng-repeat="location in locationOptions" ng-value="location.id">
                         {{location.name}}
                     </md-option>
@@ -25,15 +26,17 @@
                     </div>
                 </md-toolbar>
 
-                <md-content class="md-padding" ng-if="!isMsgShow && !isDataNotNull">
+                <md-content class="md-padding statContainerContent" ng-if="!isMsgShow && !isDataNotNull" layout="column"
+                            layout-align="center center" layout-fill>
                     <div ng-include="'views/loader.html'"></div>
                 </md-content>
 
-                <md-content class="md-padding" ng-if="!isDataNotNull && isMsgShow" layout-margin layout-padding>
+                <md-content class="md-padding statContainerContent" ng-if="!isDataNotNull && isMsgShow" layout-margin
+                            layout-padding>
                     <span>Data not available.</span>
                 </md-content>
 
-                <md-content class="md-padding" ng-if="isDataNotNull">
+                <md-content class="md-padding statContainerContent" ng-if="isDataNotNull">
                     <div id="pie-chart" ng-init="fnGeneratePieChart();"></div>
                 </md-content>
             </div>
@@ -55,25 +58,27 @@
                     </div>
                 </md-toolbar>
 
-                <md-content class="md-padding" ng-if="!isMsgShow && !isDataNotNull">
+                <md-content class="md-padding statContainerContent" ng-if="!isMsgShow && !isDataNotNull" layout="column"
+                            layout-align="center center" layout-fill>
                     <div ng-include="'views/loader.html'"></div>
                 </md-content>
 
-                <md-content class="md-padding" ng-if="!isDataNotNull && isMsgShow" layout-margin layout-padding>
+                <md-content class="md-padding statContainerContent" ng-if="!isDataNotNull && isMsgShow" layout-margin
+                            layout-padding>
                     <div class="md-headline">Data not available.</div>
                 </md-content>
 
                 <md-content ng-if="isDataNotNull" layout="column">
                     <div ng-show="useSearch" layout-padding>
-                        <form name="searchForm" layout="row" layout-sm="column">
-                            <fieldset flex>
+                        <form name="searchForm" layout="column" layout-gt-sm="row">
+                            <fieldset flex="100">
                                 <legend>Search By Customer Name or Address:</legend>
-                                <span style="color: red;"
+                                <span class="text-danger"
                                       ng-show="searchForm.searchFilter.$error.minlength">
                                     Specify atleast 5 characters.
                                 </span>
                                 <input type="text" name="searchFilter"
-                                       style="width: 100%;"
+                                       style="width: 100%; height: 32px;"
                                        class="filterBox"
                                        ng-model="searchFilter"
                                        placeholder="Search..."
@@ -86,10 +91,15 @@
                             <fieldset flex="30" flex-sm="100">
                                 <legend>Car Model:</legend>
                                 <md-input-container flex layout-fill>
-                                    <md-select aria-label="Selected model" ng-model="selectedModel" ng-change="locateMarkers(selectedModel);">
+                                    <md-select aria-label="Selected model" ng-model="selectedModel"
+                                               ng-change="fnLocateMarkers(selectedModel);">
                                         <md-option value="">All Models</md-option>
-                                        <md-optgroup label="{{vehicle.make}}" ng-repeat="vehicle in vehicleDD | orderBy: ['make']">
-                                            <md-option ng-value="v.model" ng-repeat="v in vehicleDD | filter: {make: vehicle.make } | orderBy: 'model'">{{v.model}}</md-option>
+                                        <md-optgroup label="{{vehicle.make}}"
+                                                     ng-repeat="vehicle in vehicleDD | orderBy: ['make']">
+                                            <md-option ng-value="v.model"
+                                                       ng-repeat="v in vehicleDD | filter: {make: vehicle.make } | orderBy: 'model'">
+                                                {{v.model}}
+                                            </md-option>
                                         </md-optgroup>
                                     </md-select>
                                 </md-input-container>
@@ -101,7 +111,8 @@
                         <div class="subHeader" layout="row" layout-align="space-between center">
                             <div layout="row">
                                 <span layout-margin layout-padding>{{ mapLabel }}</span>
-                                <md-progress-circular class="md-accent" ng-if="mapLabel !== 'Completed...'"
+                                <md-progress-circular md-theme="rsmt" class="md-primary"
+                                                      ng-if="mapLabel !== 'Completed...'"
                                                       md-diameter="50" md-mode="indeterminate"></md-progress-circular>
                             </div>
                             <span layout-margin>

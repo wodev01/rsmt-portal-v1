@@ -1,5 +1,5 @@
 'use strict';
-app.controller('crmSegmentsCtrl',
+app.controller('messageTemplatesCtrl',
     function ($scope, $mdDialog, Toast, locationService, crmInteractionService, crmTemplateService, $timeout) {
 
         $scope.locationOptions = [];
@@ -83,7 +83,6 @@ app.controller('crmSegmentsCtrl',
             enableRowHeaderSelection: false,
             enableVerticalScrollbar: 0,
             enableColumnMenus: false,
-
             columnDefs: [
                 {field: 'name', displayName: 'Segment Name', minWidth: 100},
                 {name:'action', displayName:'', cellTemplate: $scope.crmSegmentsAction, width: 50, enableSorting:false, enableColumnMenu: false}
@@ -98,7 +97,7 @@ app.controller('crmSegmentsCtrl',
         $scope.fnGenerateIframe =  function(){
 
             $timeout(function(){
-                var iframe = angular.element('#renderHtml')[0];
+                var iframe = angular.element('md-dialog#message-template-dialog #rendered-html')[0];
                 iframe.src = 'about:blank';
                 iframe.contentWindow.document.open('text/htmlreplace');
                 iframe.contentWindow.document.write($scope.rendered_template.html);
@@ -136,7 +135,7 @@ app.controller('crmSegmentsCtrl',
 
             $mdDialog.show({
                 scope: $scope.$new(),
-                templateUrl: 'views/authenticated/CRM/manageCrmSegments.html',
+                templateUrl: 'views/authenticated/crm/modals/manageMessageTemplates.html',
                 targetEvent: ev
             }).then(function () {
             }, function () {

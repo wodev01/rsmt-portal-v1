@@ -25,4 +25,9 @@ app.controller('manageScheduledMessagesCtrl',
             $mdDialog.hide();
         };
 
+        $scope.setClickedRow = function(groupIndex, rowIndex) {
+            $scope.selectedGroup = groupIndex;
+            $scope.selectedRow = rowIndex;
+        };
+
     });

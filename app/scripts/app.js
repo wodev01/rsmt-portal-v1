@@ -106,7 +106,7 @@ app.config(function ($mdThemingProvider, toastr, $urlRouterProvider, $stateProvi
             controller: 'VerifyCtrl',
             resolve: {
                 GetUser : function(GetUserService){
-                    return GetUserService.fnIsVerified();
+                    return GetUserService.fnUserVerified();
                 }
             }
         })
