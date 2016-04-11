@@ -1,6 +1,6 @@
 'use strict';
 app.controller('LoginCtrl',
-    function ($scope, $rootScope, $mdDialog, $mdMedia, $state, toastr, ErrorMsg) {
+    function ($scope, $rootScope, $mdDialog, $mdMedia, $state, toastr, ErrorMsg, localStorage, userObjKey) {
 
         $scope.user = {isProcessing: false};
 
@@ -16,7 +16,7 @@ app.controller('LoginCtrl',
                 function (response) {
                     user.isProcessing = false;
                     $scope.fnRefreshDom();
-                    localStorage.setItem('userObj', JSON.stringify(response));
+                    localStorage.setItem(userObjKey,escape(JSON.stringify(response)));
                     if (response.verified === 'true') {
                         $rootScope.loginUserName = response.name;
                         toastr.success('Signed in as ' + $rootScope.loginUserName);

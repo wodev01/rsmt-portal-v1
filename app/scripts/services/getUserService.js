@@ -1,6 +1,6 @@
 'use strict';
-app.factory('GetUserService', ['$q', '$state','$cookies', 'cookieName','localStorage', 'ErrorMsg',
-    function ($q, $state, $cookies, cookieName, localStorage, ErrorMsg) {
+app.factory('GetUserService', ['$q', '$state','$cookies', 'cookieName','localStorage', 'ErrorMsg', 'userObjKey',
+    function ($q, $state, $cookies, cookieName, localStorage, ErrorMsg, userObjKey) {
         var GetUserService = {};
 
         GetUserService.fetchUser = function (subscriptions) {
@@ -8,7 +8,7 @@ app.factory('GetUserService', ['$q', '$state','$cookies', 'cookieName','localSto
             var defer = $q.defer();
             var hasSubscriptions = true;
             CarglyPartner._getUser(token, function (response) {
-                localStorage.setItem('userObj',JSON.stringify(response));
+                localStorage.setItem(userObjKey,escape(JSON.stringify(response)));
                 var userSubscriptions = JSON.parse(response.subscriptions);
                 angular.forEach(userSubscriptions, function (obj) {
                     angular.forEach(subscriptions, function (value) {

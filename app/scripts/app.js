@@ -26,7 +26,8 @@ var app = angular
     .constant('cookieName', 'cargly_rsmt_access_token')
     .constant('localStorage', localStorage)
     .constant('globalTimeZone', ["US/Hawaii", "US/Alaska", "US/Pacific", "US/Arizona", "US/Mountain", "US/Central", "US/Eastern"])
-    .constant('toastr', toastr);
+    .constant('toastr', toastr)
+    .constant('userObjKey', 'q995ayycik9');
 
 
 app.config(function ($mdThemingProvider, toastr, $urlRouterProvider, $stateProvider, $httpProvider) {

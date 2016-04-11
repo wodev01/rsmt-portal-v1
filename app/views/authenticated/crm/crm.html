@@ -5,31 +5,31 @@
             <md-tab label="Scheduled Messages" >
                 <div ng-if="selectedCrmTab === 0" ng-controller="scheduledMessagesCtrl"
                      ng-init="fnInitScheduledMessages();"
-                     ng-include="'views/authenticated/CRM/scheduledMessages.html'" layout-margin>
+                     ng-include="'views/authenticated/crm/scheduledMessages.html'" layout-margin>
                 </div>
             </md-tab>
             <md-tab label="All Customers" >
                 <div ng-if="selectedCrmTab === 1" ng-controller="allCustomersCtrl"
                      ng-init="fnInitAllCustomers();"
-                     ng-include="'views/authenticated/CRM/allCustomers.html'" layout-margin>
+                     ng-include="'views/authenticated/crm/allCustomers.html'" layout-margin>
                 </div>
             </md-tab>
             <md-tab label="Message History" >
                 <div ng-if="selectedCrmTab === 2" ng-controller="messageHistoryCtrl"
                      ng-init="fnInitMessageHistory();"
-                     ng-include="'views/authenticated/CRM/messageHistory.html'" layout-margin>
+                     ng-include="'views/authenticated/crm/messageHistory.html'" layout-margin>
                 </div>
             </md-tab>
             <md-tab label="Message Templates" >
                 <div ng-if="selectedCrmTab === 3" ng-controller="crmSegmentsCtrl"
                      ng-init="fnInitCrmSegments();"
-                     ng-include="'views/authenticated/CRM/crmSegments.html'" layout-margin>
+                     ng-include="'views/authenticated/crm/crmSegments.html'" layout-margin>
                 </div>
             </md-tab>
             <md-tab label="Customer Statistics">
                 <div  ng-if="selectedCrmTab === 4" ng-controller="customerStatisticsCtrl"
                      ng-init="fnInitCustomerStatistics();"
-                     ng-include="'views/authenticated/CRM/customerStatistics.html'" layout-margin>
+                     ng-include="'views/authenticated/crm/customerStatistics.html'" layout-margin>
                 </div>
             </md-tab>
         </md-tabs>
