@@ -18,9 +18,10 @@ app.controller('LoginCtrl',
                     $scope.fnRefreshDom();
                     localStorage.setItem(userObjKey,escape(JSON.stringify(response)));
                     if (response.verified === 'true') {
-                        $rootScope.loginUserName = response.name;
-                        toastr.success('Signed in as ' + $rootScope.loginUserName);
+                        toastr.success('Signed in as ' + response.name);
                         $state.go('main.dashboard');
+                    } else {
+                        $state.go('verify');
                     }
                 },
                 function (rejection) {

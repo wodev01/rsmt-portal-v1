@@ -18,7 +18,7 @@ app.controller('MainCtrl', function ($scope, $mdDialog, $location, $cookies, coo
     $scope.fnLogout = function () {
         CarglyPartner.logout(function () {
             $cookies.remove(cookieName);
-            localStorage.removeItem(userObjKey)
+            localStorage.removeItem(userObjKey);
             $state.go('login');
         }, function () {
         });

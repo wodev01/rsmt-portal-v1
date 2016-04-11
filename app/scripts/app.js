@@ -100,6 +100,26 @@ app.config(function ($mdThemingProvider, toastr, $urlRouterProvider, $stateProvi
             templateUrl: "views/login.html",
             controller: 'LoginCtrl'
         })
+        .state('verify', {
+            url: "/verify",
+            templateUrl: "views/authenticated/verify/verify.html",
+            controller: 'VerifyCtrl',
+            resolve: {
+                GetUser : function(GetUserService){
+                    return GetUserService.fnIsVerified();
+                }
+            }
+        })
+        .state('payment', {
+            url: "/payment",
+            templateUrl: "views/authenticated/payment/payment.html",
+            controller: 'PaymentCtrl',
+            resolve: {
+                GetUser : function(GetUserService){
+                    return GetUserService.fnPaymentVerified();
+                }
+            }
+        })
         .state('main', {
             abstract: true,
             url: "/",

@@ -1,0 +1,78 @@
+<md-toolbar class="top-header" ng-init="fnInitPaymentInfo()">
+    <div class="md-toolbar-tools">
+        <div layout="row">
+            <img class="img-responsive rsmt-logo" alt="Repair Shop Marketing Tools" src="images/rsmt-full-logo.png"/>
+        </div>
+
+        <md-menu md-position-mode="target-right target">
+            <md-button ng-click="$mdOpenMenu($event)">
+                <span ng-bind="userObj.name"></span><md-icon md-font-set="material-icons">keyboard_arrow_down</md-icon>
+            </md-button>
+
+            <md-menu-content width="4">
+                <md-menu-item>
+                    <md-button ng-click="fnOpenTermsOfServiceModal($event);">
+                        <div layout="row">
+                            <p flex>
+                                <md-icon md-font-set="material-icons">description</md-icon>
+                                Terms of Use
+                            </p>
+                        </div>
+                    </md-button>
+                </md-menu-item>
+
+                <md-menu-item>
+                    <md-button ng-click="fnLogout();">
+                        <div layout="row">
+                            <p flex>
+                                <md-icon md-font-set="material-icons">power_settings_new</md-icon>
+                                Sign out
+                            </p>
+                        </div>
+                    </md-button>
+                </md-menu-item>
+            </md-menu-content>
+        </md-menu>
+    </div>
+</md-toolbar>
+<!-- Body content -->
+<md-content>
+    <div style="min-height: 20px;">
+        <md-progress-linear class="md-accent" ng-if="payment.isProcessing" md-mode="indeterminate"></md-progress-linear>
+    </div>
+    <div layout="column" layout="column" layout-align="space-between center" flex>
+        <div class="md-whiteframe-z1 md-padding paymentInfo-form-container" layout-margin>
+            <div class="md-display-1 text-center" layout-padding>Update Payment Method</div>
+
+            <form name="paymentForm" layout="column" novalidate>
+                <md-input-container class="remove-error-space">
+                    <md-icon class="md-accent">credit_card</md-icon>
+                    <input type="number" name="cardNumber" placeholder="Card Number" ng-model="payment.number" ng-pattern="/^(?:4[0-9]{12}(?:[0-9]{3})?|5[1-5][0-9]{14}|6(?:011|5[0-9][0-9])[0-9]{12}|3[47][0-9]{13}|3(?:0[0-5]|[68][0-9])[0-9]{11}|(?:2131|1800|35\d{3})\d{11})$/" required/>
+                </md-input-container>
+                <md-input-container class="remove-error-space">
+                    <md-icon class="md-accent">confirmation_number</md-icon>
+                    <input type="number" name="cvv" placeholder="CVV" ng-model="payment.cvv" ng-pattern="/^[0-9]{3,4}$/" required/>
+                </md-input-container>
+                <label style="color: rgba(0, 0, 0, 0.40); margin-left:2px;">Expiration (MM/YYYY)</label>
+                <div layout layout-sm="column">
+                    <md-input-container  class="remove-error-space">
+                        <md-icon class="md-accent">date_range</md-icon>
+                        <input type="number" name="exp_month" placeholder="Month" ng-model="payment.exp_month" maxlength="2" required  ng-pattern="/^(0?[1-9]|1[012])$/"/>
+                    </md-input-container>
+                    <md-input-container  class="remove-error-space">
+                        <md-icon class="md-accent">date_range</md-icon>
+                        <input type="number" name="exp_year" placeholder="Year" ng-model="payment.exp_year" maxlength="4" required  ng-pattern="/^[20][0-9]{3}$/"/>
+                    </md-input-container>
+                </div>
+                <div layout="column" layout-align="center center">
+                    <div layout="row">
+                        <md-button type="submit" class="md-raised md-accent"
+                                   ng-disabled="paymentForm.$invalid || payment.isProcessing" ng-click="fnUpdateUserPaymentInfo(payment);">
+                            Save
+                        </md-button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</md-content>
