@@ -1,4 +1,4 @@
-<md-content id="dashboard-tab" class="md-padding" layout="column"  layout-fill flex ng-init="fnInitDashboard();">
+<div id="dashboard-tab" class="md-padding overflow-hidden" ng-init="fnInitDashboard();">
     <!-- Location Drop-down -->
     <div layout="row">
         <md-input-container>
@@ -32,8 +32,7 @@
 
         <!-- Loader -->
         <md-content class="dashContainerContent" ng-if="!isDailySummaryData" layout="column"
-                    layout-align="center center"
-                    layout-fill flex>
+                    layout-align="center center" layout-fill>
             <md-progress-circular class="md-accent" md-diameter="100" md-mode="indeterminate"></md-progress-circular>
         </md-content>
 
@@ -379,7 +378,7 @@
                         </md-select>
                     </md-input-container>
 
-                    &nbsp;&nbsp;
+                    <span hide show-gt-sm>&nbsp;&nbsp;</span>
                     <md-input-container ng-if="sendJsonToBar.length !== 0" class="md-body-1">
                         <md-select aria-label="Chart Type" ng-model="selectedChartType"
                                    ng-change="fnGenerateBarChart(selectedChartType, selectedLocationOption);">
@@ -394,11 +393,11 @@
 
         <!-- Loader -->
         <md-content class="dashContainerContent" ng-if="!isMonthlySummaryData" layout="column"
-                    layout-align="center center" layout-fill flex>
+                    layout-align="center center" layout-fill>
             <md-progress-circular class="md-accent" md-diameter="100" md-mode="indeterminate"></md-progress-circular>
         </md-content>
 
-        <md-content class="md-padding" ng-if="isMonthlySummaryData">
+        <md-content class="md-padding overflow-hidden" ng-if="isMonthlySummaryData">
             <div class="bar-data-msg" ng-if="isMonthlyBarMsg && isDailySummaryData">{{barChartName}} is not available.
             </div>
             <div id="bar-chart" ng-init="fnGenerateBarChart(selectedChartType, selectedLocationOption);"></div>
@@ -406,9 +405,9 @@
     </section>
 
     <!--3rd Row-->
-    <section id="daily-barchart-section" class="margin-bottom-10" layout="column" layout-gt-sm="row">
+    <section id="daily-barchart-section" layout="row" layout-sm="column" layout-xs="column">
         <!--Daily Bar Chart-->
-        <div class="dailyBarContainer md-whiteframe-10dp" layout-fill flex flex-gt-sm="70">
+        <div class="dailyBarContainer margin-bottom-10 md-whiteframe-10dp" flex flex-gt-sm="70">
             <md-toolbar class="md-primary md-hue-1" md-theme="grey">
                 <div class="md-toolbar-tools">
                     <span class="md-title text-small-599 text-small-959">
@@ -432,9 +431,9 @@
             </md-content>
         </div>
 
-        &nbsp;&nbsp;
+        <span hide show-gt-sm>&nbsp;&nbsp;</span>
         <!--Repair Orders-->
-        <div class="roContainer md-whiteframe-10dp" layout-fill flex flex-gt-sm="30">
+        <div class="roContainer margin-bottom-10 md-whiteframe-10dp" flex flex-gt-sm="30">
             <md-toolbar class="md-primary md-hue-1" md-theme="grey">
                 <div class="md-toolbar-tools">
                     <span class="md-title text-small-599 text-small-959">
@@ -460,7 +459,8 @@
                 <md-list ng-if="isLocId && !isRepairOrderMsg">
                     <md-list-item class="md-3-line md-long-text" layout="column"
                                   ng-repeat="repairOrder in repairOrders">
-                        <div ng-click="fnOpenRepairOrderModal($event, repairOrder, repairOrders);">
+                        <div class="margin-bottom-10"
+                             ng-click="fnOpenRepairOrderModal($event, repairOrder, repairOrders);">
                             <h3>RO #{{repairOrder.order_number}}</h3>
 
                             <div layout="row"><span class="leftLabel">Customer :</span>
@@ -505,7 +505,7 @@
 
         <!-- Loader -->
         <div class="dashContainerContent" ng-if="!isEmpPerformanceDataLoaded" layout="column"
-             layout-align="center center" layout-fill flex>
+             layout-align="center center" layout-fill>
             <md-progress-circular class="md-accent" md-diameter="100" md-mode="indeterminate"></md-progress-circular>
         </div>
 
@@ -513,16 +513,16 @@
             <div class="bar-data-msg">Employee Performance is not available.</div>
         </md-content>
 
-        <md-content class="md-padding" ng-if="isEmpPerformanceDataLoaded && !isEmpPerformanceMsg">
+        <md-content class="md-padding overflow-hidden" ng-if="isEmpPerformanceDataLoaded && !isEmpPerformanceMsg">
             <div id="bar-chart-emp-performance" ng-init="fnGenerateBarEmpPerChart(selectedEmpPerformanceOption);"></div>
         </md-content>
 
     </section>
 
     <!--5th Row-->
-    <section id="customer-barchart-section" layout="column" layout-gt-sm="row">
+    <section id="customer-barchart-section" layout="row" layout-sm="column" layout-xs="column">
         <!-- Customer Report Bar-chart -->
-        <div class="custBarContainer margin-bottom-10 md-whiteframe-10dp" layout-fill flex flex-gt-sm="70">
+        <div class="custBarContainer margin-bottom-10 md-whiteframe-10dp" flex flex-gt-sm="70">
             <!--Daily Bar Chart-->
             <md-toolbar class="md-primary md-hue-1" md-theme="grey">
                 <div class="md-toolbar-tools" layout="row" layout-align="space-between center">
@@ -557,9 +557,9 @@
             </md-content>
         </div>
 
-        &nbsp;&nbsp;
+        <span hide show-gt-sm>&nbsp;&nbsp;</span>
         <!-- pie-chart -->
-        <div class="pieChartContainer margin-bottom-10 md-whiteframe-10dp" layout-fill flex flex-gt-sm="30">
+        <div class="pieChartContainer margin-bottom-10 md-whiteframe-10dp" flex flex-gt-sm="30">
             <md-toolbar class="md-primary md-hue-1" md-theme="grey">
                 <div class="md-toolbar-tools">
                     <span class="md-title text-small-599 text-small-959">
@@ -587,7 +587,8 @@
     </section>
 
     <!--6th Row-->
-    <section id="marketing-barchart-section" class="margin-bottom-10 md-whiteframe-10dp" layout="column">
+    <section id="marketing-barchart-section" class="margin-bottom-10 overflow-hidden md-whiteframe-10dp"
+             layout="column">
         <!--Marketing Source Bar Chart-->
         <md-toolbar class="md-primary md-hue-1" md-theme="grey">
             <div class="md-toolbar-tools" layout="row" layout-align="space-between center">
@@ -597,7 +598,7 @@
 
         <!-- Loader -->
         <div class="dashContainerContent" ng-if="!isMarketingSourcesDataLoaded" layout="column"
-             layout-align="center center" layout-fill flex>
+             layout-align="center center" layout-fill>
             <md-progress-circular class="md-accent" md-diameter="100" md-mode="indeterminate"></md-progress-circular>
         </div>
 
@@ -608,4 +609,4 @@
         </md-content>
     </section>
 
-</md-content>
+</div>

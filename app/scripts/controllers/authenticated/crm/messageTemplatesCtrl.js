@@ -69,23 +69,27 @@ app.controller('messageTemplatesCtrl',
         };
 
         $scope.crmSegmentsAction = '<div layout="row">' +
-            '<md-button class="md-icon-button md-accent"' +
-            'ng-click="grid.appScope.fnOpenManageCrmSegments(row, ev);">' +
-            '<md-icon md-font-set="material-icons">visibility</md-icon>' +
-            '<md-tooltip md-direction="top">Open</md-tooltip></md-button>' +
+            '<md-button class="md-icon-button md-accent" ng-click="grid.appScope.fnOpenManageCrmSegments(row, ev);">' +
+            '   <md-icon md-font-set="material-icons">visibility</md-icon>' +
+            '   <md-tooltip md-direction="top">Open</md-tooltip></md-button>' +
             '</div>';
         $scope.crmSegmentsGridOptions = {
             data: 'crmSegmentsData',
-            enableSorting: false,
             rowHeight: 50,
             multiSelect: false,
             enableRowSelection: true,
             enableRowHeaderSelection: false,
             enableVerticalScrollbar: 0,
-            enableColumnMenus: false,
             columnDefs: [
-                {field: 'name', displayName: 'Segment Name', minWidth: 100},
-                {name:'action', displayName:'', cellTemplate: $scope.crmSegmentsAction, width: 50, enableSorting:false, enableColumnMenu: false}
+                {field: 'name', displayName: 'Segment Name', minWidth: 100, enableHiding: false},
+                {
+                    name: 'action',
+                    displayName: '',
+                    cellTemplate: $scope.crmSegmentsAction,
+                    width: 50,
+                    enableSorting: false,
+                    enableColumnMenu: false
+                }
             ],
             onRegisterApi: function (gridApi) {
                 gridApi.selection.on.rowSelectionChanged($scope, function (row) {
@@ -94,18 +98,18 @@ app.controller('messageTemplatesCtrl',
             }
         };
 
-        $scope.fnGenerateIframe =  function(){
+        $scope.fnGenerateIframe = function () {
 
-            $timeout(function(){
+            $timeout(function () {
                 var iframe = angular.element('md-dialog#message-template-dialog #rendered-html')[0];
                 iframe.src = 'about:blank';
                 iframe.contentWindow.document.open('text/htmlreplace');
                 iframe.contentWindow.document.write($scope.rendered_template.html);
                 iframe.contentWindow.document.close();
-                iframe.contentWindow.document.onmousedown = function() {
+                iframe.contentWindow.document.onmousedown = function () {
                     return false;
                 }
-            },1000);
+            }, 1000);
         };
 
         /*---------- Call for interpolation API for interpolating template variable ----------*/
@@ -143,7 +147,7 @@ app.controller('messageTemplatesCtrl',
 
         };
 
-        $scope.fnCloseCrmDialog = function () {
+        $scope.fnCloseMessageTemplateDialog = function () {
             $mdDialog.hide();
         };
 

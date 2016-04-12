@@ -3,15 +3,15 @@
     <md-toolbar class="md-primary">
         <div class="md-toolbar-tools" layout="row" layout-align="space-between center">
             <span class="md-title"> CRM Segments</span>
-            <md-button class="md-icon-button" ng-click="fnCloseCrmDialog();">
+            <md-button class="md-icon-button" ng-click="fnCloseMessageTemplateDialog();">
                 <md-icon md-font-set="material-icons">close</md-icon>
-                <md-tooltip md-direction="top">Close</md-tooltip>
+                <md-tooltip ng-if="$root.isMobile == null" md-direction="top">Close</md-tooltip>
             </md-button>
         </div>
     </md-toolbar>
 
     <md-dialog-content class="md-padding" layout="column">
-        <div layout="column" layout-gt-xs="row" flex>
+        <div layout="column" layout-gt-xs="row">
             <md-input-container class="remove-error-space" flex>
                 <label>Segment Name</label>
                 <input type="text" ng-model="crmSubSegmentObj.name" disabled/>
@@ -27,13 +27,14 @@
                 <input type="text" ng-model="crmSubSegmentObj.interaction_delay_days" disabled/>
             </md-input-container>
         </div>
-        <div layout="row" flex  md-theme="grey" >
+
+        <div layout="row" md-theme="grey" flex>
             <div class="md-whiteframe-10dp" layout="column" flex>
                 <md-toolbar class="md-primary md-hue-1 md-whiteframe-2dp">
                     <div class="md-toolbar-tools">Template Preview</div>
                 </md-toolbar>
 
-                <md-content layout-fill flex style="overflow: hidden">
+                <md-content style="overflow: hidden;" layout-fill flex>
                     <iframe id="rendered-html"></iframe>
                 </md-content>
             </div>

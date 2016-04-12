@@ -1,4 +1,8 @@
-.center-form-container {
+.login-form-container {
+    min-width: 500px;
+}
+
+.verify-form-container, .paymentInfo-form-container {
     width: 500px;
 }
 
@@ -88,13 +92,17 @@
 }
 
 /*---------- Dashbaord Tab ----------*/
+#dashboard-tab {
+    min-height: 600px;
+}
+
 #dashboard-tab section .dashContainerContent {
     height: 352px;
 }
 
 #dashboard-tab section .dashContainerContent.summaryContent {
-    height: 435px;
-    max-height: 435px;
+    height: 425px;
+    max-height: 425px;
 }
 
 /*---------- Summary Calculation ----------*/

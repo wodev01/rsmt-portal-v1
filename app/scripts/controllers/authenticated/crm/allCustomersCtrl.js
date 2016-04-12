@@ -4,18 +4,18 @@ app.controller('allCustomersCtrl',
 
         $scope.isLocationsData = false;
         $scope.locationOptions = [];
-        $scope.idsObj = {locationId:'', segmentId:''};
+        $scope.idsObj = {locationId: '', segmentId: ''};
 
         var locId = '';
         $scope.customerIndex = 0;
         $scope.vehicleObj = null;
         $scope.selectedRow = null;
-        $scope.breadcrumbArr = [{name:'Customers'}];
+        $scope.breadcrumbArr = [{name: 'Customers'}];
         $scope.searchCustomerFilter = '';
         $scope.isMsgShow = false;
         $scope.customerFilter = {};
 
-        $scope.fnFilterKeyEvent = function(searchCustomerFilter) {
+        $scope.fnFilterKeyEvent = function (searchCustomerFilter) {
             $scope.getPagedDataAsync(searchCustomerFilter, $scope.pagingOptions.pageSize, $scope.pagingOptions.currentPage);
         };
 
@@ -86,16 +86,37 @@ app.controller('allCustomersCtrl',
             rowHeight: 50,
             enableRowSelection: true,
             enableRowHeaderSelection: false,
-            totalServerItems: 'customersTotalServerItems',
-            filterOptions: $scope.customersFilterOptions,
+            enableVerticalScrollbar: 0,
+            enableFiltering: true,
             multiSelect: false,
             columnDefs: [
-                {displayName:'', name:'Action',cellTemplate: $scope.customerAction, minWidth:50,width:'50', enableSorting:false, enableColumnMenu: false},
-                {field: 'first_name', displayName: 'First Name', minWidth: 200,enableHiding:false},
-                {field: 'last_name', displayName: 'Last Name', minWidth:200,enableHiding:false},
-                {field: 'company', displayName: 'Company', minWidth: 200,enableHiding:false},
-                {field: 'phone_numbers', displayName: 'Phone', cellFilter: 'joinTelArray', minWidth: 200,enableHiding:false},
-                {field: 'email_addresses', displayName: 'Email', cellFilter: 'joinArray', minWidth: 200,enableHiding:false}
+                {
+                    displayName: '',
+                    name: 'Action',
+                    cellTemplate: $scope.customerAction,
+                    minWidth: 50,
+                    width: '50',
+                    enableSorting: false,
+                    enableColumnMenu: false,
+                    enableFiltering: false
+                },
+                {field: 'first_name', displayName: 'First Name', minWidth: 200, enableHiding: false},
+                {field: 'last_name', displayName: 'Last Name', minWidth: 200, enableHiding: false},
+                {field: 'company', displayName: 'Company', minWidth: 200, enableHiding: false},
+                {
+                    field: 'phone_numbers',
+                    displayName: 'Phone',
+                    cellFilter: 'joinTelArray',
+                    minWidth: 200,
+                    enableHiding: false
+                },
+                {
+                    field: 'email_addresses',
+                    displayName: 'Email',
+                    cellFilter: 'joinArray',
+                    minWidth: 200,
+                    enableHiding: false
+                }
             ],
             onRegisterApi: function (gridApi) {
                 gridApi.selection.on.rowSelectionChanged($scope, function (row) {
@@ -104,26 +125,19 @@ app.controller('allCustomersCtrl',
             }
         };
 
-        $scope.$on('ngGridEventData', function(event) {
-            event.preventDefault();
-            if(typeof $scope.customersGridOptions.selectItem === 'function'){
-                $scope.customersGridOptions.selectItem($scope.intGridIndex, true);
-            }
-        });
-
-        $scope.fnOnSelectBreadcrumb = function(customerIndex){
+        $scope.fnOnSelectBreadcrumb = function (customerIndex) {
             $scope.customerIndex = customerIndex;
-            $scope.breadcrumbArr.splice(customerIndex+1, $scope.breadcrumbArr.length);
+            $scope.breadcrumbArr.splice(customerIndex + 1, $scope.breadcrumbArr.length);
         };
 
         $scope.fnViewCustomerDetails = function (ev, row) {
             $scope.intGridIndex = row.rowIndex;
             $scope.customerIndex = 1;
             $scope.customer = row.entity;
-            $scope.breadcrumbArr.push({name:row.entity.first_name+' '+row.entity.last_name});
+            $scope.breadcrumbArr.push({name: row.entity.first_name + ' ' + row.entity.last_name});
         };
 
-        $scope.fnViewVehicleDetails = function(obj) {
+        $scope.fnViewVehicleDetails = function (obj) {
             $scope.customerIndex = 2;
             $scope.vehicleObj = obj;
             $scope.breadcrumbArr.push({
@@ -131,11 +145,11 @@ app.controller('allCustomersCtrl',
             });
         };
 
-        $scope.setClickedRow = function(index) {
+        $scope.setClickedRow = function (index) {
             $scope.selectedRow = index;
         };
 
-        $scope.fnChangeFilter = function(customerFilter) {
+        $scope.fnChangeFilter = function (customerFilter) {
             $scope.getPagedDataAsync(customerFilter, $scope.pagingOptions.pageSize, $scope.pagingOptions.currentPage);
         };
 
@@ -144,14 +158,14 @@ app.controller('allCustomersCtrl',
             $scope.isLocationsData = false;
 
             locationService.fetchLocation().then(function (data) {
-                if(data.length!=0){
+                if (data.length != 0) {
                     $scope.isLocationsData = true;
                     $scope.fnCreateLocationDD(data);
                 }
             });
         };
 
-        $scope.fnCreateLocationDD = function(data) {
+        $scope.fnCreateLocationDD = function (data) {
             $scope.locationOptions = [];
             for (var intLocIndex = 0, len = data.length; intLocIndex < len; intLocIndex++) {
                 $scope.locationOptions.push({name: data[intLocIndex].name, id: data[intLocIndex].id});
@@ -160,15 +174,15 @@ app.controller('allCustomersCtrl',
             $scope.fnFilterKeyEvent($scope.searchCustomerFilter);
         };
 
-        $scope.fnChangeLocation = function(locationId) {
+        $scope.fnChangeLocation = function (locationId) {
             locId = locationId;
-            angular.element('#crm-pane #customerTab form input').val('');
+            angular.element('#crm-pane #customerTab form input.filterBox').val('');
             $scope.fnOnSelectBreadcrumb(0);
             $scope.getPagedDataAsync($scope.searchCustomerFilter, $scope.pagingOptions.pageSize, $scope.pagingOptions.currentPage);
         };
         /*--------------- Locations Filter End --------------------------*/
 
-        $scope.fnInitAllCustomers = function() {
+        $scope.fnInitAllCustomers = function () {
             $scope.fnGetLocationDetails();
         };
 

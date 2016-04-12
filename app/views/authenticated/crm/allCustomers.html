@@ -36,7 +36,7 @@
 
         <div ng-if="isDataNotNull"
              ui-grid="customersGridOptions" ui-grid-selection ui-grid-auto-resize
-             ng-style="$root.fnReturnGridHeight(customersData.length);">
+             ng-style="$root.fnReturnGridHeight(customersData.length, '', false, true);">
         </div>
     </div>
 

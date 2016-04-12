@@ -7,15 +7,6 @@
         height: 60px;
     }
 
-    md-sidenav.left-side-nav {
-        padding-top: 50px;
-    }
-
-    md-sidenav.right-side-nav {
-        min-width: 100%;
-        top: 48px;
-    }
-
     /*---------- Segments modal ----------*/
     md-dialog#manage-scheduledmsg-dialog md-dialog#crmSegmentDialog{
         min-width: 600px;
@@ -32,7 +23,8 @@
         font-size: 14px;
     }
 
-}
+    md-dialog#message-template-dialog md-dialog-content md-content iframe#rendered-html {
+        height: inherit;
+    }
 
-@media (max-width: 768px) {
 }

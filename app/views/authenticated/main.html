@@ -9,13 +9,6 @@
         </div>
 
         <md-menu md-position-mode="target-right target">
-
-          <!--  <div layout="row" layout-align="end center" ng-hide="isLoggedIn" flex>
-                <md-button class="md-warn md-raised md-hue-2"
-                           ng-click="showSignup($event)"
-                           ng-hide="isLoggedIn">Sign Up Here</md-button>
-            </div>-->
-
             <md-button ng-click="$mdOpenMenu($event)">
                 <span ng-bind="userObj.name"></span><md-icon md-font-set="material-icons">keyboard_arrow_down</md-icon>
             </md-button>
@@ -58,7 +51,7 @@
     </div>
 </md-toolbar>
 
-<div layout="row" flex>
+<md-content layout="row" flex>
     <!-- Left Side Navigation : START-->
     <md-sidenav class="left-side-nav md-sidenav-left md-whiteframe-z2"
                 layout="column"
@@ -90,5 +83,5 @@
     <!-- Left Side Navigation : END-->
 
     <!-- Body content -->
-    <div id="content" class="overflow-auto" style="height: inherit;" flex ui-view></div>
-</div>
+    <md-content id="content" class="overflow-auto" flex ui-view></md-content>
+</md-content>

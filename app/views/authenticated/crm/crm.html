@@ -1,6 +1,6 @@
-<div class="md-padding overflow-auto"
+<div id="crm-pane" class="md-padding overflow-auto"
      layout="column" flex>
-    <md-content md-theme="grey">
+    <md-content md-theme="grey" class="md-whiteframe-10dp">
         <md-tabs class="md-primary" md-dynamic-height md-selected="selectedCrmTab">
             <md-tab label="Scheduled Messages" >
                 <div ng-if="selectedCrmTab === 0" ng-controller="scheduledMessagesCtrl"
@@ -8,19 +8,19 @@
                      ng-include="'views/authenticated/crm/scheduledMessages.html'" layout-margin>
                 </div>
             </md-tab>
-            <md-tab label="All Customers" >
+            <md-tab label="All Customers">
                 <div ng-if="selectedCrmTab === 1" ng-controller="allCustomersCtrl"
                      ng-init="fnInitAllCustomers();"
                      ng-include="'views/authenticated/crm/allCustomers.html'" layout-margin>
                 </div>
             </md-tab>
-            <md-tab label="Message History" >
+            <md-tab label="Message History">
                 <div ng-if="selectedCrmTab === 2" ng-controller="messageHistoryCtrl"
                      ng-init="fnInitMessageHistory();"
                      ng-include="'views/authenticated/crm/messageHistory.html'" layout-margin>
                 </div>
             </md-tab>
-            <md-tab label="Message Templates" >
+            <md-tab label="Message Templates">
                 <div ng-if="selectedCrmTab === 3" ng-controller="messageTemplatesCtrl"
                      ng-init="fnInitCrmSegments();"
                      ng-include="'views/authenticated/crm/messageTemplates.html'" layout-margin>
