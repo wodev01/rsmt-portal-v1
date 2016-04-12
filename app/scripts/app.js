@@ -27,7 +27,7 @@ var app = angular
     .constant('localStorage', localStorage)
     .constant('globalTimeZone', ["US/Hawaii", "US/Alaska", "US/Pacific", "US/Arizona", "US/Mountain", "US/Central", "US/Eastern"])
     .constant('toastr', toastr)
-    .constant('userObjKey', 'q995ayycik9');
+    .constant('userObjKey', 'q995ayycik9'); //Math.random().toString(36).substring(7);
 
 
 app.config(function ($mdThemingProvider, toastr, $urlRouterProvider, $stateProvider, $httpProvider) {
@@ -100,13 +100,23 @@ app.config(function ($mdThemingProvider, toastr, $urlRouterProvider, $stateProvi
             templateUrl: "views/login.html",
             controller: 'LoginCtrl'
         })
+        .state('resetPassword', {
+            url: "/reset-password",
+            templateUrl: "views/resetPassword.html",
+            controller: 'ResetPasswordCtrl',
+            resolve: {
+                AuthService : function(AuthService){
+                    return AuthService.fnResetPWTokenVerified();
+                }
+            }
+        })
         .state('verify', {
             url: "/verify",
             templateUrl: "views/authenticated/verify/verify.html",
             controller: 'VerifyCtrl',
             resolve: {
-                GetUser : function(GetUserService){
-                    return GetUserService.fnUserVerified();
+                AuthService : function(AuthService){
+                    return AuthService.fnUserVerified();
                 }
             }
         })
@@ -115,8 +125,8 @@ app.config(function ($mdThemingProvider, toastr, $urlRouterProvider, $stateProvi
             templateUrl: "views/authenticated/payment/payment.html",
             controller: 'PaymentCtrl',
             resolve: {
-                GetUser : function(GetUserService){
-                    return GetUserService.fnPaymentVerified();
+                AuthService : function(AuthService){
+                    return AuthService.fnPaymentVerified();
                 }
             }
         })
@@ -131,8 +141,8 @@ app.config(function ($mdThemingProvider, toastr, $urlRouterProvider, $stateProvi
             controller: 'DashboardCtrl',
             templateUrl: "views/authenticated/dashboard/dashboard.html",
             resolve: {
-                GetUser : function(GetUserService){
-                    return GetUserService.fetchUser(['realtime_dashboard']);
+                AuthService : function(AuthService){
+                    return AuthService.fnGetUser(['realtime_dashboard']);
                 }
             }
         })
@@ -141,8 +151,8 @@ app.config(function ($mdThemingProvider, toastr, $urlRouterProvider, $stateProvi
             controller: 'LocationsCtrl',
             templateUrl: "views/authenticated/locations/locations.html",
             resolve: {
-                GetUser : function(GetUserService){
-                    return GetUserService.fetchUser([]);
+                AuthService : function(AuthService){
+                    return AuthService.fnGetUser([]);
                 }
             }
         })
@@ -151,8 +161,8 @@ app.config(function ($mdThemingProvider, toastr, $urlRouterProvider, $stateProvi
             controller: 'CrmCtrl',
             templateUrl: "views/authenticated/crm/crm.html",
             resolve: {
-                GetUser : function(GetUserService){
-                    return GetUserService.fetchUser(['crm_scheduled']);
+                AuthService : function(AuthService){
+                    return AuthService.fnGetUser(['crm_scheduled']);
                 }
             }
         })
@@ -161,8 +171,8 @@ app.config(function ($mdThemingProvider, toastr, $urlRouterProvider, $stateProvi
             controller: 'ProductsCtrl',
             templateUrl: "views/authenticated/products/products.html",
             resolve: {
-                GetUser : function(GetUserService){
-                    return GetUserService.fetchUser([]);
+                AuthService : function(AuthService){
+                    return AuthService.fnGetUser([]);
                 }
             }
         })
@@ -171,8 +181,8 @@ app.config(function ($mdThemingProvider, toastr, $urlRouterProvider, $stateProvi
             controller: 'LocationSetupCtrl',
             templateUrl: "views/authenticated/locationSetup/locationSetup.html",
             resolve: {
-                GetUser : function(GetUserService){
-                    return GetUserService.fetchUser(['realtime_dashboard']);
+                AuthService : function(AuthService){
+                    return AuthService.fnGetUser(['realtime_dashboard']);
                 }
             }
         })
@@ -181,26 +191,17 @@ app.config(function ($mdThemingProvider, toastr, $urlRouterProvider, $stateProvi
             controller: 'SettingsCtrl',
             templateUrl: 'views/authenticated/settings/settings.html',
             resolve: {
-                GetUser : function(GetUserService){
-                    return GetUserService.fetchUser([]);
+                AuthService : function(AuthService){
+                    return AuthService.fnGetUser([]);
                 }
             }
         });
 
     /*--------- End of State Management ----------*/
 
-    CarglyPartner.configure({
-        applicationId: 'bTkSVhhdCDKmJU1KrE9nmwBllTl8iQ9r', // prod
-        appLabel: 'rsmt',
-        onTwoMinWarning: function () {
-        },
-        onAuthChanged: function () {
-        }
-    });
-
 });
 
-app.run(function ($rootScope, $mdSidenav) {
+app.run(function ($rootScope, $mdDialog, $mdSidenav, $cookies, cookieName) {
     /*----- change ui-grid height -----*/
     $rootScope.fnReturnGridHeight = function (dataLength, intRowHeight, isPaginationEnabled, isFilteringEnabled) {
         var rowHeight = 50; // your row height
@@ -224,4 +225,90 @@ app.run(function ($rootScope, $mdSidenav) {
         }
     };
 
+    /*----- Close all open side-navs -----*/
+    $rootScope.fnCloseSideNavs = function () {
+        var sideNavSelector = angular.element('md-sidenav');
+
+        angular.forEach(sideNavSelector, function (elem) {
+            var componentId = angular.element(elem).attr('md-component-id');
+            if ($mdSidenav(componentId).isOpen()) {
+                $mdSidenav(componentId).close().then(function () {
+                });
+            }
+        });
+    };
+
+    /*----- Cargly Configuration -----*/
+    CarglyPartner.configure({
+        applicationId: 'bTkSVhhdCDKmJU1KrE9nmwBllTl8iQ9r', // prod
+        appLabel: 'rsmt',
+        onTwoMinWarning: function () {
+            var IdleSessionCtrl = ['$scope', '$mdDialog', '$interval', function($scope, $mdDialog, $interval) {
+                $scope.countdown;
+                $scope.minRemaining = 60;
+
+                $scope.fnCloseDialog = function() {
+                    $mdDialog.cancel();
+                };
+
+                var interval = $interval(function() {
+                    if ($scope.countdown === 0) {
+                        $interval.cancel();
+                        $scope.fnCloseDialog();
+                    }
+                    $scope.countdown -= 1;
+                }, 1000);
+
+                $scope.$watch('countdown', function(newval) {
+                    $scope.minRemaining = parseInt(newval / 60) + 1;
+                });
+
+                $scope.extendSession = function() {
+                    $scope.fnCloseDialog();
+                    CarglyPartner.extendSession(function() {
+                    }, function() { });
+                }
+
+            }];
+
+            var token = $cookies.get(cookieName);
+
+            if (token) {
+                $mdDialog.show({
+                    controller: IdleSessionCtrl,
+                    templateUrl: 'views/modals/idleSession.tmpl.html',
+                    clickOutsideToClose: false
+                });
+            }
+        },
+        onAuthChanged: function () {
+        }
+
+    });
+
+    var isMobile = {
+        Android: function() {
+            return navigator.userAgent.match(/Android/i) || navigator.platform.match(/Android/i);
+        },
+        BlackBerry: function() {
+            return navigator.userAgent.match(/BlackBerry/i) || navigator.platform.match(/BlackBerry/i);;
+        },
+        iOS: function() {
+            return navigator.userAgent.match(/iPhone|iPad|iPod/i) || navigator.platform.match(/iPhone|iPad|iPod/i);
+        },
+        Opera: function() {
+            return navigator.userAgent.match(/Opera Mini/i);
+        },
+        Windows: function() {
+            return navigator.userAgent.match(/IEMobile/i);
+        },
+        any: function() {
+            return (isMobile.Android() || isMobile.BlackBerry() || isMobile.iOS() || isMobile.Opera() || isMobile.Windows());
+        }
+    };
+
+    $rootScope.isMobile = isMobile.any();
+
 });
+
+

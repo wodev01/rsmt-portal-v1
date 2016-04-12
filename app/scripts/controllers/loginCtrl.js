@@ -1,6 +1,6 @@
 'use strict';
 app.controller('LoginCtrl',
-    function ($scope, $rootScope, $mdDialog, $mdMedia, $state, toastr, ErrorMsg, localStorage, userObjKey) {
+    function ($scope, $rootScope, $mdDialog, $mdMedia, $location, paymentService, toastr, ErrorMsg, localStorage, userObjKey) {
 
         $scope.user = {isProcessing: false};
 
@@ -17,11 +17,26 @@ app.controller('LoginCtrl',
                     user.isProcessing = false;
                     $scope.fnRefreshDom();
                     localStorage.setItem(userObjKey,escape(JSON.stringify(response)));
+                    toastr.success('Signed in as ' + response.name);
                     if (response.verified === 'true') {
-                        toastr.success('Signed in as ' + response.name);
-                        $state.go('main.dashboard');
+                        /*paymentService.fetchUserPaymentInfo()
+                            .then(function(res) {
+                                if (res.status === 404) {
+                                    $location.url('/payment');
+                                }
+                                else {*/
+                                    var userSubscriptions = JSON.parse(response.subscriptions);
+                                    angular.forEach(userSubscriptions, function (obj) {
+                                        if(obj.subscriptions.indexOf('realtime_dashboard') !== -1){
+                                            $location.url('/dashboard');
+                                        }else{
+                                            $location.url('/locations');
+                                        }
+                                    });
+                                /*}
+                            });*/
                     } else {
-                        $state.go('verify');
+                        $location.url('/verify');
                     }
                 },
                 function (rejection) {

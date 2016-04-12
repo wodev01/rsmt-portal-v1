@@ -1,8 +1,4 @@
-.login-form-container {
-    min-width: 500px;
-}
-
-.verify-form-container, .paymentInfo-form-container {
+.center-form-container {
     width: 500px;
 }
 

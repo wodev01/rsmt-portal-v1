@@ -7,8 +7,7 @@ app.controller('PaymentCtrl',
                 $cookies.remove(cookieName);
                 localStorage.removeItem(userObjKey);
                 $state.go('login');
-            }, function () {
-            });
+            }, function () {});
         };
 
         $scope.fnOpenTermsOfServiceModal = function (ev) {
@@ -37,7 +36,9 @@ app.controller('PaymentCtrl',
 
         $scope.fnUpdateUserPaymentInfo = function (payment) {
             payment.isProcessing = true;
-            ChargeIO.create_token(payment, chargeIOResponseHandler,function(response) {
+            var paymentObj = angular.copy(payment);
+            delete paymentObj.isProcessing;
+            ChargeIO.create_token(paymentObj, chargeIOResponseHandler,function(response) {
                 // Show the errors on the form
                 payment.isProcessing = false;
                 console.log(response.error.message);

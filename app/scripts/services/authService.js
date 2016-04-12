@@ -1,22 +1,22 @@
 'use strict';
-app.factory('GetUserService', ['$q', '$state','$cookies', 'paymentService', 'cookieName','localStorage', 'ErrorMsg', 'userObjKey',
-    function ($q, $state, $cookies, paymentService, cookieName, localStorage, ErrorMsg, userObjKey) {
-        var GetUserService = {};
+app.factory('AuthService', ['$q', '$location', '$cookies', 'paymentService', 'cookieName','localStorage', 'ErrorMsg', 'userObjKey',
+    function ($q, $location, $cookies, paymentService, cookieName, localStorage, ErrorMsg, userObjKey) {
+        var AuthService = {};
 
-        GetUserService.fetchUser = function (subscriptions) {
+        AuthService.fnGetUser = function (subscriptions) {
             var token = $cookies.get(cookieName);
             var defer = $q.defer();
             var hasSubscriptions = true;
             CarglyPartner._getUser(token, function (response) {
                 localStorage.setItem(userObjKey,escape(JSON.stringify(response)));
                 if (response.verified === 'true') {
-                    paymentService.fetchUserPaymentInfo()
+                    /*paymentService.fetchUserPaymentInfo()
                         .then(function(res){
                             if(res.status === 404){
-                                $state.go('payment');
+                                $location.url('/payment');
                                 defer.resolve(res);
                             }
-                            else{
+                            else{*/
                                 var userSubscriptions = JSON.parse(response.subscriptions);
                                 angular.forEach(userSubscriptions, function (obj) {
                                     angular.forEach(subscriptions, function (value) {
@@ -30,13 +30,13 @@ app.factory('GetUserService', ['$q', '$state','$cookies', 'paymentService', 'coo
                                 if (hasSubscriptions) {
                                     defer.resolve(hasSubscriptions);
                                 } else {
-                                    $state.go('main.locations');
+                                    $location.url('/locations');
                                     defer.resolve(response);
                                 }
-                            }
-                        });
+                            /*}
+                        });*/
                 } else {
-                    $state.go('verify');
+                    $location.url('/verify');
                     defer.resolve();
                 }
             },function(error){
@@ -48,23 +48,30 @@ app.factory('GetUserService', ['$q', '$state','$cookies', 'paymentService', 'coo
             return defer.promise;
         };
 
-        GetUserService.fnUserVerified = function () {
+        AuthService.fnUserVerified = function () {
             var token = $cookies.get(cookieName);
             var defer = $q.defer();
             CarglyPartner._getUser(token, function (response) {
                 localStorage.setItem(userObjKey,escape(JSON.stringify(response)));
                 if (response.verified === 'true') {
-                    paymentService.fetchUserPaymentInfo()
+                    /*paymentService.fetchUserPaymentInfo()
                         .then(function(res){
                             if(res.status === 404){
-                                $state.go('payment');
+                                $location.url('/payment');
                                 defer.resolve(res);
                             }
-                            else{
-                                $state.go('main.locations');
+                            else{*/
+                                var userSubscriptions = JSON.parse(response.subscriptions);
+                                angular.forEach(userSubscriptions, function (obj) {
+                                    if(obj.subscriptions.indexOf('realtime_dashboard') !== -1){
+                                        $location.url('/dashboard');
+                                    }else{
+                                        $location.url('/locations');
+                                    }
+                                });
                                 defer.resolve(response);
-                            }
-                        });
+                            /*}
+                        });*/
                 } else {
                     defer.resolve();
                 }
@@ -77,23 +84,31 @@ app.factory('GetUserService', ['$q', '$state','$cookies', 'paymentService', 'coo
             return defer.promise;
         };
 
-        GetUserService.fnPaymentVerified = function () {
+        AuthService.fnPaymentVerified = function () {
             var token = $cookies.get(cookieName);
             var defer = $q.defer();
             CarglyPartner._getUser(token, function (response) {
                 localStorage.setItem(userObjKey,escape(JSON.stringify(response)));
                 if (response.verified === 'true') {
-                    paymentService.fetchUserPaymentInfo()
+                    /*paymentService.fetchUserPaymentInfo()
                         .then(function(res){
                             if(res.status === 404){
                                 defer.resolve(res);
                             }
-                            else{
-                                $state.go('main.locations');
+                            else{*/
+                                var userSubscriptions = JSON.parse(response.subscriptions);
+                                angular.forEach(userSubscriptions, function (obj) {
+                                    if(obj.subscriptions.indexOf('realtime_dashboard') !== -1){
+                                        $location.url('/dashboard');
+                                    }else{
+                                        $location.url('/locations');
+                                    }
+                                });
                                 defer.resolve(response);
-                            }
-                        });
+                            /*}
+                        });*/
                 } else {
+                    $location.url('/verify');
                     defer.resolve();
                 }
             },function(error){
@@ -104,6 +119,19 @@ app.factory('GetUserService', ['$q', '$state','$cookies', 'paymentService', 'coo
 
             return defer.promise;
         };
-        return GetUserService;
+
+        AuthService.fnResetPWTokenVerified = function () {
+            var defer = $q.defer();
+            /*----- Resolve reset password page if resetpw token exist ----*/
+            if(CarglyPartner.queryParams != null && CarglyPartner.queryParams.resetpw != null
+                && CarglyPartner.queryParams.resetpw != '') {
+                defer.resolve();
+            } else {
+                $location.url('/login');
+                defer.resolve();
+            }
+            return defer.promise;
+        };
+        return AuthService;
     }
 ]);

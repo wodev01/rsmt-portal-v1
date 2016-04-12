@@ -9,8 +9,15 @@ app.factory('InterceptorsService',
                 //If 'token'(cookie) not available ask to user login.
                 var deferred = $q.defer();
                 if (!token) {
-                    $location.url('/login');
-                    deferred.resolve(req);
+                    /*----- Resolve reset password page if resetpw token exist ----*/
+                    if(CarglyPartner.queryParams != null && CarglyPartner.queryParams.resetpw != null
+                        && CarglyPartner.queryParams.resetpw != '') {
+                        $location.url('/reset-password');
+                        deferred.resolve(req);
+                    }else {
+                        $location.url('/login');
+                        deferred.resolve(req);
+                    }
                 }
                 else {
                     //If user already login and trying to access login screen.
