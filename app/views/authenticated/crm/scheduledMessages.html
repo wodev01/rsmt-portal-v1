@@ -92,7 +92,7 @@
                 <div class="md-headline text-center">No CRM Interaction available.</div>
             </div>
 
-            <!--ngGrid-->
+            <!--UI Grid-->
             <div class="margin-bottom-10" ng-if="isCrmInteractionData"
                  ui-grid="crmInteractionGridOptions" ui-grid-selection ui-grid-auto-resize
                  ng-style="$root.fnReturnGridHeight(crmInteractionData.length, crmInteractionGridOptions.rowHeight)">
@@ -106,6 +106,7 @@
                         <span ng-if="!isMoreCrmInteractions">More CRM Interactions </span>
                     </md-button>
                 </div>
+
                 <div ng-if="!isPagingData">
                     <div class="md-title">... No more results found ...</div>
                 </div>

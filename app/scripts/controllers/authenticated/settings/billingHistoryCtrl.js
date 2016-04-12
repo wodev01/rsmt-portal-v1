@@ -5,8 +5,8 @@ app.controller('BillingHistoryCtrl',
         $scope.billingHistoryFilterOptions = {
             useExternalFilter: false
         };
-        $scope.billingHistoryTotalServerItems = 0;
 
+        $scope.billingHistoryTotalServerItems = 0;
 
         $scope.setPagingData = function (data) {
             $scope.billingHistoryData = data;
@@ -17,21 +17,22 @@ app.controller('BillingHistoryCtrl',
         };
 
         $scope.getPagedDataAsync = function () {
-                billingHistoryService.fetchBillingHistory().then(function(data){
-                    if(data.length !== 0){
-                        $scope.isDataNotNull = true;
-                        $scope.isMsgShow = false;
-                        $scope.setPagingData(data);
-                    }else{
-                        $scope.isDataNotNull = false;
-                        $scope.isMsgShow = true;
-                    }
-                });
+            billingHistoryService.fetchBillingHistory().then(function (data) {
+                if (data.length !== 0) {
+                    $scope.isDataNotNull = true;
+                    $scope.isMsgShow = false;
+                    $scope.setPagingData(data);
+                } else {
+                    $scope.isDataNotNull = false;
+                    $scope.isMsgShow = true;
+                }
+            });
         };
 
-
-        $scope.fnInitBillingHistory= function (){
-            $scope.getPagedDataAsync();
+        $scope.fnInitBillingHistory = function () {
+            if ($stateParams.settingsName == 'billingHistory') {
+                $scope.getPagedDataAsync();
+            }
         };
 
         $scope.billingHistoryGridOptions = {
@@ -42,10 +43,16 @@ app.controller('BillingHistoryCtrl',
             enableRowHeaderSelection: false,
             enableVerticalScrollbar: 0,
             columnDefs: [
-                {field: 'date', displayName: 'Date', minWidth:150,cellFilter: 'date:\'dd-MM-yyyy\'', enableHiding: false},
-                {field: 'reference', displayName: 'Invoice #', minWidth:100, enableHiding: false},
-                {field: 'description', displayName: 'Description', minWidth:250, enableHiding: false},
-                {field: 'amount', displayName: 'Amount', minWidth:100, enableHiding: false}
+                {
+                    field: 'date',
+                    displayName: 'Date',
+                    minWidth: 150,
+                    cellFilter: 'date:\'dd-MM-yyyy\'',
+                    enableHiding: false
+                },
+                {field: 'reference', displayName: 'Invoice #', minWidth: 100, enableHiding: false},
+                {field: 'description', displayName: 'Description', minWidth: 250, enableHiding: false},
+                {field: 'amount', displayName: 'Amount', minWidth: 100, enableHiding: false}
             ],
             onRegisterApi: function (gridApi) {
                 gridApi.selection.on.rowSelectionChanged($scope, function (row) {
@@ -63,7 +70,6 @@ app.controller('BillingHistoryCtrl',
                 .cancel('Cancel')
                 .targetEvent(event);
             $mdDialog.show(confirm).then(function () {
-//            delete api call here
             });
         };
 

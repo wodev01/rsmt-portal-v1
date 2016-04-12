@@ -92,7 +92,7 @@ app.controller('messageHistoryCtrl',
                     name: 'name',
                     cellTemplate: $scope.nameTmpl,
                     displayName: 'Customer Name',
-                    minWidth: 100,
+                    minWidth: 180,
                     enableHiding: false
                 },
                 {
@@ -102,8 +102,8 @@ app.controller('messageHistoryCtrl',
                     minWidth: 200,
                     width: 250, enableHiding: false
                 },
-                {field: 'delivery_type', displayName: 'Delivery', enableHiding: false},
-                {field: 'status', displayName: 'Status', enableHiding: false},
+                {field: 'delivery_type', displayName: 'Delivery', minWidth: 100, enableHiding: false},
+                {field: 'status', displayName: 'Status', minWidth: 100, enableHiding: false},
                 {
                     field: 'repair_order.closed', displayName: 'Closed',
                     cellFilter: 'date:\'MM/dd/yyyy h:mm a\'', minWidth: 180, enableHiding: false

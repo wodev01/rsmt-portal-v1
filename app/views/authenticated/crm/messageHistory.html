@@ -3,7 +3,7 @@
         <div class="md-headline text-center">No Locations Available.</div>
     </div>
     <div ng-if="isLocationsData">
-        <section layout="row">
+        <section layout="column" layout-gt-sm="row">
             <div flex>
                 <md-input-container >
                     <md-select aria-label="Select location" ng-model="idsObj.locationId"
@@ -24,14 +24,18 @@
                     </md-select>
                 </md-input-container>
             </div>
+
             <div ng-if="isSegmentsData">
-                <div layout="column" layout-gt-sm="row" layout-align="end center">
+                <div layout="row" layout-align="end center"
+                     layout-align-sm="space-between center"
+                     layout-align-xs="space-between center">
                     <md-button aria-label="Refresh Grid"
                                class="md-raised md-accent"
                                ng-disabled="!isCrmInteractionData"
                                ng-click="fnRefreshGrid(idsObj)">Refresh</md-button>
+
                     <md-button aria-label="Download CSV"
-                               class="md-raised md-accent"
+                               class="md-raised md-accent margin-right-0"
                                ng-disabled="!isCrmInteractionData"
                                ng-click="fnDownloadInteractionCSV($event, idsObj)">Export Interaction CSV</md-button>
                 </div>

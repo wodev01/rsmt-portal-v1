@@ -30,9 +30,10 @@ app.controller('UsersCtrl',
         });
 
         $scope.fnInitUsers = function () {
-            $scope.getPagedDataAsync();
+            if ($stateParams.settingsName == 'users') {
+                $scope.getPagedDataAsync();
+            }
         };
-
 
         $scope.userAction = '<div layout="row"> ' +
             '<md-button class="md-icon-button md-accent" ng-click="grid.appScope.fnUserEdit(row,$event);">' +
@@ -45,7 +46,6 @@ app.controller('UsersCtrl',
             '</md-button> ' +
             '</div>';
 
-
         $scope.userGridOptions = {
             data: 'usersData',
             rowHeight: 50,
@@ -54,8 +54,8 @@ app.controller('UsersCtrl',
             enableRowHeaderSelection: false,
             enableVerticalScrollbar: 0,
             columnDefs: [
-                {field: 'name', displayName: 'Name', minWidth:100, enableHiding: false},
-                {field: 'email', displayName: 'Email', minWidth:100, enableHiding: false},
+                {field: 'name', displayName: 'Name', minWidth: 180, enableHiding: false},
+                {field: 'email', displayName: 'Email', minWidth: 200, enableHiding: false},
                 {field: 'role', displayName: 'Role', minWidth: 100, enableHiding: false},
                 {field: 'verified', displayName: 'Verified', minWidth: 100, enableHiding: false},
                 {
@@ -83,7 +83,7 @@ app.controller('UsersCtrl',
                 .cancel('Cancel')
                 .targetEvent(event);
             $mdDialog.show(confirm).then(function () {
-                userService.deleteUser(row.entity.id).then(function(){
+                userService.deleteUser(row.entity.id).then(function () {
                     $scope.getPagedDataAsync();
                 });
             });
@@ -98,21 +98,21 @@ app.controller('UsersCtrl',
         };
 
         //Swapping view open function
-        $scope.fnOpenSwap = function() {
-            setTimeout(function(){
+        $scope.fnOpenSwap = function () {
+            setTimeout(function () {
                 $scope.rightView = '';
                 $scope.$apply();
                 $scope.rightView = 'views/authenticated/settings/manageUser.html';
                 $scope.$apply();
-                $mdSidenav('userSwap').open().then(function(){
-                    });
+                $mdSidenav('userSwap').open().then(function () {
+                });
             });
         };
 
         //Swapping view close function
-        $scope.fnCloseSwap = function() {
-            $mdSidenav('userSwap').close()
-                .then(function(){
-                });
+        $scope.fnCloseSwap = function () {
+            $mdSidenav('userSwap').close().then(function () {
+            });
         };
+
     });

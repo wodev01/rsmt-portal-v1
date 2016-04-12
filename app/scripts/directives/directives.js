@@ -335,10 +335,14 @@ app.directive('repairOrderGrid', function($mdDialog,allCustomerService) {
                 var intRowHeight = 50;
                 if(!id) {
                     intRowHeight = 80;
-                    $scope.laborTmpl = '<div layout="column" add-description arr="row.entity.labor"></div>';
-                    $scope.partsTmpl = '<div layout="column" add-description arr="row.entity.parts"></div>';
+
+                    $scope.laborTmpl = '<div class="highLight ui-grid-cell-contents overflow-auto" layout="column" ' +
+                        'layout-fill add-description arr="row.entity.labor"></div>';
+                    $scope.partsTmpl = '<div class="highLight ui-grid-cell-contents overflow-auto" layout="column" ' +
+                        'layout-fill add-description arr="row.entity.parts"></div>';
+
                     colDffArr = [
-                        {name:'action', displayName: '',cellTemplate: $scope.roAction, minWidth: 50, enableSorting: false, enableColumnMenu: false},
+                        {name:'action', displayName: '',cellTemplate: $scope.roAction, minWidth: 50, enableColumnMenu: false},
                         {field: 'closed', displayName: 'Closed', cellFilter: 'date:\'MM/dd/yyyy h:mm a\'', minWidth: 200},
                         {field: 'inspection', displayName: 'Inspection', cellFilter: 'inspection', minWidth: 110},
                         {field: 'order_number', displayName: 'RO #', minWidth: 100},
@@ -373,6 +377,7 @@ app.directive('repairOrderGrid', function($mdDialog,allCustomerService) {
                     enableRowHeaderSelection: false,
                     enableVerticalScrollbar: 0,
                     multiSelect: false,
+                    enableSorting: false,
                     enableGridMenu: true,
                     columnDefs: colDffArr,
                     onRegisterApi: function (gridApi) {
@@ -417,8 +422,9 @@ app.directive('addDescription', function() {
         },
         link: function (scope, iElement) {
             var html = '';
-            angular.forEach(scope.arr,function(objVal){
-                html += '<div style="margin: 10px;">'+objVal.description+'</div>';
+            angular.forEach(scope.arr, function (objVal) {
+                html += '<div style="white-space: normal; line-height: normal;" layout-margin>'
+                    + objVal.description + '</div>';
             });
             iElement.append(html);
         }

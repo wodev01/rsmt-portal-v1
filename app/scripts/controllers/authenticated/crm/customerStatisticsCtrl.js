@@ -129,7 +129,7 @@ app.controller('customerStatisticsCtrl',
         function filterVehicleByModelName(custObj) {
             var filterVehArr = [];
             angular.forEach(custObj.vehicles, function (vObj) {
-                if (vObj.model == $scope.selectedModel.model) {
+                if (vObj.model == $scope.selectedModel) {
                     filterVehArr.push(vObj);
                 }
             });
@@ -139,7 +139,7 @@ app.controller('customerStatisticsCtrl',
 
         /*-------------------- Filter markers by customer name | address | vehicle model ----------------*/
         function createMarker(latlng, custObj) {
-            if ($scope.searchText !== '' && ($scope.selectedModel && $scope.selectedModel.model !== '')) {
+            if ($scope.searchText !== '' && ($scope.selectedModel && $scope.selectedModel !== '')) {
                 custObj.vehicles = filterVehicleByModelName(custObj);
 
                 var foundByName = custObj._fullName.search(new RegExp($scope.searchText, "i"));
@@ -157,7 +157,7 @@ app.controller('customerStatisticsCtrl',
                         setMarkerOnMap(latlng, custObj);
                     }
                 }
-            } else if ($scope.selectedModel && $scope.selectedModel.model !== '') {
+            } else if ($scope.selectedModel && $scope.selectedModel !== '') {
                 custObj.vehicles = filterVehicleByModelName(custObj);
 
                 if (custObj.vehicles.length != 0) {

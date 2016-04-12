@@ -310,5 +310,3 @@ app.run(function ($rootScope, $mdDialog, $mdSidenav, $cookies, cookieName) {
     $rootScope.isMobile = isMobile.any();
 
 });
-
-

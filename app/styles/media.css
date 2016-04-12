@@ -8,7 +8,7 @@
     }
 
     /*---------- Segments modal ----------*/
-    md-dialog#manage-scheduledmsg-dialog md-dialog#crmSegmentDialog{
+    md-dialog#manage-scheduledmsg-dialog, md-dialog#message-template-dialog {
         min-width: 600px;
     }
 
@@ -27,4 +27,12 @@
         height: inherit;
     }
 
+}
+
+@media (max-width: 768px) {
+    /* Customize breadcrumb */
+    #customerTab ul.breadcrumb {
+        font-size: 12px;
+        margin-left: -3.3em;
+    }
 }

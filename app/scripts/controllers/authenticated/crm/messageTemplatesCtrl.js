@@ -81,7 +81,7 @@ app.controller('messageTemplatesCtrl',
             enableRowHeaderSelection: false,
             enableVerticalScrollbar: 0,
             columnDefs: [
-                {field: 'name', displayName: 'Segment Name', minWidth: 100, enableHiding: false},
+                {field: 'name', displayName: 'Segment Name', minWidth: 250, enableHiding: false},
                 {
                     name: 'action',
                     displayName: '',

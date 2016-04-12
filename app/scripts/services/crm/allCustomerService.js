@@ -1,6 +1,6 @@
 'use strict';
-app.factory('allCustomerService', ['$q', '$rootScope',
-    function($q, $rootScope) {
+app.factory('allCustomerService', ['$q', 'ErrorMsg',
+    function($q, ErrorMsg) {
         var allCustomerService = {};
         var pagingCursor = '';
 
@@ -14,7 +14,7 @@ app.factory('allCustomerService', ['$q', '$rootScope',
                     defer.resolve(data);
                 },
                 error: function(error){
-                    $rootScope.fnCheckStatus(error.status);
+                    ErrorMsg.CheckStatusCode(error.status);
                     defer.resolve(error);
                 }
             });
@@ -36,7 +36,7 @@ app.factory('allCustomerService', ['$q', '$rootScope',
                     defer.resolve(response);
                 },
                 error:function(error) {
-                    $rootScope.fnCheckStatus(error.status);
+                    ErrorMsg.CheckStatusCode(error.status);
                     defer.resolve(error);
                 }
             });
@@ -54,7 +54,7 @@ app.factory('allCustomerService', ['$q', '$rootScope',
                     defer.resolve(data);
                 },
                 error: function(error){
-                    $rootScope.fnCheckStatus(error.status);
+                    ErrorMsg.CheckStatusCode(error.status);
                     defer.resolve(error);
                 }
             });
@@ -73,7 +73,7 @@ app.factory('allCustomerService', ['$q', '$rootScope',
                     defer.resolve(data);
                 },
                 error: function(error){
-                    $rootScope.fnCheckStatus(error.status);
+                    ErrorMsg.CheckStatusCode(error.status);
                     defer.resolve(error);
                 }
             });
@@ -93,7 +93,7 @@ app.factory('allCustomerService', ['$q', '$rootScope',
                     defer.resolve(data);
                 },
                 error: function(error){
-                    $rootScope.fnCheckStatus(error.status);
+                    ErrorMsg.CheckStatusCode(error.status);
                     defer.resolve(error);
                 }
             });
@@ -112,7 +112,7 @@ app.factory('allCustomerService', ['$q', '$rootScope',
                     defer.resolve(data);
                 },
                 error: function(error){
-                    $rootScope.fnCheckStatus(error.status);
+                    ErrorMsg.CheckStatusCode(error.status);
                     defer.resolve(error);
                 }
             });
@@ -129,7 +129,7 @@ app.factory('allCustomerService', ['$q', '$rootScope',
                     defer.resolve(data);
                 },
                 error:function(error) {
-                    $rootScope.fnCheckStatus(error.status);
+                    ErrorMsg.CheckStatusCode(error.status);
                     defer.resolve(error);
                 }
             });
@@ -146,7 +146,7 @@ app.factory('allCustomerService', ['$q', '$rootScope',
                     defer.resolve(data);
                 },
                 error:function(error) {
-                    $rootScope.fnCheckStatus(error.status);
+                    ErrorMsg.CheckStatusCode(error.status);
                     defer.resolve(error);
                 }
             });
@@ -163,7 +163,7 @@ app.factory('allCustomerService', ['$q', '$rootScope',
                     defer.resolve(data);
                 },
                 error:function(error) {
-                    $rootScope.fnCheckStatus(error.status);
+                    ErrorMsg.CheckStatusCode(error.status);
                     defer.resolve(error);
                 }
             });
@@ -180,7 +180,7 @@ app.factory('allCustomerService', ['$q', '$rootScope',
                     defer.resolve(data);
                 },
                 error:function(error) {
-                    $rootScope.fnCheckStatus(error.status);
+                    ErrorMsg.CheckStatusCode(error.status);
                     defer.resolve(error);
                 }
             });
@@ -199,7 +199,7 @@ app.factory('allCustomerService', ['$q', '$rootScope',
                     defer.resolve(data);
                 },
                 error:function(error) {
-                    $rootScope.fnCheckStatus(error.status);
+                    ErrorMsg.CheckStatusCode(error.status);
                     defer.resolve(error);
                 }
             });
@@ -216,7 +216,7 @@ app.factory('allCustomerService', ['$q', '$rootScope',
                     defer.resolve(data);
                 },
                 error:function(error) {
-                    $rootScope.fnCheckStatus(error.status);
+                    ErrorMsg.CheckStatusCode(error.status);
                     defer.resolve(error);
                 }
             });
@@ -233,7 +233,7 @@ app.factory('allCustomerService', ['$q', '$rootScope',
                     defer.resolve(data);
                 },
                 error:function(error) {
-                    $rootScope.fnCheckStatus(error.status);
+                    ErrorMsg.CheckStatusCode(error.status);
                     defer.resolve(error);
                 }
             });
@@ -250,7 +250,7 @@ app.factory('allCustomerService', ['$q', '$rootScope',
                     defer.resolve(data);
                 },
                 error:function(error) {
-                    $rootScope.fnCheckStatus(error.status);
+                    ErrorMsg.CheckStatusCode(error.status);
                     defer.resolve(error);
                 }
             });
@@ -272,7 +272,7 @@ app.factory('allCustomerService', ['$q', '$rootScope',
                     defer.resolve(response);
                 },
                 error:function(error) {
-                    $rootScope.fnCheckStatus(error.status);
+                    ErrorMsg.CheckStatusCode(error.status);
                     defer.resolve(error);
                 }
             });
