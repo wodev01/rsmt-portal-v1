@@ -182,7 +182,7 @@ app.config(function ($mdThemingProvider, toastr, $urlRouterProvider, $stateProvi
             templateUrl: "views/authenticated/locationSetup/locationSetup.html",
             resolve: {
                 AuthService : function(AuthService){
-                    return AuthService.fnGetUser(['realtime_dashboard']);
+                    return AuthService.fnGetUser([]);
                 }
             }
         })

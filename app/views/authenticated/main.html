@@ -76,7 +76,7 @@
             <md-icon md-font-set="material-icons">redeem</md-icon> Products</md-button>
 
         <md-button class="md-primary" ng-class="fnIsActive('/location/setup')"
-                   ng-if="fnCheckSubscription(userSubscriptions,['realtime_dashboard'])"
+                   ng-if="fnCheckSubscription(userSubscriptions,[])"
                    ng-click="$root.fnCloseSideNavs();" ui-sref="main.locationSetup">
             <md-icon md-font-set="material-icons">pin_drop</md-icon> Location Setup</md-button>
     </md-sidenav>

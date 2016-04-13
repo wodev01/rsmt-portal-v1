@@ -73,6 +73,7 @@ app.factory('AuthService', ['$q', '$location', '$cookies', 'paymentService', 'co
                             /*}
                         });*/
                 } else {
+                    $location.url('/verify');
                     defer.resolve();
                 }
             },function(error){
