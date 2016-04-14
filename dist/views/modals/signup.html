@@ -1,0 +1,73 @@
+<md-dialog aria-label="Sign Up" flex ng-cloak>
+    <form name="businessForm" novalidate>
+        <md-toolbar>
+            <div class="md-toolbar-tools">
+                <h2>Partner Sign-up</h2>
+                <span flex></span>
+                <md-button class="md-icon-button" ng-click="cancel()">
+                    <md-icon md-font-set="material-icons">close</md-icon>
+                    <md-tooltip md-direction="top">Close</md-tooltip>
+                </md-button>
+            </div>
+        </md-toolbar>
+        <md-dialog-content>
+            <div class="md-dialog-content md-padding" layout="column">
+                <div ng-if="isProcessing">
+                    <div ng-include="'views/loader.html'"></div>
+                </div>
+                <md-input-container class="remove-error-space" flex>
+                    <label>Business Name</label>
+                    <input name=businessName"" ng-model="user.businessName" required ng-minlength="5">
+                </md-input-container>
+                <md-input-container class="remove-error-space" flex>
+                    <label>Business Zip</label>
+                    <input name="businessZip" ng-model="user.businessZip" required ng-pattern="/^[0-9]+$/"
+                           ng-minlength="5"
+                           ng-maxlength="20"/>
+                </md-input-container>
+                <md-input-container class="md-block" flex>
+                    <label>Business Timezone</label>
+                    <md-select ng-model="user.businessTimezone">
+                        <md-option ng-repeat="timezone in timeZoneDDOptions" ng-value="timezone">
+                            {{timezone}}
+                        </md-option>
+                    </md-select>
+                </md-input-container>
+                <md-input-container class="remove-error-space" flex>
+                    <label>Business Website</label>
+                    <input name="businessUrl" ng-model="user.businessUrl" required
+                           ng-pattern="/^\w+([\.-]?\w+)*\w+([\.-]?\w+)*(\.\w{2,3})+$/"/>
+                </md-input-container>
+                <md-input-container class="remove-error-space" flex>
+                    <label>Contact Name</label>
+                    <input name="contactName" ng-model="user.contactName" required ng-minlength="6"
+                           ng-pattern="/^[A-Za-z ]+$/"/>
+                </md-input-container>
+                <md-input-container class="remove-error-space" flex>
+                    <label>Contact Email</label>
+                    <input name="contactEmail" type="email" ng-model="user.contactEmail" required ng-minlength="5">
+                </md-input-container>
+                <md-input-container class="remove-error-space" flex>
+                    <label>Password</label>
+                    <input name="passwd" type="password" ng-model="user.password" required minlength="5">
+                </md-input-container>
+                <md-input-container class="remove-error-space" flex>
+                    <label>Password Again</label>
+                    <input name="confirmPassword" type="password" ng-model="user.confirmPassword" required
+                           minlength="5">
+                </md-input-container>
+                <md-checkbox md-no-ink aria-label="Checkbox No Ink" ng-model="agreed" class="md-accent" required>
+                    <a ng-click="fnOpenTermsOfServiceModal($event)" href="javascript:void(0)">Agree to Terms</a>
+                </md-checkbox>
+                <div><span class="text-danger"> {{ error }}</span></div>
+
+            </div>
+        </md-dialog-content>
+        <md-dialog-actions layout="row">
+            <md-button class="md-raised md-accent" ng-disabled="businessForm.$invalid" ng-click="registerUser()">
+                Create Partner Account
+            </md-button>
+            <md-button class="md-warn md-raised md-hue-2" ng-click="hide()">Cancel</md-button>
+        </md-dialog-actions>
+    </form>
+</md-dialog>

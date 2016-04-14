@@ -1,0 +1,79 @@
+<div  id="message-history-tab">
+    <div ng-if="!isLocationsData" class="margin-bottom-10">
+        <div class="md-headline text-center">No Locations Available.</div>
+    </div>
+    <div ng-if="isLocationsData">
+        <section layout="column" layout-gt-sm="row">
+            <div flex>
+                <md-input-container >
+                    <md-select aria-label="Select location" ng-model="idsObj.locationId"
+                               ng-change="fnChangeLocation(idsObj.locationId);">
+                        <md-option ng-repeat="location in locationOptions" ng-value="location.id">
+                            {{location.name}}
+                        </md-option>
+                    </md-select>
+                </md-input-container>
+
+                <md-input-container >
+                    <md-select aria-label="Select Type" ng-model="idsObj.segmentId"
+                               ng-if="isSegmentsData"
+                               ng-change="fnChangeSegment(idsObj);">
+                        <md-option ng-repeat="segment in segmentsOptions" ng-value="segment.id">
+                            {{segment.name}}
+                        </md-option>
+                    </md-select>
+                </md-input-container>
+            </div>
+
+            <div ng-if="isSegmentsData">
+                <div layout="row" layout-align="end center"
+                     layout-align-sm="space-between center"
+                     layout-align-xs="space-between center">
+                    <md-button aria-label="Refresh Grid"
+                               class="md-raised md-accent"
+                               ng-disabled="!isCrmInteractionData"
+                               ng-click="fnRefreshGrid(idsObj)">Refresh</md-button>
+
+                    <md-button aria-label="Download CSV"
+                               class="md-raised md-accent margin-right-0"
+                               ng-disabled="!isCrmInteractionData"
+                               ng-click="fnDownloadInteractionCSV($event, idsObj)">Export Interaction CSV</md-button>
+                </div>
+            </div>
+        </section>
+
+        <div ng-if="!isSegmentsData" class="margin-bottom-10">
+            <div class="md-headline text-center">No Segments Available.</div>
+        </div>
+
+        <div ng-if="isSegmentsData">
+            <div ng-if="!isCrmInteractionData && !isCrmMsgGridShow" layout="column" layout-align="center center"
+                 layout-fill flex>
+                <md-progress-circular class="md-accent" md-diameter="100" md-mode="indeterminate"></md-progress-circular>
+            </div>
+
+            <div ng-if="isCrmMsgGridShow" class="margin-bottom-10">
+                <div class="md-headline text-center">No CRM Interaction available</div>
+            </div>
+
+            <!--ngGrid-->
+            <div class="margin-bottom-10" ng-if="isCrmInteractionData"
+                 ui-grid="crmInteractionGridOptions" ui-grid-selection ui-grid-auto-resize
+                 ng-style="$root.fnReturnGridHeight(crmInteractionData.length,crmInteractionGridOptions.rowHeight);">
+            </div>
+
+            <div ng-if="isCrmInteractionData" layout="row" layout="row" layout-align="center center" layout-margin>
+                <div ng-if="isPagingData">
+                    <md-button aria-label="More Segment Interactions" class="md-raised md-accent"
+                               ng-click="fnLoadMoreCrmInteractions(idsObj)" >
+                        <span ng-if="isMoreCrmInteractions"> Loading... </span>
+                        <span ng-if="!isMoreCrmInteractions">More CRM Interactions </span>
+                    </md-button>
+                </div>
+                <div ng-if="!isPagingData">
+                    <div class="md-title">... No more results found ...</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,124 @@
+<div class="md-padding">
+    <div class="margin-bottom-10" layout="row" layout-align="space-between center">
+        <div class="md-display-1">Account Settings</div>
+    </div>
+
+    <form name="partner_form" id="partner_form" layout="column" novalidate flex="70">
+        <div class="md-title">Business Information</div>
+        <div layout="column" class="md-padding">
+            <md-input-container class="remove-error-space">
+                <label>Business Name</label>
+                <input ng-model="user.businessName" required minlength="5">
+            </md-input-container>
+
+            <md-input-container class="remove-error-space">
+                <label>Business Website</label>
+                <input ng-model="user.website" required
+                       ng-pattern="/^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/">
+            </md-input-container>
+
+            <md-input-container class="remove-error-space">
+                <label>Address</label>
+                <input ng-model="user.address">
+            </md-input-container>
+
+            <md-input-container class="remove-error-space">
+                <label>City</label>
+                <input ng-model="user.city">
+            </md-input-container>
+
+            <md-input-container class="remove-error-space">
+                <label>State</label>
+                <input ng-model="user.state">
+            </md-input-container>
+
+            <md-input-container class="remove-error-space">
+                <label>Business Zip</label>
+                <input ng-model="user.zip" md-maxlength="10" minlength="5" ng-pattern="/^[0-9]+$/" required>
+            </md-input-container>
+
+            <md-input-container>
+                <label>Business Timezone</label>
+                <md-select aria-label="Select Timezone" ng-model="user.timezone">
+                    <md-option ng-repeat="option in timeZoneDDOptions" ng-value="option">
+                        {{option}}
+                    </md-option>
+                </md-select>
+            </md-input-container>
+        </div>
+
+
+        <div class="md-title">Contact Information</div>
+        <div class="md-padding" layout="column">
+            <md-input-container class="remove-error-space">
+                <label>Contact Name</label>
+                <input ng-model="user.contactName" required minlength="5" ng-pattern="/^[A-Za-z ]+$/">
+            </md-input-container>
+
+            <md-input-container class="remove-error-space">
+                <label>Contact Email</label>
+                <input ng-model="email" minlength="5" disabled>
+            </md-input-container>
+        </div>
+
+
+        <div class="md-title">Payment Processing Config</div>
+        <div class="md-padding" layout="column">
+            <md-input-container class="remove-error-space">
+                <label>API Secret Key</label>
+                <input ng-model="user.paymentProcessingSecretKey" minlength="6">
+            </md-input-container>
+
+            <md-input-container class="remove-error-space">
+                <label>API Public Key</label>
+                <input ng-model="user.paymentProcessingPublicKey" minlength="5">
+            </md-input-container>
+
+            <md-input-container class="remove-error-space">
+                <label>Account ID</label>
+                <input ng-model="user.paymentProcessingAccountId" minlength="5">
+            </md-input-container>
+        </div>
+
+        <div layout="row">
+            <md-button class="md-raised md-accent"
+                       ng-disabled="partner_form.$invalid"
+                       ng-click="updateUser();">Save
+            </md-button>
+
+            <md-button class="md-warn md-raised md-hue-2" ng-click="cancel();">Cancel</md-button>
+
+            <md-progress-circular class="md-primary" md-theme="rsmt" ng-if="isProcessing"
+                                  md-mode="indeterminate"></md-progress-circular>
+        </div>
+    </form>
+
+
+    <div class="md-title margin-top-10">Payment Information</div>
+    <div class="md-padding" layout="column">
+        <md-input-container class="remove-error-space">
+            <label>Subscription Type</label>
+            <input name="subscriptionType" ng-model="paymentInfo.subscriptionType" disabled>
+        </md-input-container>
+
+        <md-input-container class="remove-error-space">
+            <label>Card Type</label>
+            <input name="cardType" ng-model="paymentInfo.cardType" disabled>
+        </md-input-container>
+
+        <md-input-container class="remove-error-space">
+            <label>Card Number</label>
+            <input name="cardLast4" ng-model="paymentInfo.cardLast4" disabled>
+        </md-input-container>
+    </div>
+
+    <div layout="row">
+        <md-button class="md-warn md-raised md-hue-2"
+                   ng-disabled="partner_form.$invalid"
+                   ng-click="">Remove
+        </md-button>
+
+        <md-button class="md-raised md-accent" ng-click="openUserPaymentInfo($event);">Change</md-button>
+    </div>
+
+</div>

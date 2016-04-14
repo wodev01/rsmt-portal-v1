@@ -105,9 +105,9 @@ app.config(function ($mdThemingProvider, toastr, $urlRouterProvider, $stateProvi
             templateUrl: "views/resetPassword.html",
             controller: 'ResetPasswordCtrl',
             resolve: {
-                AuthService : function(AuthService){
+                AuthService : ['AuthService', function (AuthService) {
                     return AuthService.fnResetPWTokenVerified();
-                }
+                }]
             }
         })
         .state('verify', {
@@ -115,9 +115,9 @@ app.config(function ($mdThemingProvider, toastr, $urlRouterProvider, $stateProvi
             templateUrl: "views/authenticated/verify/verify.html",
             controller: 'VerifyCtrl',
             resolve: {
-                AuthService : function(AuthService){
+                AuthService : ['AuthService', function (AuthService) {
                     return AuthService.fnUserVerified();
-                }
+                }]
             }
         })
         .state('payment', {
@@ -125,9 +125,9 @@ app.config(function ($mdThemingProvider, toastr, $urlRouterProvider, $stateProvi
             templateUrl: "views/authenticated/payment/payment.html",
             controller: 'PaymentCtrl',
             resolve: {
-                AuthService : function(AuthService){
+                AuthService : ['AuthService', function (AuthService) {
                     return AuthService.fnPaymentVerified();
-                }
+                }]
             }
         })
         .state('main', {
@@ -141,9 +141,9 @@ app.config(function ($mdThemingProvider, toastr, $urlRouterProvider, $stateProvi
             controller: 'DashboardCtrl',
             templateUrl: "views/authenticated/dashboard/dashboard.html",
             resolve: {
-                AuthService : function(AuthService){
+                AuthService : ['AuthService', function (AuthService) {
                     return AuthService.fnGetUser(['realtime_dashboard']);
-                }
+                }]
             }
         })
         .state('main.locations', {
@@ -151,9 +151,9 @@ app.config(function ($mdThemingProvider, toastr, $urlRouterProvider, $stateProvi
             controller: 'LocationsCtrl',
             templateUrl: "views/authenticated/locations/locations.html",
             resolve: {
-                AuthService : function(AuthService){
+                AuthService : ['AuthService', function (AuthService) {
                     return AuthService.fnGetUser([]);
-                }
+                }]
             }
         })
         .state('main.crm', {
@@ -161,9 +161,9 @@ app.config(function ($mdThemingProvider, toastr, $urlRouterProvider, $stateProvi
             controller: 'CrmCtrl',
             templateUrl: "views/authenticated/crm/crm.html",
             resolve: {
-                AuthService : function(AuthService){
+                AuthService : ['AuthService', function (AuthService) {
                     return AuthService.fnGetUser(['crm_scheduled']);
-                }
+                }]
             }
         })
         .state('main.products', {
@@ -171,9 +171,9 @@ app.config(function ($mdThemingProvider, toastr, $urlRouterProvider, $stateProvi
             controller: 'ProductsCtrl',
             templateUrl: "views/authenticated/products/products.html",
             resolve: {
-                AuthService : function(AuthService){
+                AuthService : ['AuthService', function (AuthService) {
                     return AuthService.fnGetUser([]);
-                }
+                }]
             }
         })
         .state('main.locationSetup', {
@@ -181,9 +181,9 @@ app.config(function ($mdThemingProvider, toastr, $urlRouterProvider, $stateProvi
             controller: 'LocationSetupCtrl',
             templateUrl: "views/authenticated/locationSetup/locationSetup.html",
             resolve: {
-                AuthService : function(AuthService){
+                AuthService : ['AuthService', function (AuthService) {
                     return AuthService.fnGetUser([]);
-                }
+                }]
             }
         })
         .state('main.settings', {
@@ -191,9 +191,9 @@ app.config(function ($mdThemingProvider, toastr, $urlRouterProvider, $stateProvi
             controller: 'SettingsCtrl',
             templateUrl: 'views/authenticated/settings/settings.html',
             resolve: {
-                AuthService : function(AuthService){
+                AuthService : ['AuthService', function (AuthService) {
                     return AuthService.fnGetUser([]);
-                }
+                }]
             }
         });
 

@@ -1,0 +1,45 @@
+<md-dialog aria-label="Update Payment Info" id="updatePaymentInfo" flex-gt-sm="30" flex-sm="60" flex-xs="70">
+
+    <md-toolbar class="light-black-bg-1">
+        <div class="md-toolbar-tools" layout="row" layout-align="space-between center">
+            <span class="md-title">Update Payment Method</span>
+        </div>
+    </md-toolbar>
+
+    <md-dialog-content class="md-padding" layout="row">
+        <md-content layout-fill>
+            <form name="updatePaymentInfoForm" layout="column" novalidate>
+                <md-input-container class="remove-error-space" flex>
+                    <label>Card Number</label>
+                    <input name="cardNumber" ng-model="paymentInfo.number" required
+                           ng-pattern="/^(?:4[0-9]{12}(?:[0-9]{3})?|5[1-5][0-9]{14}|6(?:011|5[0-9][0-9])[0-9]{12}|3[47][0-9]{13}|3(?:0[0-5]|[68][0-9])[0-9]{11}|(?:2131|1800|35\d{3})\d{11})$/"/>
+                </md-input-container>
+                <md-input-container class="remove-error-space" flex>
+                    <label>CVV</label>
+                    <input name="cvv" ng-model="paymentInfo.cvv" required ng-pattern="/^[0-9]{3,4}$/"/>
+                </md-input-container>
+                <label style="color: rgba(0, 0, 0, 0.40); margin-left:2px;">Expiration (MM/YYYY)</label>
+
+                <div layout="row" layout-sm="column">
+                    <md-input-container  class="remove-error-space" flex>
+                        <label>Month</label>
+                        <input name="exp_month" type="number" min="1" max="12"
+                               ng-model="paymentInfo.exp_month" required/>
+                    </md-input-container>
+                    <md-input-container class="remove-error-space" flex>
+                        <label>Year</label>
+                        <input name="exp_year" type="number" min="1000" max="9999"
+                               ng-model="paymentInfo.exp_year" required/>
+                    </md-input-container>
+                </div>
+
+            </form>
+        </md-content>
+    </md-dialog-content>
+    <md-dialog-actions>
+        <md-button class="md-raised md-accent" ng-disabled="updatePaymentInfoForm.$invalid"
+                   ng-click="updateUserPaymentInfo()">save
+        </md-button>
+        <md-button class="md-raised md-warn" ng-click="hide()">Cancel</md-button>
+    </md-dialog-actions>
+</md-dialog>

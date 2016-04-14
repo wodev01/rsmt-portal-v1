@@ -1,0 +1,87 @@
+<md-toolbar class="top-header" ng-init="fnInitMain()">
+    <div class="md-toolbar-tools">
+        <md-button ng-click="fnToggleSideNav('left')" hide-gt-sm class="md-icon-button">
+            <md-icon aria-label="Menu">menu</md-icon>
+        </md-button>
+
+        <div layout="row">
+            <img class="img-responsive rsmt-logo" alt="Repair Shop Marketing Tools" src="images/rsmt-full-logo.png"/>
+        </div>
+
+        <md-menu md-position-mode="target-right target">
+            <md-button ng-click="$mdOpenMenu($event)">
+                <span ng-bind="userObj.name"></span><md-icon md-font-set="material-icons">keyboard_arrow_down</md-icon>
+            </md-button>
+
+            <md-menu-content width="4">
+                <md-menu-item>
+                    <md-button ng-click="fnStateSettings();">
+                        <div layout="row">
+                            <p flex>
+                                <md-icon md-font-set="material-icons">settings</md-icon>
+                                Settings
+                            </p>
+                        </div>
+                    </md-button>
+                </md-menu-item>
+
+                <md-menu-item>
+                    <md-button ng-click="fnOpenTermsOfServiceModal($event);">
+                        <div layout="row">
+                            <p flex>
+                                <md-icon md-font-set="material-icons">description</md-icon>
+                                Terms of Use
+                            </p>
+                        </div>
+                    </md-button>
+                </md-menu-item>
+
+                <md-menu-item>
+                    <md-button ng-click="fnLogout();">
+                        <div layout="row">
+                            <p flex>
+                                <md-icon md-font-set="material-icons">power_settings_new</md-icon>
+                                Sign out
+                            </p>
+                        </div>
+                    </md-button>
+                </md-menu-item>
+            </md-menu-content>
+        </md-menu>
+    </div>
+</md-toolbar>
+
+<md-content layout="row" flex>
+    <!-- Left Side Navigation : START-->
+    <md-sidenav class="left-side-nav md-sidenav-left md-whiteframe-z2"
+                layout="column"
+                md-component-id="left"
+                md-is-locked-open="$mdMedia('gt-sm')">
+        <md-button class="md-primary" ng-class="fnIsActive('/dashboard')"
+                   ng-if="fnCheckSubscription(userSubscriptions,['realtime_dashboard'])"
+                   ng-click="$root.fnCloseSideNavs();" ui-sref="main.dashboard">
+            <md-icon md-font-set="material-icons">dashboard</md-icon> Dashboard</md-button>
+
+        <md-button class="md-primary" ng-class="fnIsActive('/locations')"
+                   ng-click="$root.fnCloseSideNavs();" ui-sref="main.locations">
+            <md-icon md-font-set="material-icons">place</md-icon> Locations</md-button>
+
+        <md-button class="md-primary" ng-class="fnIsActive('/crm')"
+                   ng-if="fnCheckSubscription(userSubscriptions,['crm_scheduled'])"
+                   ng-click="$root.fnCloseSideNavs();" ui-sref="main.crm">
+            <md-icon md-font-set="material-icons">group</md-icon> CRM</md-button>
+
+        <md-button class="md-primary" ng-class="fnIsActive('/products')"
+                   ng-click="$root.fnCloseSideNavs();" ui-sref="main.products">
+            <md-icon md-font-set="material-icons">redeem</md-icon> Products</md-button>
+
+        <md-button class="md-primary" ng-class="fnIsActive('/location/setup')"
+                   ng-if="fnCheckSubscription(userSubscriptions,[])"
+                   ng-click="$root.fnCloseSideNavs();" ui-sref="main.locationSetup">
+            <md-icon md-font-set="material-icons">pin_drop</md-icon> Location Setup</md-button>
+    </md-sidenav>
+    <!-- Left Side Navigation : END-->
+
+    <!-- Body content -->
+    <md-content id="content" class="overflow-auto" flex ui-view></md-content>
+</md-content>

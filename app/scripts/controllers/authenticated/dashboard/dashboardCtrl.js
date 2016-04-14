@@ -2,7 +2,6 @@
 app.controller('DashboardCtrl', function ($scope, $mdDialog, $filter, $timeout, toastr, locationService, dashboardService) {
 
     $scope.partnerId = '';
-    $scope.partnerId = 'ahBzfmNhcmdseXBsYXRmb3JtchULEghQUGFydG5lchiAgICQmP2fCww';
     $scope.locationDDOptions = [];
     $scope.selectedLocationOption = '';
 

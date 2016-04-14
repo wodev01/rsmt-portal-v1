@@ -1,0 +1,27 @@
+<div class="md-padding overflow-auto" layout="column" ng-init="fnInitLocations();" flex>
+
+    <div layout="row" layout-align="space-between center">
+        <div class="md-display-1">Locations</div>
+        <md-button class="md-raised md-accent" ng-click="newLocationView();">New Location</md-button>
+    </div>
+
+    <p class="md-subhead">Please provide your business locations below. These are the locations that will be
+        available in your Apps.</p>
+
+    <div ng-if="isLocationMsgShow" layout="row" layout-align="center center">
+        <div class="md-headline"> No locations available.</div>
+    </div>
+
+    <div ng-if="!isLocationDataNotNull && !isLocationMsgShow" layout="column" layout-align="center center" layout-fill
+         flex>
+        <md-progress-circular class="md-accent" md-diameter="100" md-mode="indeterminate"></md-progress-circular>
+    </div>
+
+    <!-- Grid Section -->
+    <div ng-if="isLocationDataNotNull" ng-style="$root.fnReturnGridHeight(locationData.length)"
+         ui-grid="locationGridOptions" ui-grid-selection ui-grid-auto-resize></div>
+
+</div>
+<!-- include swapping view-->
+<div ng-include="rightView"></div>
+<div ng-include="rightEditView"></div>

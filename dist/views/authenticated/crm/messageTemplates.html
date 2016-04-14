@@ -1,0 +1,37 @@
+<div class="tab-pane right-panel" id="segments-pane">
+
+    <div class="md-headline margin-top-10">Message Templates</div>
+
+    <div ng-if="!isLocationsData" class="margin-bottom-10">
+        <div class="md-headline text-center">No Locations Available.</div>
+    </div>
+
+    <div ng-if="isLocationsData">
+
+        <md-input-container >
+            <md-select aria-label="Select location" ng-model="locationId"
+                       ng-change="fnChangeLocation(locationId);">
+                <md-option ng-repeat="location in locationOptions" ng-value="location.id">
+                    {{location.name}}
+                </md-option>
+            </md-select>
+        </md-input-container>
+
+        <div ng-if="!isCrmSegmentsData && !isCrmSegmentsMsgShow" layout="column" layout-align="center center"
+             layout-fill flex>
+            <md-progress-circular class="md-accent" md-diameter="100" md-mode="indeterminate"></md-progress-circular>
+        </div>
+
+        <div ng-if="isCrmSegmentsMsgShow" class="margin-bottom-10">
+            <div class="md-headline text-center">No Segments available.</div>
+        </div>
+
+        <!--UI Grid-->
+        <div ng-if="isCrmSegmentsData">
+            <div ui-grid-selection ui-grid-auto-resize
+                 ng-style="$root.fnReturnGridHeight(crmSegmentsData.length)"
+                 ui-grid="crmSegmentsGridOptions">
+            </div>
+        </div>
+    </div>
+</div>

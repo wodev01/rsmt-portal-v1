@@ -1,11 +1,10 @@
 'use strict';
 app.controller('PaymentCtrl',
-    function ($scope, $cookies, $state, $mdDialog, cookieName, localStorage, userObjKey, paymentService) {
+    function ($scope, $cookies, $state, $mdDialog, cookieName, paymentService) {
 
         $scope.fnLogout = function () {
             CarglyPartner.logout(function () {
                 $cookies.remove(cookieName);
-                localStorage.removeItem(userObjKey);
                 $state.go('login');
             }, function () {});
         };
@@ -53,8 +52,8 @@ app.controller('PaymentCtrl',
 
 
         $scope.fnInitPaymentInfo = function () {
-            if (localStorage.getItem(userObjKey)) {
-                $scope.userObj = JSON.parse(unescape(localStorage.getItem(userObjKey)));
+            if (CarglyPartner.user) {
+                $scope.userObj = CarglyPartner.user;
             }
         };
     });

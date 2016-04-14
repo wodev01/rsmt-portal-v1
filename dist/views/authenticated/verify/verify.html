@@ -1,0 +1,51 @@
+<md-toolbar class="top-header" ng-init="fnInitVerify()">
+    <div class="md-toolbar-tools">
+        <div layout="row">
+            <img class="img-responsive rsmt-logo" alt="Repair Shop Marketing Tools" src="images/rsmt-full-logo.png"/>
+        </div>
+
+        <md-menu md-position-mode="target-right target">
+            <md-button ng-click="$mdOpenMenu($event)">
+                <span ng-bind="userObj.name"></span><md-icon md-font-set="material-icons">keyboard_arrow_down</md-icon>
+            </md-button>
+
+            <md-menu-content width="4">
+                <md-menu-item>
+                    <md-button ng-click="fnOpenTermsOfServiceModal($event);">
+                        <div layout="row">
+                            <p flex>
+                                <md-icon md-font-set="material-icons">description</md-icon>
+                                Terms of Use
+                            </p>
+                        </div>
+                    </md-button>
+                </md-menu-item>
+
+                <md-menu-item>
+                    <md-button ng-click="fnLogout();">
+                        <div layout="row">
+                            <p flex>
+                                <md-icon md-font-set="material-icons">power_settings_new</md-icon>
+                                Sign out
+                            </p>
+                        </div>
+                    </md-button>
+                </md-menu-item>
+            </md-menu-content>
+        </md-menu>
+    </div>
+</md-toolbar>
+<!-- Body content -->
+<div style="min-height: 20px;">
+    <md-progress-linear class="md-accent" ng-if="user.isProcessing" md-mode="indeterminate"></md-progress-linear>
+</div>
+<md-content layout="column" layout="column" layout-align="space-between center" flex>
+    <div class="md-whiteframe-z1 md-padding center-form-container" layout-margin>
+        <p>A confirmation message has been sent to your email address.
+            Please click the link in that email in order to confirm this account.
+            Remember to check your <strong>SPAM</strong> folder if you can't find the message.</p>
+        <p>If you have any questions please contact support@repairshopmarketingtools.com.</p>
+        <md-button class="md-raised md-accent" ng-click="fnReconfirmUser()" ng-fi="!isReconfirmUser">Resend Confirmation Email</md-button>
+        <span id="reconfirm_sent" ng-if="isReconfirmUser">Reconfirmation email sent!</span>
+    </div>
+</md-content>

@@ -1,0 +1,137 @@
+<div class="tab-pane" id="customer-statistics-tab">
+
+    <div class="text-center" ng-if="!isLocationsData">
+        <div class="md-headline">No Locations Available.</div>
+    </div>
+
+    <div ng-if="isLocationsData" layout="column">
+        <div layout="row">
+            <md-input-container>
+                <md-select aria-label="Select location" ng-model="locationId"
+                           ng-change="fnChangeLocation(idsObj.locationId);"
+                           ng-disabled="isProcessing">
+                    <md-option ng-repeat="location in locationOptions" ng-value="location.id">
+                        {{location.name}}
+                    </md-option>
+                </md-select>
+            </md-input-container>
+        </div>
+
+        <!-- pie-chart -->
+        <section layout="column" class="margin-bottom-10">
+            <div class="md-whiteframe-z2">
+                <md-toolbar class="md-primary md-hue-1">
+                    <div class="md-toolbar-tools">
+                        <span class="text-small-599 text-small-959">Customers Count based on Email-Address</span>
+                    </div>
+                </md-toolbar>
+
+                <md-content class="md-padding statContainerContent" ng-if="!isMsgShow && !isDataNotNull" layout="column"
+                            layout-align="center center" layout-fill>
+                    <div ng-include="'views/loader.html'"></div>
+                </md-content>
+
+                <md-content class="md-padding statContainerContent" ng-if="!isDataNotNull && isMsgShow" layout-margin
+                            layout-padding>
+                    <span>Data not available.</span>
+                </md-content>
+
+                <md-content class="md-padding statContainerContent" ng-if="isDataNotNull">
+                    <div id="pie-chart" ng-init="fnGeneratePieChart();"></div>
+                </md-content>
+            </div>
+        </section>
+
+        <!-- Google map -->
+        <section layout="column">
+            <div class="md-whiteframe-z2">
+                <md-toolbar class="md-primary md-hue-1">
+                    <div class="md-toolbar-tools" layout="row" layout-align="space-between center">
+                        <span class="text-small-599 text-small-959">Customers by Location</span>
+                        <md-checkbox aria-label="search criteria"
+                                     ng-model="useSearch"
+                                     ng-init="useSearch = false"
+                                     ng-disabled="!isDataNotNull"
+                                     class="md-primary margin-top-10">
+                            <span class="text-small-599 text-small-959">Use Search Criteria</span>
+                        </md-checkbox>
+                    </div>
+                </md-toolbar>
+
+                <md-content class="md-padding statContainerContent" ng-if="!isMsgShow && !isDataNotNull" layout="column"
+                            layout-align="center center" layout-fill>
+                    <div ng-include="'views/loader.html'"></div>
+                </md-content>
+
+                <md-content class="md-padding statContainerContent" ng-if="!isDataNotNull && isMsgShow" layout-margin
+                            layout-padding>
+                    <div class="md-headline">Data not available.</div>
+                </md-content>
+
+                <md-content ng-if="isDataNotNull" layout="column">
+                    <div ng-show="useSearch" layout-padding>
+                        <form name="searchForm" layout="column" layout-gt-sm="row">
+                            <fieldset flex="100">
+                                <legend>Search By Customer Name or Address:</legend>
+
+                                <span class="text-danger"
+                                      ng-show="searchForm.searchFilter.$error.minlength">
+                                    Specify atleast 5 characters.
+                                </span>
+
+                                <input type="text" name="searchFilter"
+                                       style="width: 100%; height: 32px;"
+                                       class="filterBox"
+                                       ng-model="searchFilter"
+                                       placeholder="Search..."
+                                       ng-model-options="{ updateOn: 'default blur', debounce: { 'default': 1500, 'blur': 0 } }"
+                                       ng-change="fnSearchCustomer(searchFilter);"
+                                       ng-minlength="5"
+                                       ng-keyup="fnCancelSearchFilter($event, this)" flex/>
+                            </fieldset>
+
+                            <fieldset flex="30" flex-sm="100">
+                                <legend>Car Model:</legend>
+
+                                <md-input-container flex layout-fill>
+                                    <md-select aria-label="Selected model" ng-model="selectedModel"
+                                               ng-change="fnLocateMarkers(selectedModel);">
+                                        <md-option value="">All Models</md-option>
+
+                                        <md-optgroup label="{{vehicle.make}}"
+                                                     ng-repeat="vehicle in vehicleDD | orderBy: ['make']">
+                                            <md-option ng-value="v.model"
+                                                       ng-repeat="v in vehicleDD | filter: {make: vehicle.make } | orderBy: 'model'">
+                                                {{v.model}}
+                                            </md-option>
+                                        </md-optgroup>
+                                    </md-select>
+                                </md-input-container>
+                            </fieldset>
+                        </form>
+                    </div>
+
+                    <div class="md-whiteframe-z2" layout="column" layout-padding flex>
+                        <div class="subHeader" layout="row" layout-align="space-between center">
+                            <div layout="row">
+                                <span layout-margin layout-padding>{{ mapLabel }}</span>
+                                <md-progress-circular md-theme="rsmt" class="md-primary"
+                                                      ng-if="mapLabel !== 'Completed...'"
+                                                      md-diameter="50" md-mode="indeterminate"></md-progress-circular>
+                            </div>
+                            <span layout-margin>
+                                <span ng-if="totalCustomersFound != 0">
+                                    Total {{totalCustomersFound}} customers found.
+                                </span>
+                                <span ng-if="totalCustomersFound == 0">No customers found.</span>
+                            </span>
+                        </div>
+                        <md-content class="ngMapContainer border">
+                            <ng-map zoom="10" center="[0, 0]" map-type-id="ROADMAP"></ng-map>
+                        </md-content>
+                    </div>
+                </md-content>
+            </div>
+        </section>
+    </div>
+</div>

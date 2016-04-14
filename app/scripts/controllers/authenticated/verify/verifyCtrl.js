@@ -1,11 +1,10 @@
 'use strict';
 app.controller('VerifyCtrl',
-    function ($scope, $cookies, $state, $mdDialog, cookieName, localStorage, userObjKey) {
+    function ($scope, $cookies, $state, $mdDialog, cookieName) {
 
         $scope.fnLogout = function () {
             CarglyPartner.logout(function () {
                 $cookies.remove(cookieName);
-                localStorage.removeItem(userObjKey);
                 $state.go('login');
             }, function () {
             });
@@ -38,8 +37,8 @@ app.controller('VerifyCtrl',
         };
 
         $scope.fnInitVerify = function () {
-            if (localStorage.getItem(userObjKey)) {
-                $scope.userObj = JSON.parse(unescape(localStorage.getItem(userObjKey)));
+            if (CarglyPartner.user) {
+                $scope.userObj = CarglyPartner.user;
             }
         };
     });

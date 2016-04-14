@@ -1,6 +1,6 @@
 'use strict';
 
-app.controller('MainCtrl', function ($scope, $mdDialog, $location, $cookies, cookieName, $state, $mdSidenav, localStorage, userObjKey) {
+app.controller('MainCtrl', function ($scope, $mdDialog, $location, $cookies, cookieName, $state, $mdSidenav) {
 
     $scope.fnToggleSideNav = function (componentId) {
         $mdSidenav(componentId).toggle().then(function () {
@@ -18,7 +18,6 @@ app.controller('MainCtrl', function ($scope, $mdDialog, $location, $cookies, coo
     $scope.fnLogout = function () {
         CarglyPartner.logout(function () {
             $cookies.remove(cookieName);
-            localStorage.removeItem(userObjKey);
             $state.go('login');
         }, function () {
         });
@@ -29,9 +28,9 @@ app.controller('MainCtrl', function ($scope, $mdDialog, $location, $cookies, coo
     };
 
     $scope.fnInitMain = function () {
-        if (localStorage.getItem(userObjKey)) {
-            $scope.userObj = JSON.parse(unescape(localStorage.getItem(userObjKey)));
-            $scope.userSubscriptions = JSON.parse($scope.userObj.subscriptions);
+        if (CarglyPartner.user) {
+            $scope.userObj = CarglyPartner.user;
+            $scope.userSubscriptions = JSON.parse(CarglyPartner.user.subscriptions);
         }
     };
 

@@ -1,0 +1,20 @@
+<div class="md-padding overflow-auto" id="loc-setup-pane" ng-init="fnInitLocSetup()">
+    <!-- Row -->
+    <section  class="md-whiteframe-10dp" layout="column" layout-fill>
+        <md-toolbar class="md-primary md-hue-1" md-theme="grey">
+            <div class="md-toolbar-tools" layout="row" layout-align="space-between center">
+                <span class="md-title text-small-599 text-small-959">Location Setup</span>
+            </div>
+        </md-toolbar>
+        <md-content class="location-setup">
+            <md-card ng-repeat="step in steps">
+                <md-card-content>
+                    <h2 class="md-title">Step {{$index + 1}} : {{step.title}}</h2>
+                    <p>{{step.description}} <a ng-if="$index == 0" href="{{appDownloadUrl}}" target="_blank">Click to download setup</a></p>
+                </md-card-content>
+                <div ng-class="step.class" ng-if="step.class" hide-sm class="big-img md-card-image"></div>
+                <div ng-class="step.class" ng-if="step.class" hide-gt-sm class="small-img md-card-image"></div>
+            </md-card>
+        </md-content>
+    </section>
+</div>

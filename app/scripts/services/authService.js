@@ -1,6 +1,6 @@
 'use strict';
-app.factory('AuthService', ['$q', '$location', '$cookies', 'paymentService', 'cookieName','localStorage', 'ErrorMsg', 'userObjKey',
-    function ($q, $location, $cookies, paymentService, cookieName, localStorage, ErrorMsg, userObjKey) {
+app.factory('AuthService', ['$q', '$location', '$cookies', 'paymentService', 'cookieName', 'ErrorMsg',
+    function ($q, $location, $cookies, paymentService, cookieName, ErrorMsg) {
         var AuthService = {};
 
         AuthService.fnGetUser = function (subscriptions) {
@@ -8,7 +8,6 @@ app.factory('AuthService', ['$q', '$location', '$cookies', 'paymentService', 'co
             var defer = $q.defer();
             var hasSubscriptions = true;
             CarglyPartner._getUser(token, function (response) {
-                localStorage.setItem(userObjKey,escape(JSON.stringify(response)));
                 if (response.verified === 'true') {
                     /*paymentService.fetchUserPaymentInfo()
                         .then(function(res){
@@ -52,7 +51,6 @@ app.factory('AuthService', ['$q', '$location', '$cookies', 'paymentService', 'co
             var token = $cookies.get(cookieName);
             var defer = $q.defer();
             CarglyPartner._getUser(token, function (response) {
-                localStorage.setItem(userObjKey,escape(JSON.stringify(response)));
                 if (response.verified === 'true') {
                     /*paymentService.fetchUserPaymentInfo()
                         .then(function(res){
@@ -89,7 +87,6 @@ app.factory('AuthService', ['$q', '$location', '$cookies', 'paymentService', 'co
             var token = $cookies.get(cookieName);
             var defer = $q.defer();
             CarglyPartner._getUser(token, function (response) {
-                localStorage.setItem(userObjKey,escape(JSON.stringify(response)));
                 if (response.verified === 'true') {
                     /*paymentService.fetchUserPaymentInfo()
                         .then(function(res){
