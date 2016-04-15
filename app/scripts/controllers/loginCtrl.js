@@ -41,10 +41,9 @@ app.controller('LoginCtrl',
                 function (rejection) {
                     user.isProcessing = false;
                     $scope.fnRefreshDom();
-                    if (rejection) {
+                    if (rejection && rejection.status !== 401) {
                         ErrorMsg.CheckStatusCode(rejection.status);
-                    }
-                    else {
+                    } else {
                         toastr.error('Username and password are wrong.');
                     }
                 }
