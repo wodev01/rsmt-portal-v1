@@ -1074,9 +1074,17 @@ md-input-container.remove-error-space .md-errors-spacer {
     line-height: 3em;
 }
 
+/*---------- md-dialog delete button ----------*/
 md-dialog[aria-label=Delete] button[aria-label=Delete] {
     background-color: rgb(198, 40, 40) !important;
     border-color: #C9302C !important;
+    color: rgba(255, 255, 255, 0.87) !important;
+}
+
+/*---------- md-dialog create button (app download dialog) ----------*/
+md-dialog[aria-label=createLocation] button[aria-label=Create] {
+    background-color: rgb(91, 123, 227) !important;
+    border-color: #5b94e3 !important;
     color: rgba(255, 255, 255, 0.87) !important;
 }
 
@@ -1094,10 +1102,6 @@ md-dialog[aria-label=Delete] button[aria-label=Delete] {
 
 .c3-legend-item-tile, .c3-xgrid-focus, .c3-ygrid, .c3-event-rect, .c3-bars path {
     cursor: pointer !important;
-}
-
-#terms-of-service p {
-    line-height: 1.846;
 }
 
 /*---------- md-tabs tab container size ----------*/

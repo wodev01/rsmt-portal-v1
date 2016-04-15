@@ -331,7 +331,7 @@ md-dialog#crmSegmentDialog md-content.template-view{
     border: solid thin #CCCCCC;
 }
 
-/*---------- Terms of service ----------*/
+/*---------- Terms of service Dialog ----------*/
 md-dialog#terms-of-service-dialog p {
     text-align: justify;
     line-height: 1.846;
@@ -351,4 +351,14 @@ md-dialog#message-template-dialog md-dialog-content md-content iframe#rendered-h
 /*---------- Customers vehicle RO grid ----------*/
 #ro-grid .ui-grid .ui-grid-viewport .ui-grid-cell-contents.highLight:hover {
     border: 2px solid #808080;
+}
+
+/*---------- Download App Dialog ----------*/
+md-dialog#download-app {
+    max-width: 350px;
+}
+
+md-dialog#download-app md-dialog-content {
+    line-height: 2em;
+    text-align: justify;
 }

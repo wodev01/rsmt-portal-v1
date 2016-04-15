@@ -284,6 +284,12 @@ module.exports = function (grunt) {
                     cwd: '<%= yeoman.app %>/images',
                     src: '{,*/}*.{png,jpg,jpeg,gif}',
                     dest: '<%= yeoman.dist %>/images'
+                },
+                {
+                    expand: true,
+                    cwd: 'bower_components/jquery-ui/themes/smoothness/images',
+                    src: '{,*/}*.{png,jpg,jpeg,gif}',
+                    dest: '<%= yeoman.dist %>/styles/images'
                 }]
             }
         },
@@ -352,7 +358,7 @@ module.exports = function (grunt) {
         // Copies remaining files to places other tasks can use
         copy: {
             dist: {
-                files:[
+                files: [
                     {
                         expand: true,
                         dot: true,
