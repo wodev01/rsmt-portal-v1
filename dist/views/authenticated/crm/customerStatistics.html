@@ -8,7 +8,7 @@
         <div layout="row">
             <md-input-container>
                 <md-select aria-label="Select location" ng-model="locationId"
-                           ng-change="fnChangeLocation(idsObj.locationId);"
+                           ng-change="fnChangeLocation(locationId);"
                            ng-disabled="isProcessing">
                     <md-option ng-repeat="location in locationOptions" ng-value="location.id">
                         {{location.name}}
@@ -26,9 +26,10 @@
                     </div>
                 </md-toolbar>
 
-                <md-content class="md-padding statContainerContent" ng-if="!isMsgShow && !isDataNotNull" layout="column"
-                            layout-align="center center" layout-fill>
-                    <div ng-include="'views/loader.html'"></div>
+                <md-content class="statContainerContent" ng-if="!isMsgShow && !isDataNotNull" layout="column"
+                            layout-align="center center" layout-fill flex>
+                    <md-progress-circular class="md-accent" md-diameter="100"
+                                          md-mode="indeterminate"></md-progress-circular>
                 </md-content>
 
                 <md-content class="md-padding statContainerContent" ng-if="!isDataNotNull && isMsgShow" layout-margin
@@ -58,9 +59,10 @@
                     </div>
                 </md-toolbar>
 
-                <md-content class="md-padding statContainerContent" ng-if="!isMsgShow && !isDataNotNull" layout="column"
-                            layout-align="center center" layout-fill>
-                    <div ng-include="'views/loader.html'"></div>
+                <md-content class="statContainerContent" ng-if="!isMsgShow && !isDataNotNull" layout="column"
+                            layout-align="center center" layout-fill flex>
+                    <md-progress-circular class="md-accent" md-diameter="100"
+                                          md-mode="indeterminate"></md-progress-circular>
                 </md-content>
 
                 <md-content class="md-padding statContainerContent" ng-if="!isDataNotNull && isMsgShow" layout-margin
