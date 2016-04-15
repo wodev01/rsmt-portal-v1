@@ -1406,7 +1406,7 @@ app.controller('DashboardCtrl', function ($scope, $mdDialog, $filter, $timeout, 
     }
 
     /*---------- Bind scroll and window resize event for viewport changes ----------*/
-    $('#content').on('scroll', function() {
+    $('#dashboard-tab').on('scroll', function() {
         var elem = $('#content #dashboard-tab');
         if (elem && elem.length != 0) {
            dashboardRequest();
