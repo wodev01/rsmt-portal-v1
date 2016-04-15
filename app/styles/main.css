@@ -230,7 +230,9 @@
     color: #000000;
     margin-top: 5px;
 }
-
+md-dialog#manage-scheduledmsg-dialog md-toolbar.md-rsmt-theme.md-hue-1:not(.md-menu-toolbar){
+    color: #FFFFFF;
+}
 /*---------- Jquery UI Date-range Picker ----------*/
 .ui-widget {
     font-size: inherit;
