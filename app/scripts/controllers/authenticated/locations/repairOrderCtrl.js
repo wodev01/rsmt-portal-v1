@@ -47,10 +47,12 @@ app.controller('repairOrderCtrl',
 
         $scope.getPagedDataAsync($scope.pagingOptions.pageSize, $scope.pagingOptions.currentPage);
 
-        $scope.roAction = '<div layout="row">' +
-            '<md-button class="md-icon-button md-accent" ng-click="grid.appScope.fnViewRODetails($event,row)">' +
-            '<md-icon md-font-set="material-icons">launch</md-icon>' +
-            '<md-tooltip md-direction="top">View</md-tooltip></md-button></div>';
+        $scope.roAction = '<div class="ui-grid-cell-contents padding-left-0">' +
+            '   <md-button class="md-icon-button md-accent" ng-click="grid.appScope.fnViewRODetails($event,row);">' +
+            '       <md-icon md-font-set="material-icons">launch</md-icon>' +
+            '       <md-tooltip ng-if="$root.isMobile == null" md-direction="top">View</md-tooltip>' +
+            '   </md-button></div>';
+
         $scope.repairOrderGridOptions = {
             data: 'repairOrdersData',
             rowHeight: 50,

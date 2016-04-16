@@ -136,7 +136,8 @@
                                             <md-button class="md-icon-button md-accent"
                                                        ng-click="fnViewVehicleDetails(val); setClickedRow($index);">
                                                 <md-icon md-font-set="material-icons">visibility</md-icon>
-                                                <md-tooltip md-direction="top">Open</md-tooltip>
+                                                <md-tooltip ng-if="$root.isMobile == null" md-direction="top">Open
+                                                </md-tooltip>
                                             </md-button>
                                         </div>
                                     </td>

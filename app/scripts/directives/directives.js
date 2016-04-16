@@ -326,11 +326,12 @@ app.directive('repairOrderGrid', function($mdDialog,allCustomerService) {
             };
 
             $scope.fnSetGridOptions = function(id) {
-                $scope.roAction = '<div layout="row">' +
-                    '<md-button class="md-icon-button md-accent" ng-click="grid.appScope.fnViewRODetails($event,row)">' +
-                    '<md-icon md-font-set="material-icons">launch</md-icon>' +
-                    '<md-tooltip md-direction="top">View</md-tooltip></md-button>' +
-                    '</div>';
+                $scope.roAction = '<div class="ui-grid-cell-contents paddding-left-0">' +
+                    '   <md-button class="md-icon-button md-accent" ng-click="grid.appScope.fnViewRODetails($event,row);">' +
+                    '       <md-icon md-font-set="material-icons">launch</md-icon>' +
+                    '       <md-tooltip ng-if="$root.isMobile == null" md-direction="top">View</md-tooltip>' +
+                    '   </md-button></div>';
+
                 var colDffArr = [];
                 var intRowHeight = 50;
                 if(!id) {

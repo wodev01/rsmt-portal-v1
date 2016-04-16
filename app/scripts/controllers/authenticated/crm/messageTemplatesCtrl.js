@@ -68,11 +68,12 @@ app.controller('messageTemplatesCtrl',
             }
         };
 
-        $scope.crmSegmentsAction = '<div layout="row">' +
-            '<md-button class="md-icon-button md-accent" ng-click="grid.appScope.fnOpenManageCrmSegments(row, ev);">' +
-            '   <md-icon md-font-set="material-icons">visibility</md-icon>' +
-            '   <md-tooltip md-direction="top">Open</md-tooltip></md-button>' +
-            '</div>';
+        $scope.crmSegmentsAction = '<div class="ui-grid-cell-contents padding-left-0">' +
+            '   <md-button class="md-icon-button md-accent" ng-click="grid.appScope.fnOpenManageCrmSegments(row, ev);">' +
+            '       <md-icon md-font-set="material-icons">visibility</md-icon>' +
+            '       <md-tooltip ng-if="$root.isMobile == null" md-direction="top">Open</md-tooltip>' +
+            '</md-button></div>';
+
         $scope.crmSegmentsGridOptions = {
             data: 'crmSegmentsData',
             rowHeight: 50,

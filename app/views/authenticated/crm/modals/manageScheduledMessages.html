@@ -4,7 +4,7 @@
             <span class="md-title">Scheduled Message</span>
             <md-button class="md-icon-button" ng-click="fnCloseDialog();">
                 <md-icon md-font-set="material-icons">close</md-icon>
-                <md-tooltip md-direction="top">Close</md-tooltip>
+                <md-tooltip ng-if="$root.isMobile == null" md-direction="top">Close</md-tooltip>
             </md-button>
         </div>
     </md-toolbar>
@@ -12,7 +12,7 @@
     <md-dialog-content class="md-padding" layout="row">
 
         <!-- Form Section -->
-        <div class="md-whiteframe-1dp"  layout-fill flex="40">
+        <div class="md-whiteframe-1dp" layout-fill flex="40">
             <md-toolbar class="md-primary md-hue-1 md-whiteframe-2dp">
                 <div class="md-toolbar-tools">Segment Info</div>
             </md-toolbar>
@@ -384,7 +384,7 @@
                 </section>
 
                 <!-- Inspection Details Section -->
-                <section class="md-whiteframe-3dp">
+                <section class="md-whiteframe-3dp margin-bottom-10">
                     <md-toolbar class="md-primary md-hue-1 md-whiteframe-2dp" md-theme="grey">
                         <div class="md-toolbar-tools" layout="row" layout-align="center center">
                             <span>Inspection</span>

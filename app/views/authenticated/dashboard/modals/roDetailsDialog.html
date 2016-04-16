@@ -12,7 +12,7 @@
                            ng-class="{'btn-disabled' : position === 0}"
                            ng-click="fnMove(-1);">
                     <md-icon md-font-set="material-icons"> skip_previous</md-icon>
-                    <md-tooltip md-direction="top">Previous</md-tooltip>
+                    <md-tooltip ng-if="$root.isMobile == null" md-direction="top">Previous</md-tooltip>
                 </md-button>
 
                 <md-button class="md-fab md-mini"
@@ -20,12 +20,12 @@
                            ng-disabled="position === repairOrders.length-1"
                            ng-click="fnMove(1);">
                     <md-icon md-font-set="material-icons">skip_next</md-icon>
-                    <md-tooltip md-direction="top">Next</md-tooltip>
+                    <md-tooltip ng-if="$root.isMobile == null" md-direction="top">Next</md-tooltip>
                 </md-button>
 
                 <md-button class="md-icon-button" ng-click="hide();">
                     <md-icon md-font-set="material-icons">close</md-icon>
-                    <md-tooltip md-direction="top">Close</md-tooltip>
+                    <md-tooltip ng-if="$root.isMobile == null" md-direction="top">Close</md-tooltip>
                 </md-button>
             </div>
         </div>

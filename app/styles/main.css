@@ -315,7 +315,7 @@ md-dialog#crmSegmentDialog md-content.template-view{
 }
 
 #customer-statistics-tab .ngMapContainer {
-    height: 400px;
+    height: 500px;
 }
 
 #customer-statistics-tab .ngMapContainer ng-map {

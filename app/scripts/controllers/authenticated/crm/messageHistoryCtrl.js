@@ -48,24 +48,21 @@ app.controller('messageHistoryCtrl',
                 });
         };
 
-        $scope.nameTmpl = '<div layout="row">'
-            + '<span style="margin: 15px 0 !important;">'
-            + '{{row.entity.customer.first_name}}&nbsp;{{ row.entity.customer.last_name}}'
-            + '</span></div>';
-
-        $scope.infoTmpl = '<div layout="row">'
-            + '<div style="margin: 15px 5px !important;">'
-            + '     <div> Email: {{row.entity.customer.email_addresses | joinArray}} </div>'
-            + '     <div style="width: 200px"> Phone: {{row.entity.customer.phone_numbers | tel | joinTelArray}} </div>'
-            + '     <div> Address: {{row.entity.customer.address1}} </div>'
-            + '</div></div>';
-
-        $scope.crmInteractionAction = '<div layout="row">' +
-            '<md-button class="md-icon-button md-accent" ng-click="grid.appScope.fnOpenCrmInteraction(row)">' +
-            '<md-icon md-font-set="material-icons">visibility</md-icon>' +
-            '<md-tooltip md-direction="top">Open</md-tooltip></md-button>' +
+        $scope.nameTmpl = '<div class="ui-grid-cell-contents">' +
+            '   {{row.entity.customer.first_name}}&nbsp;{{ row.entity.customer.last_name}}' +
             '</div>';
 
+        $scope.infoTmpl = '<div layout="row" layout-padding>' +
+            '<div class="padding-0"><div> Email: {{row.entity.customer.email_addresses | joinArray}} </div>' +
+            '     <div> Phone: {{row.entity.customer.phone_numbers | tel | joinTelArray}} </div>' +
+            '     <div> Address: {{row.entity.customer.address1}} </div>' +
+            '</div></div>';
+
+        $scope.crmInteractionAction = '<div class="ui-grid-cell-contents padding-left-0">' +
+            '   <md-button class="md-icon-button md-accent" ng-click="grid.appScope.fnOpenCrmInteraction(row);">' +
+            '       <md-icon md-font-set="material-icons">visibility</md-icon>' +
+            '       <md-tooltip ng-if="$root.isMobile == null" md-direction="top">Open</md-tooltip>' +
+            '   </md-button></div>';
 
         $scope.crmInteractionGridOptions = {
             data: 'crmInteractionData',
@@ -144,20 +141,20 @@ app.controller('messageHistoryCtrl',
                 locals: idsObj,
                 controller: DialogController,
                 template: '<md-dialog aria-label="Alert Dialog">' +
-                '  <md-content style="padding: 20px 20px 0 20px !important;">' +
-                '      <h3> Download Interaction CSV </h3>' +
-                '      This could take some time. Are you sure..?' +
-                '  </md-content>' +
-                '  <div class="md-actions">' +
-                '       <md-button aria-label="download" class="md-raised md-accent" ng-click="fnDownload()">Download</md-button>' +
-                '       <md-button aria-label="cancel" class="md-raised" ng-click="fnHide()">Cancel</md-button>' +
-                '  </div>' +
+                '  <md-dialog-content class="md-padding" layout-padding>' +
+                '      <div class="md-title"> Download Interaction CSV </div>' +
+                '      <p>This could take some time. Are you sure..?</p>' +
+                '  </md-dialog-content>' +
+                '  <md-dialog-actions>' +
+                '       <md-button aria-label="download" ' +
+                '           class="md-raised md-accent" ng-click="fnDownload();">Download</md-button>' +
+                '       <md-button aria-label="cancel" class="md-raised" ng-click="fnHide();">Cancel</md-button>' +
+                '  </md-dialog-actions>' +
                 '</md-dialog>',
                 targetEvent: event
             }).then(function () {
-                },
-                function (err) {
-                });
+            }, function (err) {
+            });
         };
 
         $scope.fnOpenCrmInteraction = function (row) {

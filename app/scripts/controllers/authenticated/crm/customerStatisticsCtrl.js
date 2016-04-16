@@ -192,7 +192,7 @@ app.controller('customerStatisticsCtrl',
             });
         }
 
-        /*------ Map Initialization ------*/
+        /*------ Marker Initialization ------*/
         $scope.fnInitMarkers = function (tempData, customersStatData) {
             if (count >= customersStatData.length) {
                 $scope.mapLabel = 'Completed...';

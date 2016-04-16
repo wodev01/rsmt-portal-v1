@@ -81,10 +81,10 @@ app.controller('LocationsCtrl',
         $scope.locationAction = '<div layout="row">' +
             '<md-button class="md-icon-button md-accent" ng-click="grid.appScope.fnLocationEdit(row)">' +
             '   <md-icon md-font-set="material-icons">visibility</md-icon>' +
-            '   <md-tooltip md-direction="top">Open</md-tooltip></md-button>' +
+            '   <md-tooltip ng-if="$root.isMobile == null" md-direction="top">Open</md-tooltip></md-button>' +
             '<md-button class="md-icon-button md-warn md-hue-2" ng-click="grid.appScope.fnLocationDelete(row,$event);">' +
             '   <md-icon md-font-set="material-icons">delete</md-icon>' +
-            '   <md-tooltip md-direction="top">Delete</md-tooltip>' +
+            '   <md-tooltip ng-if="$root.isMobile == null" md-direction="top">Delete</md-tooltip>' +
             '</md-button>' +
             '</div>';
 
@@ -157,4 +157,3 @@ app.controller('LocationsCtrl',
         $rootScope.rightEditView = 'views/authenticated/locations/manageLocation.html';
 
     });
-

@@ -5,7 +5,7 @@
     <div ng-if="isLocationsData">
         <section layout="column" layout-gt-sm="row">
             <div flex>
-                <md-input-container >
+                <md-input-container>
                     <md-select aria-label="Select location" ng-model="idsObj.locationId"
                                ng-change="fnChangeLocation(idsObj.locationId);">
                         <md-option ng-repeat="location in locationOptions" ng-value="location.id">
@@ -14,7 +14,7 @@
                     </md-select>
                 </md-input-container>
 
-                <md-input-container >
+                <md-input-container>
                     <md-select aria-label="Select Type" ng-model="idsObj.segmentId"
                                ng-if="isSegmentsData"
                                ng-change="fnChangeSegment(idsObj);">
@@ -25,7 +25,7 @@
                 </md-input-container>
             </div>
 
-            <div ng-if="isSegmentsData">
+            <div class="margin-top-8" ng-if="isSegmentsData">
                 <div layout="row" layout-align="end center"
                      layout-align-sm="space-between center"
                      layout-align-xs="space-between center">

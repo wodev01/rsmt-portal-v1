@@ -76,11 +76,12 @@ app.controller('allCustomersCtrl',
             }
         }, true);
 
-        $scope.customerAction = '<div layout="row"><md-button class="md-icon-button md-accent"' +
-            'ng-click="grid.appScope.fnViewCustomerDetails($event,row)">' +
-            '<md-icon md-font-set="material-icons">visibility</md-icon>' +
-            '<md-tooltip md-direction="top">Open</md-tooltip></md-button>' +
-            '</div>';
+        $scope.customerAction = '<div class="ui-grid-cell-contents padding-left-0">' +
+            '   <md-button class="md-icon-button md-accent" ng-click="grid.appScope.fnViewCustomerDetails($event,row);">' +
+            '       <md-icon md-font-set="material-icons">visibility</md-icon>' +
+            '       <md-tooltip ng-if="$root.isMobile == null" md-direction="top">Open</md-tooltip>' +
+            '   </md-button></div>';
+
         $scope.customersGridOptions = {
             data: 'customersData',
             rowHeight: 50,

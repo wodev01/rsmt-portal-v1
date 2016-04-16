@@ -85,8 +85,15 @@
 
 <!-- build:js({.tmp,app}) scripts/plugin.min.js -->
 <script type="text/javascript" src="scripts/vendor/within-viewport.js"></script>
-<script type="text/javascript" src="scripts/vendor/jquery.comiseo.daterangepicker.js"></script>
+
+<!--Fix SVGPathSeg for newer browsers-->
 <script type="text/javascript" src="scripts/vendor/polyfill.js"></script>
+
+<!--Fixes for iPad devices-->
+<script type="text/javascript" src="scripts/vendor/interaction.js"></script>
+<script type="text/javascript" src="scripts/vendor/config.js"></script>
+
+<script type="text/javascript" src="scripts/vendor/jquery.comiseo.daterangepicker.js"></script>
 <!-- endbuild -->
 
 <!-- build:js({.tmp,app}) scripts/scripts.js -->

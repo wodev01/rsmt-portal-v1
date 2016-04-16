@@ -8,7 +8,7 @@
     }
 
     /*---------- Segments modal ----------*/
-    md-dialog#manage-scheduledmsg-dialog, md-dialog#message-template-dialog {
+    md-dialog#manage-scheduledmsg-dialog {
         min-width: 600px;
     }
 
