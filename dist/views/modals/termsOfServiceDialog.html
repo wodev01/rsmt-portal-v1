@@ -1,14 +1,15 @@
-<md-dialog id="terms-of-service-dialog" aria-label="termsOfServiceDialog" flex ng-cloak>
+<md-dialog id="terms-of-service-dialog" class="fullScreenDialog" aria-label="termsOfServiceDialog">
     <md-toolbar>
         <div class="md-toolbar-tools">
-            <h2>Terms & Conditions</h2>
+            <span>Terms & Conditions</span>
             <span flex></span>
-            <md-button class="md-icon-button" ng-click="hide()">
+            <md-button class="md-icon-button" ng-click="hide();">
                 <md-icon md-font-set="material-icons">close</md-icon>
                 <md-tooltip ng-if="$root.isMobile == null" md-direction="top">Close</md-tooltip>
             </md-button>
         </div>
     </md-toolbar>
+
     <md-dialog-content>
         <div md-theme="grey" class="md-dialog-content">
             <md-tabs class="md-primary" md-dynamic-height md-border-bottom md-selected="selectedTab">

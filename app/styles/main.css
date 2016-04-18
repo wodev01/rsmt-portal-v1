@@ -269,13 +269,23 @@ md-dialog#manage-scheduledmsg-dialog md-toolbar.md-rsmt-theme.md-hue-1:not(.md-m
     padding: 0;
 }
 
-/*---------- Segments modal ----------*/
+/*---------- CRM modal ----------*/
 md-dialog#manage-scheduledmsg-dialog .contentViewSection {
-    height: 55vh;
+    height: 54vh;
+    min-height: 54vh;
+    overflow-x: hidden;
 }
 
 md-dialog#manage-scheduledmsg-dialog md-dialog-content {
     overflow: hidden;
+}
+
+md-dialog#manage-scheduledmsg-dialog md-dialog-content div > md-toolbar:first-child .md-toolbar-tools span{
+    color: #FFFFFF;
+}
+
+md-dialog#manage-scheduledmsg-dialog div.previewSection md-content.contentViewSection section {
+    margin: 8px;
 }
 
 /* Location Color Indicator */

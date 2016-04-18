@@ -1,4 +1,4 @@
-<md-dialog aria-label="Message Template Form" id="message-template-dialog" flex>
+<md-dialog aria-label="Message Template Form" id="message-template-dialog" class="fullScreenDialog">
 
     <md-toolbar class="md-primary">
         <div class="md-toolbar-tools" layout="row" layout-align="space-between center">
@@ -28,13 +28,13 @@
             </md-input-container>
         </div>
 
-        <div layout="row" md-theme="grey" flex>
+        <div layout="row" md-theme="grey">
             <div class="md-whiteframe-1dp" layout="column" flex>
                 <md-toolbar class="md-primary md-hue-1 md-whiteframe-2dp">
                     <div class="md-toolbar-tools">Template Preview</div>
                 </md-toolbar>
 
-                <md-content class="overflow-hidden" layout-fill flex>
+                <md-content class="overflow-hidden" style="height: 100%;">
                     <iframe id="rendered-html" class="overflow-auto"></iframe>
                 </md-content>
             </div>

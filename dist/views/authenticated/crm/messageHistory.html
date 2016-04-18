@@ -4,7 +4,7 @@
     </div>
     <div ng-if="isLocationsData">
         <section layout="column" layout-gt-sm="row">
-            <div flex>
+            <div>
                 <md-input-container>
                     <md-select aria-label="Select location" ng-model="idsObj.locationId"
                                ng-change="fnChangeLocation(idsObj.locationId);">
@@ -24,7 +24,7 @@
                     </md-select>
                 </md-input-container>
             </div>
-
+            <span flex></span>
             <div class="margin-top-8" ng-if="isSegmentsData">
                 <div layout="row" layout-align="end center"
                      layout-align-sm="space-between center"

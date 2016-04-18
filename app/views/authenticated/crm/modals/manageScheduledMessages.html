@@ -48,7 +48,7 @@
 
         <!-- Preview Section -->
         &nbsp;&nbsp;
-        <section class="md-whiteframe-1dp" layout-fill flex>
+        <div class="md-whiteframe-1dp overflow-hidden previewSection" layout="column" flex>
 
             <!-- Header section -->
             <md-toolbar class="md-primary md-hue-1 md-whiteframe-2dp">
@@ -60,7 +60,7 @@
                 Repair orders not available.
             </div>
 
-            <md-content class="contentViewSection" ng-if="repairOrder" layout="column" layout-margin layout-fill flex>
+            <md-content class="contentViewSection" ng-if="repairOrder" layout-fill>
 
                 <!-- Customer Info-->
                 <section class="md-whiteframe-1dp">
@@ -464,6 +464,6 @@
                     </div>
                 </section>
             </md-content>
-        </section>
+        </div>
     </md-dialog-content>
 </md-dialog>
