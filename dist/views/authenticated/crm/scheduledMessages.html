@@ -4,7 +4,7 @@
     </div>
 
     <div ng-if="isLocationsData">
-        <section layout="row">
+        <section layout="row" layout-xs="column">
             <md-input-container>
                 <md-select aria-label="Select location" ng-model="idsObj.locationId"
                            ng-change="fnChangeLocation(idsObj.locationId);">
@@ -65,7 +65,7 @@
                     </md-input-container>
                 </div>
 
-                <div layout="row" layout-align="end center"
+                <div layout="row" layout-align="end center" layout-xs="column"
                      layout-align-sm="space-between center" layout-align-xs="space-between center"
                      layout-fill flex>
                     <md-button aria-label="Refresh Grid"
