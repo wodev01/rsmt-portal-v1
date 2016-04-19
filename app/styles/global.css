@@ -977,6 +977,7 @@ html, body {
 
 .overflow-auto {
     overflow: auto;
+    overflow-x: hidden;
 }
 
 .overflow-hidden {
@@ -1166,4 +1167,9 @@ div.settings-tab-container md-tabs md-tabs-content-wrapper > md-tab-content > di
 
 .datagrid table tbody tr:last-child td {
     border-bottom: none;
+}
+
+/* In IE-11(Edge) to popup dialog center of the screen*/
+md-dialog.fullScreenDialog {
+    width: 100%;
 }

@@ -1,4 +1,4 @@
-<md-dialog aria-label="segmentInteractionForm" id="manage-scheduledmsg-dialog" flex>
+<md-dialog aria-label="segmentInteractionForm" id="manage-scheduledmsg-dialog" class="fullScreenDialog">
     <md-toolbar class="light-black-bg-1">
         <div class="md-toolbar-tools" layout="row" layout-align="space-between center">
             <span class="md-title">Scheduled Message</span>
@@ -18,27 +18,27 @@
             </md-toolbar>
             <md-content layout-fill class="contentViewSection">
                 <form name="manageCrmInteractionForm" class="md-padding" layout="column" novalidate>
-                    <md-input-container class="remove-error-space" flex>
+                    <md-input-container class="remove-error-space">
                         <label>Segment</label>
                         <input type="text" ng-model="crmInteraction.segment.name" disabled />
                     </md-input-container>
-                    <md-input-container class="remove-error-space" flex>
+                    <md-input-container class="remove-error-space">
                         <label>Due Date</label>
                         <input type="text" ng-model="crmInteraction.due_date" disabled />
                     </md-input-container>
-                    <md-input-container class="remove-error-space" flex>
+                    <md-input-container class="remove-error-space">
                         <label>Template Name</label>
                         <input type="text" ng-model="crmInteraction.sub_segment.template_name" disabled />
                     </md-input-container>
-                    <md-input-container class="remove-error-space" flex>
+                    <md-input-container class="remove-error-space">
                         <label>Scheduled Days</label>
                         <input type="number" ng-model="crmInteraction.sub_segment.interaction_delay_days" disabled />
                     </md-input-container>
-                    <md-input-container class="remove-error-space" flex>
+                    <md-input-container class="remove-error-space">
                         <label>Delivery Type</label>
                         <input type="text" ng-model="crmInteraction.delivery_type" disabled />
                     </md-input-container>
-                    <md-input-container class="remove-error-space" flex>
+                    <md-input-container class="remove-error-space">
                         <label>Status</label>
                         <input type="text" ng-model="crmInteraction.status" disabled />
                     </md-input-container>
