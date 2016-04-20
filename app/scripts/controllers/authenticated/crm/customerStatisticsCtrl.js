@@ -307,6 +307,7 @@ app.controller('customerStatisticsCtrl',
         $scope.$on("$destroy", function () {
             $scope.mapLabel = 'Completed...';
             $timeout.cancel($scope.timer);
+            clearMarkers();
         });
 
         /*--------------- Locations Filter --------------------------*/
