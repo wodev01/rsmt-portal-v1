@@ -12,8 +12,8 @@
                     <h2 class="md-title">Step {{$index + 1}} : {{step.title}}</h2>
                     <p>{{step.description}} <a ng-if="$index == 0" href="{{appDownloadUrl}}" target="_blank">Click to download setup</a></p>
                 </md-card-content>
-                <div ng-class="step.class" ng-if="step.class" hide-sm class="big-img md-card-image"></div>
-                <div ng-class="step.class" ng-if="step.class" hide-gt-sm class="small-img md-card-image"></div>
+                <div ng-class="step.class" ng-if="step.class" hide-xs class="big-img md-card-image"></div>
+                <div ng-class="step.class" ng-if="step.class" hide-gt-xs class="small-img md-card-image"></div>
             </md-card>
         </md-content>
     </section>
