@@ -72,7 +72,7 @@
 
                 <md-content ng-if="isDataNotNull" layout="column">
                     <div ng-show="useSearch" layout-padding>
-                        <form name="searchForm" layout="column" layout-gt-sm="row">
+                        <form name="searchForm" layout="row" layout-xs="column">
                             <fieldset flex="100">
                                 <legend>Search By Customer Name or Address:</legend>
 
@@ -92,7 +92,7 @@
                                        ng-keyup="fnCancelSearchFilter($event, this)" flex/>
                             </fieldset>
 
-                            <fieldset flex="30" flex-sm="100">
+                            <fieldset flex="30" flex-xs="100">
                                 <legend>Car Model:</legend>
 
                                 <md-input-container flex layout-fill>
