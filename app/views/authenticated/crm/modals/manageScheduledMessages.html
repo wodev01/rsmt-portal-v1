@@ -14,33 +14,35 @@
         <!-- Form Section -->
         <div class="md-whiteframe-1dp" layout-fill flex="40" flex-xs="100">
             <md-toolbar class="md-primary md-hue-1 md-whiteframe-2dp">
-                <div class="md-toolbar-tools">Segment Info</div>
+                <div class="md-toolbar-tools">
+                    <span class="text-small-959">Segment Info</span>
+                </div>
             </md-toolbar>
             <md-content layout-fill class="contentViewSection">
                 <form name="manageCrmInteractionForm" class="md-padding" layout="column" novalidate>
                     <md-input-container class="remove-error-space">
                         <label>Segment</label>
-                        <input type="text" ng-model="crmInteraction.segment.name" disabled />
+                        <input type="text" ng-model="crmInteraction.segment.name" disabled/>
                     </md-input-container>
                     <md-input-container class="remove-error-space">
                         <label>Due Date</label>
-                        <input type="text" ng-model="crmInteraction.due_date" disabled />
+                        <input type="text" ng-model="crmInteraction.due_date" disabled/>
                     </md-input-container>
                     <md-input-container class="remove-error-space">
                         <label>Template Name</label>
-                        <input type="text" ng-model="crmInteraction.sub_segment.template_name" disabled />
+                        <input type="text" ng-model="crmInteraction.sub_segment.template_name" disabled/>
                     </md-input-container>
                     <md-input-container class="remove-error-space">
                         <label>Scheduled Days</label>
-                        <input type="number" ng-model="crmInteraction.sub_segment.interaction_delay_days" disabled />
+                        <input type="number" ng-model="crmInteraction.sub_segment.interaction_delay_days" disabled/>
                     </md-input-container>
                     <md-input-container class="remove-error-space">
                         <label>Delivery Type</label>
-                        <input type="text" ng-model="crmInteraction.delivery_type" disabled />
+                        <input type="text" ng-model="crmInteraction.delivery_type" disabled/>
                     </md-input-container>
                     <md-input-container class="remove-error-space">
                         <label>Status</label>
-                        <input type="text" ng-model="crmInteraction.status" disabled />
+                        <input type="text" ng-model="crmInteraction.status" disabled/>
                     </md-input-container>
                 </form>
             </md-content>
@@ -52,7 +54,9 @@
 
             <!-- Header section -->
             <md-toolbar class="md-primary md-hue-1 md-whiteframe-2dp">
-                <div class="md-toolbar-tools"> RO #{{repairOrder.order_number}}</div>
+                <div class="md-toolbar-tools">
+                    <span class="text-small-959"> RO #{{repairOrder.order_number}}</span>
+                </div>
             </md-toolbar>
 
             <!-- Content section -->
@@ -206,7 +210,8 @@
                                     Labor details not available.
                                 </div>
 
-                                <md-list-item class="md-3-line md-long-text" ng-repeat="labor in repairOrder.labor" layout="column">
+                                <md-list-item class="md-3-line md-long-text" ng-repeat="labor in repairOrder.labor"
+                                              layout="column">
                                     <h3>{{labor.tech.full_name}}</h3>
                                     <div class="margin-bottom-10">
                                         <div layout="column" layout-gt-md="row">
@@ -250,7 +255,8 @@
                                     Parts details not available.
                                 </div>
 
-                                <md-list-item class="md-3-line md-long-text" ng-repeat="part in repairOrder.parts" layout="column">
+                                <md-list-item class="md-3-line md-long-text" ng-repeat="part in repairOrder.parts"
+                                              layout="column">
                                     <h3>{{part.tech.full_name}}</h3>
 
                                     <div>
@@ -288,7 +294,7 @@
                                             </span>
                                         </div>
                                         <p>{{part.description}}</p>
-                                            </div>
+                                    </div>
                                     <md-divider></md-divider>
                                 </md-list-item>
                             </div>
@@ -304,7 +310,8 @@
                                     Sublet details not available.
                                 </div>
 
-                                <md-list-item class="md-3-line md-long-text" ng-repeat="sublet in repairOrder.sublets" layout="column">
+                                <md-list-item class="md-3-line md-long-text" ng-repeat="sublet in repairOrder.sublets"
+                                              layout="column">
                                     <div>
                                         <span><span class="leftLabel">Order ID:</span>#{{sublet.id}}</span>
 
@@ -336,7 +343,7 @@
                                 </md-list-item>
                             </div>
                         </md-list>
-                </md-content>
+                    </md-content>
                 </section>
 
                 <!-- Recommended Section -->
@@ -376,7 +383,7 @@
                                         </span>
                                     </div>
                                     <p>{{recItem.text}}</p>
-                                    </div>
+                                </div>
                                 <md-divider></md-divider>
                             </md-list-item>
                         </md-list>
@@ -420,7 +427,8 @@
                                         <div class="datagrid">
                                             <table>
                                                 <thead>
-                                                <tr><th>Description</th>
+                                                <tr>
+                                                    <th>Description</th>
                                                     <th>Location</th>
                                                     <th>Before Status</th>
                                                     <th>Before Value</th>

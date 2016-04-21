@@ -23,9 +23,7 @@ app.controller('LocationInfoCtrl',
                     toastr.error('Location can\'t saved.Invalid information.');
                 }
 
-                if (location.id) {
-                    $scope.$parent.fnCloseLocationManageSwap();
-                } else {
+                if (!location.id) {
                     $scope.$parent.closeNewLocationSwap();
                 }
             });
