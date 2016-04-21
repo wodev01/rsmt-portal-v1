@@ -1174,3 +1174,8 @@ div.settings-tab-container md-tabs md-tabs-content-wrapper > md-tab-content > di
 md-dialog.fullScreenDialog {
     width: 100%;
 }
+
+/* Remove outline for repair order list */
+md-list md-list-item > div {
+    outline: none;
+}
