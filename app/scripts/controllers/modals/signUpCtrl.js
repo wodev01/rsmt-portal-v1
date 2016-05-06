@@ -1,5 +1,5 @@
 'use strict';
-app.controller('SignUpCtrl', function ($scope, $mdDialog,globalTimeZone) {
+app.controller('SignUpCtrl', function ($scope, $location, $mdDialog, globalTimeZone) {
 
     $scope.user = {
         businessName: '',
@@ -41,10 +41,8 @@ app.controller('SignUpCtrl', function ($scope, $mdDialog,globalTimeZone) {
                         contactEmail: '',
                         password: ''
                     };
-                    $rootScope.userName = CarglyPartner.user.name;
-                    $rootScope.isLoggedIn = true;
-                    $state.go('VerifyUser');
-                    //                    $location.url('/verifyUser');
+                    $scope.isProcessing = false;
+                    $location.url('/verify');
                 },
                 function (failure) {
                     if (typeof failure === 'undefined' || failure.status !== HTTP_CONFLICT) {

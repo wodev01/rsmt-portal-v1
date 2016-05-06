@@ -1029,7 +1029,7 @@ md-input-container.remove-error-space .md-errors-spacer {
     min-height: 0;
 }
 
-md-input-container .error-msg {
+.error-msg {
     color: rgb(213, 0, 0);
     font-size: 12px;
 }
