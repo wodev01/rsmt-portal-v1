@@ -44,30 +44,49 @@
         <div class="md-whiteframe-z1 md-padding center-form-container" layout-margin>
             <div class="md-display-1 text-center" layout-padding>Update Payment Method</div>
 
-            <form name="paymentForm" layout="column" novalidate>
+            <form name="paymentForm" ng-submit="paymentForm.$valid && fnUpdateUserPaymentInfo(payment);" layout="column" novalidate>
                 <md-input-container class="remove-error-space">
                     <md-icon class="md-accent">credit_card</md-icon>
                     <input type="number" name="cardNumber" placeholder="Card Number" ng-model="payment.number" ng-pattern="/^(?:4[0-9]{12}(?:[0-9]{3})?|5[1-5][0-9]{14}|6(?:011|5[0-9][0-9])[0-9]{12}|3[47][0-9]{13}|3(?:0[0-5]|[68][0-9])[0-9]{11}|(?:2131|1800|35\d{3})\d{11})$/" required/>
+                    <div ng-if="paymentForm.$submitted || paymentForm.cardNumber.$touched">
+                        <span class="error-msg" ng-if="paymentForm.cardNumber.$error.required">Card number is required.</span>
+                        <span class="error-msg" ng-if="paymentForm.cardNumber.$error.pattern">This field must contain valid card number</span>
+                    </div>
                 </md-input-container>
                 <md-input-container class="remove-error-space">
                     <md-icon class="md-accent">confirmation_number</md-icon>
                     <input type="number" name="cvv" placeholder="CVV" ng-model="payment.cvv" ng-pattern="/^[0-9]{3,4}$/" required/>
+                    <div ng-if="paymentForm.$submitted || paymentForm.cvv.$touched">
+                        <span class="error-msg"
+                              ng-if="paymentForm.cvv.$error.required">CVV is required.</span>
+                        <span class="error-msg" ng-if="paymentForm.cvv.$error.pattern">This field must contain valid CVV number</span>
+                    </div>
                 </md-input-container>
                 <label style="color: rgba(0, 0, 0, 0.40); margin-left:2px;">Expiration (MM/YYYY)</label>
                 <div layout layout-sm="column">
                     <md-input-container  class="remove-error-space">
                         <md-icon class="md-accent">date_range</md-icon>
-                        <input type="number" name="exp_month" placeholder="Month" ng-model="payment.exp_month" maxlength="2" required  ng-pattern="/^(0?[1-9]|1[012])$/"/>
+                        <input type="number" name="exp_month" placeholder="Month" ng-model="payment.exp_month" min="1" max="12" required  ng-pattern="/^(0?[1-9]|1[012])$/"/>
+                        <div ng-if="paymentForm.$submitted || paymentForm.exp_month.$touched">
+                            <span class="error-msg" ng-if="paymentForm.exp_month.$error.required">Month is required.</span>
+                            <span class="error-msg" ng-if="paymentForm.exp_month.$error.min || paymentForm.exp_month.$error.max">Month must be between 1-12.</span>
+                            <span class="error-msg" ng-if="paymentForm.exp_month.$error.number">This field must contain numbers only.</span>
+                        </div>
                     </md-input-container>
                     <md-input-container  class="remove-error-space">
                         <md-icon class="md-accent">date_range</md-icon>
-                        <input type="number" name="exp_year" placeholder="Year" ng-model="payment.exp_year" maxlength="4" required  ng-pattern="/^[20][0-9]{3}$/"/>
+                        <input type="number" name="exp_year" placeholder="Year" ng-model="payment.exp_year" min="1000" max="9999" required  ng-pattern="/^[20][0-9]{3}$/"/>
+                        <div ng-if="paymentForm.$submitted || paymentForm.exp_year.$touched">
+                            <span class="error-msg" ng-if="paymentForm.exp_year.$error.required">Year is required.</span>
+                            <span class="error-msg" ng-if="paymentForm.exp_year.$error.min || paymentForm.exp_year.$error.max">Year is invalid.</span>
+                            <span class="error-msg" ng-if="paymentForm.exp_year.$error.number">This field must contain numbers only.</span>
+                        </div>
                     </md-input-container>
                 </div>
                 <div layout="column" layout-align="center center">
                     <div layout="row">
                         <md-button type="submit" class="md-raised md-accent"
-                                   ng-disabled="paymentForm.$invalid || payment.isProcessing" ng-click="fnUpdateUserPaymentInfo(payment);">
+                                   ng-disabled="payment.isProcessing">
                             Save
                         </md-button>
                     </div>
