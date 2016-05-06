@@ -1024,10 +1024,15 @@ md-toolbar.top-header {
 }
 
 /*---------- Remove error space in input-container ----------*/
+
 md-input-container.remove-error-space .md-errors-spacer {
-    min-height: 0px;
+    min-height: 0;
 }
 
+md-input-container .error-msg {
+    color: rgb(213, 0, 0);
+    font-size: 12px;
+}
 .md-rsmt-theme.md-hue-1 .md-datepicker-input {
     background: none !important;
 }

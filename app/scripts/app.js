@@ -96,12 +96,14 @@ app.config(function ($mdThemingProvider, toastr, $urlRouterProvider, $stateProvi
         .state('login', {
             url: "/login",
             templateUrl: "views/login.html",
-            controller: 'LoginCtrl'
+            controller: 'LoginCtrl',
+            data:{pageTitle:'Login'}
         })
         .state('resetPassword', {
             url: "/reset-password",
             templateUrl: "views/resetPassword.html",
             controller: 'ResetPasswordCtrl',
+            data:{pageTitle:'Reset Password'},
             resolve: {
                 AuthService : ['AuthService', function (AuthService) {
                     return AuthService.fnResetPWTokenVerified();
@@ -112,6 +114,7 @@ app.config(function ($mdThemingProvider, toastr, $urlRouterProvider, $stateProvi
             url: "/verify",
             templateUrl: "views/authenticated/verify/verify.html",
             controller: 'VerifyCtrl',
+            data:{pageTitle:'User Verify'},
             resolve: {
                 AuthService : ['AuthService', function (AuthService) {
                     return AuthService.fnUserVerified();
@@ -122,6 +125,7 @@ app.config(function ($mdThemingProvider, toastr, $urlRouterProvider, $stateProvi
             url: "/payment",
             templateUrl: "views/authenticated/payment/payment.html",
             controller: 'PaymentCtrl',
+            data:{pageTitle:'Payment'},
             resolve: {
                 AuthService : ['AuthService', function (AuthService) {
                     return AuthService.fnPaymentVerified();
@@ -138,6 +142,7 @@ app.config(function ($mdThemingProvider, toastr, $urlRouterProvider, $stateProvi
             url: "dashboard",
             controller: 'DashboardCtrl',
             templateUrl: "views/authenticated/dashboard/dashboard.html",
+            data:{pageTitle:'Dashboard'},
             resolve: {
                 AuthService : ['AuthService', function (AuthService) {
                     return AuthService.fnGetUser(['realtime_dashboard']);
@@ -148,6 +153,7 @@ app.config(function ($mdThemingProvider, toastr, $urlRouterProvider, $stateProvi
             url: "locations",
             controller: 'LocationsCtrl',
             templateUrl: "views/authenticated/locations/locations.html",
+            data:{pageTitle:'Locations'},
             resolve: {
                 AuthService : ['AuthService', function (AuthService) {
                     return AuthService.fnGetUser([]);
@@ -158,6 +164,7 @@ app.config(function ($mdThemingProvider, toastr, $urlRouterProvider, $stateProvi
             url: "crm",
             controller: 'CrmCtrl',
             templateUrl: "views/authenticated/crm/crm.html",
+            data:{pageTitle:'CRM'},
             resolve: {
                 AuthService : ['AuthService', function (AuthService) {
                     return AuthService.fnGetUser(['crm_scheduled']);
@@ -168,6 +175,7 @@ app.config(function ($mdThemingProvider, toastr, $urlRouterProvider, $stateProvi
             url: "products",
             controller: 'ProductsCtrl',
             templateUrl: "views/authenticated/products/products.html",
+            data:{pageTitle:'Products'},
             resolve: {
                 AuthService : ['AuthService', function (AuthService) {
                     return AuthService.fnGetUser([]);
@@ -178,6 +186,7 @@ app.config(function ($mdThemingProvider, toastr, $urlRouterProvider, $stateProvi
             url: 'location/setup',
             controller: 'LocationSetupCtrl',
             templateUrl: "views/authenticated/locationSetup/locationSetup.html",
+            data:{pageTitle:'Location Setup'},
             resolve: {
                 AuthService : ['AuthService', function (AuthService) {
                     return AuthService.fnGetUser([]);
@@ -188,6 +197,7 @@ app.config(function ($mdThemingProvider, toastr, $urlRouterProvider, $stateProvi
             url: 'settings/:settingsName',
             controller: 'SettingsCtrl',
             templateUrl: 'views/authenticated/settings/settings.html',
+            data:{pageTitle:'Settings'},
             resolve: {
                 AuthService : ['AuthService', function (AuthService) {
                     return AuthService.fnGetUser([]);
