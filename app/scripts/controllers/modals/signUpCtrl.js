@@ -20,6 +20,8 @@ app.controller('SignUpCtrl', function ($scope, $location, $mdDialog, globalTimeZ
     };
 
     $scope.timeZoneDDOptions = globalTimeZone;
+    $scope.businessForm = {};
+    var tempBusinessForm = {};
 
     var HTTP_CONFLICT = 409;
     $scope.user.businessTimezone = 'US/Central';
@@ -80,7 +82,7 @@ app.controller('SignUpCtrl', function ($scope, $location, $mdDialog, globalTimeZ
                 $scope.fnOpenSignUp();
             };
 
-            $scope.fnOpenSignUp = function(){
+            $scope.fnOpenSignUp = function () {
                 $mdDialog.show({
                     controller: 'SignUpCtrl',
                     templateUrl: 'views/modals/signup.html',
@@ -94,4 +96,5 @@ app.controller('SignUpCtrl', function ($scope, $location, $mdDialog, globalTimeZ
             targetEvent: ev
         });
     };
+
 });

@@ -1,5 +1,5 @@
 <md-dialog aria-label="Sign Up" class="fullScreenDialog">
-    <form name="businessForm" novalidate>
+    <form name="businessForm" ng-submit="businessForm.$valid && registerUser();" novalidate>
         <md-toolbar>
             <div class="md-toolbar-tools">
                 <span>Partner Sign-up</span>
@@ -15,14 +15,31 @@
             <div class="md-dialog-content md-padding" layout="column">
                 <md-input-container class="remove-error-space">
                     <label>Business Name</label>
-                    <input name=businessName"" ng-model="user.businessName" required ng-minlength="5">
+                    <input name="businessName" ng-model="user.businessName" ng-minlength="5" required>
+
+                    <div ng-if="businessForm.$submitted || businessForm.businessName.$touched">
+                        <span class="error-msg" ng-if="businessForm.businessName.$error.required">
+                            Business Name is required.</span>
+                        <span class="error-msg" ng-if="businessForm.businessName.$error.minlength">
+                            This field is too short minimum 5 character required.</span>
+                    </div>
                 </md-input-container>
 
                 <md-input-container class="remove-error-space">
                     <label>Business Zip</label>
                     <input name="businessZip" ng-model="user.businessZip" required ng-pattern="/^[0-9]+$/"
-                           ng-minlength="5"
-                           ng-maxlength="20"/>
+                           ng-minlength="5" ng-maxlength="20"/>
+
+                    <div ng-if="businessForm.$submitted || businessForm.businessZip.$touched">
+                        <span class="error-msg" ng-if="businessForm.businessZip.$error.required">
+                            Business Zip is required.</span>
+                        <span class="error-msg" ng-if="businessForm.businessZip.$error.pattern">
+                            This field must contain number only.</span>
+                        <span class="error-msg" ng-if="businessForm.businessZip.$error.minlength">
+                            This field is too short minimum 5 character required.</span>
+                        <span class="error-msg" ng-if="businessForm.businessZip.$error.maxlength">
+                            This field is too long maximum 20 character required.</span>
+                    </div>
                 </md-input-container>
 
                 <md-input-container class="md-block">
@@ -38,34 +55,73 @@
                     <label>Business Website</label>
                     <input name="businessUrl" ng-model="user.businessUrl" required
                            ng-pattern="/^\w+([\.-]?\w+)*\w+([\.-]?\w+)*(\.\w{2,3})+$/"/>
+
+                    <div ng-if="businessForm.$submitted || businessForm.businessUrl.$touched">
+                        <span class="error-msg" ng-if="businessForm.businessUrl.$error.required">
+                            Business Website is required.</span>
+                        <span class="error-msg" ng-if="businessForm.businessUrl.$error.pattern">
+                            This field must be a valid url.</span>
+                    </div>
                 </md-input-container>
 
                 <md-input-container class="remove-error-space">
                     <label>Contact Name</label>
                     <input name="contactName" ng-model="user.contactName" required ng-minlength="6"
                            ng-pattern="/^[A-Za-z ]+$/"/>
+
+                    <div ng-if="businessForm.$submitted || businessForm.contactName.$touched">
+                        <span class="error-msg" ng-if="businessForm.contactName.$error.required">
+                            Contact Name is required.</span>
+                        <span class="error-msg" ng-if="businessForm.contactName.$error.pattern">
+                            This field must contain alphabets only.</span>
+                        <span class="error-msg" ng-if="businessForm.contactName.$error.minlength">
+                            This field is too short minimum 6 character required.</span>
+                    </div>
                 </md-input-container>
 
                 <md-input-container class="remove-error-space">
                     <label>Contact Email</label>
-                    <input name="contactEmail" type="email" ng-model="user.contactEmail" required ng-minlength="5">
+                    <input name="contactEmail" type="email" ng-model="user.contactEmail" required>
+
+                    <div ng-if="businessForm.$submitted || businessForm.contactEmail.$touched">
+                        <span class="error-msg" ng-if="businessForm.contactEmail.$error.required">
+                            Contact Email is required.</span>
+                        <span class="error-msg" ng-if="businessForm.contactEmail.$error.email">
+                            This field must be a valid email address.</span>
+                    </div>
                 </md-input-container>
 
                 <md-input-container class="remove-error-space">
                     <label>Password</label>
                     <input name="passwd" type="password" ng-model="user.password" required minlength="5">
+
+                    <div ng-if="businessForm.$submitted || businessForm.passwd.$touched">
+                        <span class="error-msg" ng-if="businessForm.passwd.$error.required">
+                            Password is required.</span>
+                        <span class="error-msg" ng-if="businessForm.passwd.$error.minlength">
+                            This field is too short minimum 5 character required.</span>
+                    </div>
                 </md-input-container>
 
                 <md-input-container>
                     <label>Password Again</label>
-                    <input name="confirmPassword" type="password" ng-model="user.confirmPassword" required
-                           minlength="5">
+                    <input name="confirmPassword" type="password" ng-model="user.confirmPassword" required>
+
+                    <div ng-if="businessForm.$submitted || businessForm.confirmPassword.$touched">
+                        <span class="error-msg" ng-if="businessForm.confirmPassword.$error.required">
+                            Confirm Password is required.</span>
+                    </div>
                 </md-input-container>
 
                 <span>
-                    <md-checkbox md-no-ink aria-label="Checkbox No Ink" ng-model="agreed" class="md-accent" required>
+                    <md-checkbox md-no-ink aria-label="Checkbox No Ink" name="termsAgreed" ng-model="agreed"
+                                 class="md-accent" required>
                         <a ng-click="fnOpenTermsOfServiceModal($event);" href="javascript:void(0);">Agree to Terms</a>
                     </md-checkbox>
+                    <div ng-if="businessForm.$submitted || businessForm.termsAgreed.$touched">
+                        <span class="error-msg" ng-if="businessForm.termsAgreed.$error.required">
+                            Please agree the terms & conditions.</span>
+                    </div>
                 </span>
 
                 <div><span class="text-danger"> {{ error }}</span></div>
@@ -75,8 +131,7 @@
         <md-dialog-actions layout-margin>
             <md-progress-circular class="md-accent" ng-if="isProcessing"
                                   md-mode="indeterminate"></md-progress-circular>
-
-            <md-button class="md-raised md-accent" ng-disabled="businessForm.$invalid" ng-click="registerUser();">
+            <md-button type="submit" class="md-raised md-accent">
                 Create Partner Account
             </md-button>
 

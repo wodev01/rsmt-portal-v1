@@ -1033,6 +1033,7 @@ md-input-container.remove-error-space .md-errors-spacer {
     color: rgb(213, 0, 0);
     font-size: 12px;
 }
+
 .md-rsmt-theme.md-hue-1 .md-datepicker-input {
     background: none !important;
 }
@@ -1091,7 +1092,7 @@ md-dialog[aria-label=Delete] button[aria-label=Delete] {
 /*---------- md-dialog create button (app download dialog) ----------*/
 md-dialog[aria-label=createLocation] button[aria-label=Create] {
     background-color: rgb(91, 123, 227) !important;
-    border-color: #5b94e3 !important;
+    border-color: #5B94E3 !important;
     color: rgba(255, 255, 255, 0.87) !important;
 }
 
@@ -1159,6 +1160,11 @@ div.settings-tab-container md-tabs md-tabs-content-wrapper > md-tab-content > di
 
 .datagrid table tbody tr.selected {
     background-color: #E5E3E3 !important;
+    outline: none;
+}
+
+.datagrid table tbody tr:focus {
+    outline: none;
 }
 
 .datagrid table tbody td {

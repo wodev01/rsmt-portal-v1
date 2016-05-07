@@ -18,10 +18,16 @@
 
             <md-tab label="Recommended Service">
                 <md-content ng-controller="recommendedServiceCtrl" class="md-padding" ng-if="selectedLocationTab === 1">
-                    <div layout="row" layout-sm="column" layout-align="center center" ng-if="!isDataNotNull && !isMsgShow">
-                        <md-progress-circular  class="md-accent" md-diameter="100" md-mode="indeterminate"></md-progress-circular>
+                    <div layout="row" layout-sm="column" layout-align="center center"
+                         ng-if="!isDataNotNull && !isMsgShow">
+                        <md-progress-circular class="md-accent" md-diameter="100"
+                                              md-mode="indeterminate"></md-progress-circular>
                     </div>
-                    <div ng-if="isMsgShow" layout="row" layout-align="center center"><h1>No recommended service available</h1></div>
+
+                    <div class="md-headline" ng-if="isMsgShow" layout="row" layout-align="center center">
+                        No recommended service available.
+                    </div>
+
                     <div layout-fill flex ng-if="isDataNotNull"
                          ui-grid-selection ui-grid-auto-resize
                          ng-style="$root.fnReturnGridHeight(recommendedServicesData.length)"
@@ -31,10 +37,16 @@
 
             <md-tab label="Repair Orders">
                 <md-content ng-controller="repairOrderCtrl" class="md-padding" ng-if="selectedLocationTab === 2">
-                    <div layout="row" layout-sm="column" layout-align="center center" ng-if="!isDataNotNull && !isMsgShow">
-                        <md-progress-circular  class="md-accent" md-diameter="100" md-mode="indeterminate"></md-progress-circular>
+                    <div layout="row" layout-sm="column" layout-align="center center"
+                         ng-if="!isDataNotNull && !isMsgShow">
+                        <md-progress-circular class="md-accent" md-diameter="100"
+                                              md-mode="indeterminate"></md-progress-circular>
                     </div>
-                    <div ng-if="isMsgShow" layout="row" layout-align="center center"><h1>No repair orders available</h1></div>
+
+                    <div class="md-headline" ng-if="isMsgShow" layout="row" layout-align="center center">
+                        No repair orders available.
+                    </div>
+
                     <div layout-fill flex ng-if="isDataNotNull"
                          ui-grid-selection ui-grid-auto-resize ui-grid-pagination
                          ng-style="$root.fnReturnGridHeight(filteredData.length, '', true, false)"
@@ -46,5 +58,6 @@
     </md-content>
 
 </md-sidenav>
+
 <!-- include swapping view-->
 <div ng-include="rightUserSwapView"></div>

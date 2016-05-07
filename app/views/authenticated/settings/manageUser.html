@@ -23,11 +23,10 @@
 
             <md-input-container class="remove-error-space">
                 <label>Email</label>
-                <input name="email" type="email" ng-model="user.email" ng-minlength="5" required/>
+                <input name="email" type="email" ng-model="user.email" required/>
                 <div ng-if="userForm.$submitted || userForm.email.$touched">
                     <span class="error-msg" ng-if="userForm.email.$error.required">Email is required.</span>
                     <span class="error-msg" ng-if="userForm.email.$error.email">This field must contain valid email address.</span>
-                    <span class="error-msg" ng-if="userForm.email.$error.minlength">This field is too short minimum 5 character required.</span>
                 </div>
             </md-input-container>
 
@@ -72,12 +71,9 @@
                     Save
                 </md-button>
 
-                <md-button class="md-warn md-raised md-hue-2" ng-click="fnCloseSwap()">Cancel</md-button>
+                <md-button class="md-warn md-raised" ng-click="fnCloseSwap()">Cancel</md-button>
             </div>
         </form>
     </md-content>
 
 </md-sidenav>
-
-
-

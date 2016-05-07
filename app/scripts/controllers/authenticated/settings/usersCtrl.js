@@ -40,7 +40,7 @@ app.controller('UsersCtrl',
             '   <md-icon md-font-set="material-icons">edit</md-icon>' +
             '   <md-tooltip ng-if="$root.isMobile == null" md-direction="top">Edit</md-tooltip></md-button>' +
             '</md-button>' +
-            '<md-button class="md-icon-button md-warn md-hue-2" ng-click="grid.appScope.fnUserDelete(row,$event)">' +
+            '<md-button class="md-icon-button md-warn" ng-click="grid.appScope.fnUserDelete(row,$event)">' +
             '    <md-icon md-font-set="material-icons">delete</md-icon>' +
             '   <md-tooltip ng-if="$root.isMobile == null" md-direction="top">Delete</md-tooltip>' +
             '</md-button> ' +

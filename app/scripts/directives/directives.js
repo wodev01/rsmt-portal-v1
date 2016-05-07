@@ -27,103 +27,6 @@ app.directive('pageTitle', function ($rootScope, $timeout) {
     };
 });
 
-app.directive('dropdown', ['$rootScope', function($rootScope) {
-    return {
-        restrict: 'E',
-        templateUrl: 'views/authenticated/dropdown.tmpl.html',
-        scope: {
-            placeholder: '@',
-            list: '=',
-            ddSelected: '=',
-            selectedLabel: '=',
-            optionValue: '@',
-            optionText: '@',
-            isSearchFilter: '=',
-            isSort: '=',
-            ddChange: '&'
-        },
-        link: function(scope, element) {
-            scope.isPlaceholder = true;
-
-            scope.select = function(item,intIndex) {
-                var itemsArr = element.find('div.list-item');
-                angular.element(itemsArr).each(function(index){
-                    if(index!==intIndex){
-                        $(this).removeClass('selected');
-                    }
-                });
-                scope.isPlaceholder = false;
-                scope.ddSelected = item[scope.optionValue];
-                scope.selectedLabel = item[scope.optionText];
-            };
-
-            scope.fnInitDDOption = function($last){
-                if($last){
-                    var longest = scope.list.reduce(function (a, b) { return a.name.length > b.name.length ? a : b; });
-                    if (longest.name.length > 30) {
-                        element.css('width',longest.name.length * 10+'px');
-                    }
-                }
-            };
-
-            scope.show = function() {
-                scope.listVisible = !scope.listVisible;
-            };
-
-            scope.$watch('selectedLabel', function(current) {
-                scope.isPlaceholder = current === undefined;
-                scope.display = current;
-            });
-
-            scope.$watch('ddSelected', function(current,old) {
-                if(current!==old){
-                    scope.ddChange();
-                    angular.forEach(scope.list, function(obj) {
-                        if (obj.value === current) {
-                            scope.selectedLabel = obj.name;
-                            return false;
-                        }
-                    });
-                }
-            });
-
-            $rootScope.$on('EventListener', function (event, target) {
-                event.preventDefault();
-                scope.searchText = '';
-                if($(target[0]).is('input')){return;}
-                if (!$(target[0]).is('.dropdown-display') && !$(target[0]).parents('.dropdown-display').length > 0){
-                    scope.$apply(function () {
-                        scope.listVisible = false;
-                    });
-                }
-            });
-
-            element.on('keyup',function (e) {
-                if (scope.listVisible) {
-                    var selected = element.find('div.selected'), item = element.find('div.list-item');
-                    if (e.keyCode === 40) { // key-down
-                        e.preventDefault();
-                        e.stopPropagation();
-                        selected.removeClass('selected').next().addClass('selected').find('a').focus();
-                        if (selected.next().length === 0) {
-                            item.eq(0).addClass('selected');
-                        }
-                    } else if (e.keyCode === 38) { // key-up
-                        e.preventDefault();
-                        e.stopPropagation();
-                        selected.removeClass('selected').prev().addClass('selected').find('a').focus();
-                        if (selected.prev().length === 0) {
-                            item.eq(-1).addClass('selected');
-                        }
-                    } else if (e.keyCode === 13) { // Enter
-                        element.find('a.display-anchor').focus();
-                    }
-                }
-            });
-        }
-    };
-}]);
-
 app.directive('recommendedGrid', function($mdDialog, allCustomerService) {
     return {
         restrict: 'EA',
@@ -230,7 +133,7 @@ app.directive('recommendedGrid', function($mdDialog, allCustomerService) {
                     colDffArr.unshift({cellTemplate: $scope.tooltip, displayName: 'Recent Labor', minWidth: 50, width:120, sortable:false});
                     colDffArr.push(
                         {field: 'customer.first_name',displayName: 'Customer Name',
-                            cellTemplate: '<div class="ngCellText">' +
+                            cellTemplate: '<div class="ui-grid-cell-contents">' +
                             '{{row.getProperty(col.field)}} {{row.entity.customer.last_name}}</div>',minWidth: 220, enableHiding: false},
                         {field: 'customer.phone_numbers',displayName: 'Phone Numbers',
                             cellFilter: 'joinArray',minWidth: 100, enableHiding: false}
@@ -354,8 +257,10 @@ app.directive('repairOrderGrid', function($mdDialog,allCustomerService) {
             };
 
             $scope.fnSetGridOptions = function(id) {
-                $scope.roAction = '<div class="ui-grid-cell-contents paddding-left-0">' +
-                    '   <md-button class="md-icon-button md-accent" ng-click="grid.appScope.fnViewRODetails($event,row);">' +
+                $scope.roAction = '<div class="ui-grid-cell-contents">' +
+                    '   <md-button class="md-icon-button md-accent" ' +
+                    '               style="margin-left: 0;"' +
+                    '               ng-click="grid.appScope.fnViewRODetails($event,row);">' +
                     '       <md-icon md-font-set="material-icons">launch</md-icon>' +
                     '       <md-tooltip ng-if="$root.isMobile == null" md-direction="top">View</md-tooltip>' +
                     '   </md-button></div>';

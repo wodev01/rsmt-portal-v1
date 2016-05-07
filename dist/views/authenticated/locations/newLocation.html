@@ -13,29 +13,76 @@
             <md-input-container class="remove-error-space">
                 <label>Name</label>
                 <input name="name" ng-model="location.name" required ng-minlength="5">
+
+                <div ng-if="locationForm.$submitted || locationForm.name.$touched">
+                    <span class="error-msg" ng-if="locationForm.name.$error.required">
+                        Location name is required.</span>
+                    <span class="error-msg" ng-if="locationForm.name.$error.minlength">
+                        This field is too short minimum 5 character required.</span>
+                </div>
             </md-input-container>
+
             <md-input-container class="remove-error-space">
                 <label>Phone</label>
                 <input name="phone" ng-model="location.phone" required ng-minlength="10" ng-maxlength="20">
+
+                <div ng-if="locationForm.$submitted || locationForm.phone.$touched">
+                    <span class="error-msg" ng-if="locationForm.phone.$error.required">
+                        Phone number is required.</span>
+                    <span class="error-msg" ng-if="locationForm.phone.$error.minlength">
+                        This field is too short minimum 10 character required.</span>
+                    <span class="error-msg" ng-if="locationForm.phone.$error.maxlength">
+                        This field is too long minimum 20 character required.</span>
+                </div>
             </md-input-container>
+
             <md-input-container class="remove-error-space">
                 <label>Address</label>
-                <input name="address" name="address" ng-model="location.address" required>
+                <input name="address" ng-model="location.address" required>
+
+                <div ng-if="locationForm.$submitted || locationForm.address.$touched">
+                    <span class="error-msg" ng-if="locationForm.address.$error.required">
+                        Address is required.</span>
+                </div>
             </md-input-container>
+
             <md-input-container class="remove-error-space">
                 <label>City</label>
                 <input name="city" ng-model="location.city" required>
+
+                <div ng-if="locationForm.$submitted || locationForm.city.$touched">
+                    <span class="error-msg" ng-if="locationForm.city.$error.required">
+                        City is required.</span>
+                </div>
             </md-input-container>
+
             <md-input-container class="remove-error-space">
                 <label>State</label>
                 <input name="state" ng-model="location.state" required>
+
+                <div ng-if="locationForm.$submitted || locationForm.state.$touched">
+                    <span class="error-msg" ng-if="locationForm.state.$error.required">
+                        State is required.</span>
+                </div>
             </md-input-container>
+
             <md-input-container class="remove-error-space">
                 <label>Zip</label>
                 <input name="zip" ng-model="location.zip" required ng-pattern="/^[0-9]+$/" md-maxlength="10"
-                       ng-minlength="5"
-                       ng-maxlength="20">
+                       ng-minlength="5" ng-maxlength="20">
+
+                <div ng-if="locationForm.$submitted || locationForm.zip.$touched">
+                    <span class="error-msg" ng-if="locationForm.zip.$error.required">
+                        Zip is required.</span>
+                    <span class="error-msg" ng-if="locationForm.zip.$error.minlength">
+                        This field is too short minimum 5 character required.</span>
+                    <span class="error-msg" ng-if="locationForm.zip.$error.maxlength">
+                        This field is too long minimum 20 character required.</span>
+                    <span class="error-msg" ng-if="locationForm.zip.$error.pattern">
+                        Only digits allowed.</span>
+                </div>
             </md-input-container>
+
             <md-input-container class="remove-error-space">
                 <label for="location_timezone">Timezone</label>
                 <md-select aria-label="Select Timezone" ng-model="location.timezone" id="location_timezone">
@@ -46,14 +93,14 @@
             </md-input-container>
 
             <div layout="row" layout-align="end center">
-                <md-progress-circular ng-if="isProcessing" class="md-accent" md-mode="indeterminate"></md-progress-circular>
+                <md-progress-circular ng-if="isProcessing" class="md-accent" md-mode="indeterminate">
+                </md-progress-circular>
 
-                <md-button class="md-raised md-accent"
-                           ng-disabled="locationForm.$invalid"
-                           ng-click="saveLocation(location);">Save
+                <md-button class="md-raised md-accent" type="submit"
+                           ng-click="locationForm.$valid && saveLocation(location)">Save
                 </md-button>
 
-                <md-button class="md-warn md-raised md-hue-2"
+                <md-button class="md-warn md-raised"
                            ng-click="closeNewLocationSwap();">Cancel
                 </md-button>
             </div>
