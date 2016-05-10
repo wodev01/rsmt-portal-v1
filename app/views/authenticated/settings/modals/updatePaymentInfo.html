@@ -6,8 +6,7 @@
         </div>
     </md-toolbar>
 
-    <form name="updatePaymentInfoForm" ng-submit="updatePaymentInfoForm.$valid && updateUserPaymentInfo();"
-           novalidate>
+    <form name="updatePaymentInfoForm" novalidate>
         <md-dialog-content class="md-padding" layout="row">
             <md-content layout="column" layout-fill flex>
                 <md-input-container class="remove-error-space">
@@ -59,7 +58,8 @@
         </md-dialog-content>
 
         <md-dialog-actions>
-            <md-button type="submit" class="md-raised md-accent">
+            <md-button type="submit" class="md-raised md-accent"
+                       ng-click="updatePaymentInfoForm.$valid && updateUserPaymentInfo();">
                 save
             </md-button>
 
