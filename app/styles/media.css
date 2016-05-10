@@ -1,8 +1,4 @@
 @media (max-width: 959px) {
-    .login-form-container {
-        min-width: 300px;
-    }
-
     img.rsmt-logo {
         height: 60px;
     }
@@ -30,6 +26,9 @@
 }
 
 @media (max-width: 768px) {
+    .center-form-container {
+        width: 300px;
+    }
     /* Customize breadcrumb */
     #customerTab ul.breadcrumb {
         font-size: 12px;

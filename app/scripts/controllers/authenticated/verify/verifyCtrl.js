@@ -1,13 +1,14 @@
 'use strict';
 app.controller('VerifyCtrl',
-    function ($scope, $cookies, $state, $mdDialog, cookieName) {
+    function ($scope, $cookies, $state, $timeout, $mdDialog, cookieName, toastr) {
+
+        $scope.isProcessing = false;
 
         $scope.fnLogout = function () {
             CarglyPartner.logout(function () {
                 $cookies.remove(cookieName);
                 $state.go('login');
-            }, function () {
-            });
+            }, function () {});
         };
 
         $scope.fnOpenTermsOfServiceModal = function (ev) {
@@ -28,11 +29,16 @@ app.controller('VerifyCtrl',
             });
         };
 
-        $scope.isReconfirmUser = false;
+        $scope.fnRefreshDom = function(){
+            $timeout(function(){$scope.$apply();});
+        };
+
         $scope.fnReconfirmUser = function () {
+            $scope.isProcessing = true;
             CarglyPartner.reconfirmUser(function () {
-                $scope.isReconfirmUser = true;
-                $scope.$apply();
+                $scope.isProcessing = false;
+                $scope.fnRefreshDom();
+                toastr.success('Confirmation email sent successfully.');
             });
         };
 

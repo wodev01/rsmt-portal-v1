@@ -44,7 +44,7 @@
         <div class="md-whiteframe-z1 md-padding center-form-container" layout-margin>
             <div class="md-display-1 text-center" layout-padding>Update Payment Method</div>
 
-            <form name="paymentForm" ng-submit="paymentForm.$valid && fnUpdateUserPaymentInfo(payment);" layout="column" novalidate>
+            <form name="paymentForm" layout="column" novalidate>
                 <md-input-container class="remove-error-space">
                     <md-icon class="md-accent">credit_card</md-icon>
                     <input type="number" name="cardNumber" placeholder="Card Number" ng-model="payment.number" ng-pattern="/^(?:4[0-9]{12}(?:[0-9]{3})?|5[1-5][0-9]{14}|6(?:011|5[0-9][0-9])[0-9]{12}|3[47][0-9]{13}|3(?:0[0-5]|[68][0-9])[0-9]{11}|(?:2131|1800|35\d{3})\d{11})$/" required/>
@@ -86,7 +86,8 @@
                 <div layout="column" layout-align="center center">
                     <div layout="row">
                         <md-button type="submit" class="md-raised md-accent"
-                                   ng-disabled="payment.isProcessing">
+                                   ng-disabled="payment.isProcessing"
+                                   ng-click="paymentForm.$valid && fnUpdateUserPaymentInfo(payment);">
                             Save
                         </md-button>
                     </div>

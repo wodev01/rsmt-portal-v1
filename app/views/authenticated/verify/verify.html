@@ -41,11 +41,12 @@
 </div>
 <md-content layout="column" layout="column" layout-align="space-between center" flex>
     <div class="md-whiteframe-z1 md-padding center-form-container" layout-margin>
-        <p>A confirmation message has been sent to your email address.
+        <p class="text-justify">A confirmation message has been sent to your email address.
             Please click the link in that email in order to confirm this account.
             Remember to check your <strong>SPAM</strong> folder if you can't find the message.</p>
         <p>If you have any questions please contact support@repairshopmarketingtools.com.</p>
-        <md-button class="md-raised md-accent" ng-click="fnReconfirmUser()" ng-fi="!isReconfirmUser">Resend Confirmation Email</md-button>
-        <span id="reconfirm_sent" ng-if="isReconfirmUser">Reconfirmation email sent!</span>
+        <md-button class="md-raised md-accent"
+                   ng-click="fnReconfirmUser()"
+                   ng-disabled="isProcessing">Resend Confirmation Email</md-button>
     </div>
 </md-content>

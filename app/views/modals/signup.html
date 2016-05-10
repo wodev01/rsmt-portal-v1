@@ -4,7 +4,7 @@
             <div class="md-toolbar-tools">
                 <span>Partner Sign-up</span>
                 <span flex></span>
-                <md-button class="md-icon-button" ng-click="cancel();">
+                <md-button class="md-icon-button" ng-click="fnCancel();">
                     <md-icon md-font-set="material-icons">close</md-icon>
                     <md-tooltip ng-if="$root.isMobile == null" md-direction="top">Close</md-tooltip>
                 </md-button>
@@ -105,11 +105,11 @@
 
                 <md-input-container>
                     <label>Password Again</label>
-                    <input name="confirmPassword" type="password" ng-model="user.confirmPassword" required>
-
+                    <input name="confirmPassword" type="password"
+                           ng-model="user.confirmPassword" data-password-verify="user.password" required>
                     <div ng-if="businessForm.$submitted || businessForm.confirmPassword.$touched">
-                        <span class="error-msg" ng-if="businessForm.confirmPassword.$error.required">
-                            Confirm Password is required.</span>
+                        <span class="error-msg" ng-if="businessForm.confirmPassword.$error.required">Confirm Password is required.</span>
+                        <span class="error-msg" ng-if="businessForm.confirmPassword.$error.passwordVerify">Password don't match.</span>
                     </div>
                 </md-input-container>
 
@@ -133,11 +133,11 @@
                                   md-mode="indeterminate"></md-progress-circular>
             <md-button type="submit" class="md-raised md-accent"
                        ng-disabled="isProcessing"
-                       ng-click="businessForm.$valid && registerUser();">
+                       ng-click="businessForm.$valid && fnRegisterUser(user);">
                 Create Partner Account
             </md-button>
 
-            <md-button class="md-warn md-raised" ng-click="hide();">Cancel</md-button>
+            <md-button class="md-warn md-raised" ng-click="fnHide();">Cancel</md-button>
         </md-dialog-actions>
     </form>
 </md-dialog>

@@ -1,77 +1,45 @@
 'use strict';
-app.controller('SignUpCtrl', function ($scope, $location, $mdDialog, globalTimeZone) {
+app.controller('SignUpCtrl', function ($scope, $location, $timeout, $mdDialog, globalTimeZone, ErrorMsg, toastr) {
 
-    $scope.user = {
-        businessName: '',
-        businessZip: '',
-        businessTimezone: '',
-        businessUrl: '',
-        contactName: '',
-        contactEmail: '',
-        password: ''
-    };
+    $scope.user = {businessTimezone:'US/Central', isProcessing: false};
+    $scope.timeZoneDDOptions = globalTimeZone;
 
-    $scope.hide = function () {
+    $scope.fnHide = function () {
         $mdDialog.hide();
     };
 
-    $scope.cancel = function () {
+    $scope.fnCancel = function () {
         $mdDialog.cancel();
     };
 
-    $scope.timeZoneDDOptions = globalTimeZone;
-    $scope.businessForm = {};
-    var tempBusinessForm = {};
+    $scope.fnRefreshDom = function(){
+        $timeout(function(){$scope.$apply();});
+    };
 
-    var HTTP_CONFLICT = 409;
-    $scope.user.businessTimezone = 'US/Central';
-    $scope.registerUser = function () {
-        if ($scope.user.password !== $scope.user.confirmPassword) {
-            $scope.error = 'Password must be matched';
+    $scope.fnRegisterUser = function (user) {
+        if (user.password !== user.confirmPassword) {
+            toastr.error('Password must be matched');
         } else {
-            $scope.error = '';
             $scope.isProcessing = true;
-            $scope.businessForm.$invalid = true;
-            CarglyPartner.createPartner($scope.user,
+            CarglyPartner.createPartner(user,
                 function () {
-                    $scope.user = {
-                        businessName: '',
-                        businessZip: '',
-                        businessTimezone: '',
-                        businessUrl: '',
-                        contactName: '',
-                        contactEmail: '',
-                        password: ''
-                    };
                     $scope.isProcessing = false;
+                    $scope.fnRefreshDom();
+                    $scope.fnHide();
                     $location.url('/verify');
                 },
                 function (failure) {
-                    if (typeof failure === 'undefined' || failure.status !== HTTP_CONFLICT) {
-                        $scope.error = 'An unexpected error occurred on the server. Please reload the page and try again. If the problem continues, contact us at support@cargly.com.';
-                    } else {
-                        $scope.error = 'The email address provided is already associated with another partner account.';
-                    }
-
                     $scope.isProcessing = false;
-                    $scope.businessForm.$invalid = false;
-                    $scope.$apply();
+                    $scope.fnRefreshDom();
+                    if (typeof failure === 'undefined' || failure.status !== 409) {
+                        toastr.remove();
+                        toastr.error('An unexpected error occurred on the server. Please reload the page and try again. If the problem continues, contact us at support@cargly.com.');
+                    } else {
+                        ErrorMsg.CheckStatusCode(failure.status);
+                    }
                 }
             );
         }
-    };
-
-    $scope.resendMail = function () {
-        CarglyPartner.requestPasswordReset($scope.resendEmail,
-            function () {
-                Toast.success('Password request send successfully.');
-                $scope.hide();
-            },
-            function () {
-                Toast.failure('Something goe\'s, wrong while sending request.');
-                $scope.cancel();
-            }
-        );
     };
 
     $scope.fnOpenTermsOfServiceModal = function (ev) {

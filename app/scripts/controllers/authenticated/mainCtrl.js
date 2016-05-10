@@ -34,18 +34,18 @@ app.controller('MainCtrl', function ($scope, $mdDialog, $location, $cookies, coo
         }
     };
 
-    $scope.fnCheckSubscription = function (userSubscriptions, subscriptions) {
+    $scope.fnCheckSubscription = function (userSubscriptions, subscription) {
         var hasSubscriptions = true;
-        if(userSubscriptions) {
+        if(userSubscriptions !== null && userSubscriptions !== "") {
             angular.forEach(userSubscriptions, function (obj) {
-                angular.forEach(subscriptions, function (value) {
-                    if (hasSubscriptions) {
-                        if (obj.subscriptions.indexOf(value) === -1) {
-                            hasSubscriptions = false;
-                        }
+                if (hasSubscriptions) {
+                    if (obj.subscriptions.indexOf(subscription) === -1) {
+                        hasSubscriptions = false;
                     }
-                });
+                }
             });
+        }else{
+            hasSubscriptions = false;
         }
         return hasSubscriptions;
     };

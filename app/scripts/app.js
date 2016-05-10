@@ -28,10 +28,7 @@ var app = angular
     .constant('globalTimeZone', ["US/Hawaii", "US/Alaska", "US/Pacific", "US/Arizona", "US/Mountain", "US/Central", "US/Eastern"])
     .constant('toastr', toastr);
 
-app.config(function ($mdThemingProvider, toastr, $urlRouterProvider, $stateProvider, $httpProvider) {
-
-    // Pull in `Request/Response Service` from the dependency injector
-    $httpProvider.interceptors.push('InterceptorsService');
+app.config(function ($mdThemingProvider, toastr, $urlRouterProvider, $stateProvider) {
 
     $mdThemingProvider.definePalette('rsmtPalette', {
         '50': 'BDBDBD',
@@ -97,7 +94,13 @@ app.config(function ($mdThemingProvider, toastr, $urlRouterProvider, $stateProvi
             url: "/login",
             templateUrl: "views/login.html",
             controller: 'LoginCtrl',
-            data:{pageTitle:'Login'}
+            data:{pageTitle:'Login'},
+            resolve: {
+                AuthService : ['AuthService', function (AuthService) {
+                    return AuthService.fnGetUser();
+                }]
+            }
+
         })
         .state('resetPassword', {
             url: "/reset-password",
@@ -106,7 +109,7 @@ app.config(function ($mdThemingProvider, toastr, $urlRouterProvider, $stateProvi
             data:{pageTitle:'Reset Password'},
             resolve: {
                 AuthService : ['AuthService', function (AuthService) {
-                    return AuthService.fnResetPWTokenVerified();
+                    return AuthService.fnGetUser();
                 }]
             }
         })
@@ -117,7 +120,7 @@ app.config(function ($mdThemingProvider, toastr, $urlRouterProvider, $stateProvi
             data:{pageTitle:'User Verify'},
             resolve: {
                 AuthService : ['AuthService', function (AuthService) {
-                    return AuthService.fnUserVerified();
+                    return AuthService.fnGetUser();
                 }]
             }
         })
@@ -128,7 +131,7 @@ app.config(function ($mdThemingProvider, toastr, $urlRouterProvider, $stateProvi
             data:{pageTitle:'Payment'},
             resolve: {
                 AuthService : ['AuthService', function (AuthService) {
-                    return AuthService.fnPaymentVerified();
+                    return AuthService.fnGetUser();
                 }]
             }
         })
@@ -145,7 +148,7 @@ app.config(function ($mdThemingProvider, toastr, $urlRouterProvider, $stateProvi
             data:{pageTitle:'Dashboard'},
             resolve: {
                 AuthService : ['AuthService', function (AuthService) {
-                    return AuthService.fnGetUser(['realtime_dashboard']);
+                    return AuthService.fnGetUser('realtime_dashboard');
                 }]
             }
         })
@@ -156,7 +159,7 @@ app.config(function ($mdThemingProvider, toastr, $urlRouterProvider, $stateProvi
             data:{pageTitle:'Locations'},
             resolve: {
                 AuthService : ['AuthService', function (AuthService) {
-                    return AuthService.fnGetUser([]);
+                    return AuthService.fnGetUser();
                 }]
             }
         })
@@ -167,7 +170,7 @@ app.config(function ($mdThemingProvider, toastr, $urlRouterProvider, $stateProvi
             data:{pageTitle:'CRM'},
             resolve: {
                 AuthService : ['AuthService', function (AuthService) {
-                    return AuthService.fnGetUser(['crm_scheduled']);
+                    return AuthService.fnGetUser('crm_scheduled');
                 }]
             }
         })
@@ -178,7 +181,7 @@ app.config(function ($mdThemingProvider, toastr, $urlRouterProvider, $stateProvi
             data:{pageTitle:'Products'},
             resolve: {
                 AuthService : ['AuthService', function (AuthService) {
-                    return AuthService.fnGetUser([]);
+                    return AuthService.fnGetUser();
                 }]
             }
         })
@@ -189,7 +192,7 @@ app.config(function ($mdThemingProvider, toastr, $urlRouterProvider, $stateProvi
             data:{pageTitle:'Location Setup'},
             resolve: {
                 AuthService : ['AuthService', function (AuthService) {
-                    return AuthService.fnGetUser([]);
+                    return AuthService.fnGetUser('realtime_dashboard');
                 }]
             }
         })
@@ -200,7 +203,7 @@ app.config(function ($mdThemingProvider, toastr, $urlRouterProvider, $stateProvi
             data:{pageTitle:'Settings'},
             resolve: {
                 AuthService : ['AuthService', function (AuthService) {
-                    return AuthService.fnGetUser([]);
+                    return AuthService.fnGetUser();
                 }]
             }
         });

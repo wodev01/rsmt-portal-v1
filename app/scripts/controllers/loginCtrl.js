@@ -24,14 +24,18 @@ app.controller('LoginCtrl',
                                     $location.url('/payment');
                                 }
                                 else {*/
-                                    var userSubscriptions = JSON.parse(response.subscriptions);
-                                    angular.forEach(userSubscriptions, function (obj) {
-                                        if(obj.subscriptions.indexOf('realtime_dashboard') !== -1){
-                                            $location.url('/dashboard');
-                                        }else{
-                                            $location.url('/locations');
-                                        }
-                                    });
+                                    if(response.subscriptions !== null && response.subscriptions !== "") {
+                                        var userSubscriptions = JSON.parse(response.subscriptions);
+                                        angular.forEach(userSubscriptions, function (obj) {
+                                            if (obj.subscriptions.indexOf('realtime_dashboard') !== -1) {
+                                                $location.url('/dashboard');
+                                            } else {
+                                                $location.url('/locations');
+                                            }
+                                        });
+                                    } else {
+                                        $location.url('/locations');
+                                    }
                                 /*}
                             });*/
                     } else {

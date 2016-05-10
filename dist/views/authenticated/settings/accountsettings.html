@@ -3,7 +3,7 @@
         <div class="md-display-1">Account Settings</div>
     </div>
 
-    <form name="partner_form" id="partner_form" ng-submit="partner_form.$valid && updateUser();" layout="column"
+    <form name="partner_form" id="partner_form" layout="column"
           novalidate flex="70" flex-xs="100">
         <div class="md-title">Business Information</div>
         <div layout="column" class="md-padding">
@@ -122,7 +122,9 @@
         </div>
 
         <div layout="row">
-            <md-button type="submit" class="md-raised md-accent" ng-disabled="isProcessing">
+            <md-button type="submit" class="md-raised md-accent"
+                       ng-disabled="isProcessing"
+                       ng-click="partner_form.$valid && updateUser();">
                 Save
             </md-button>
 
