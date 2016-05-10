@@ -53,9 +53,9 @@ app.controller('scheduledMessagesCtrl',
 
         $scope.crmInteractionAction = '<div class="ui-grid-cell-contents padding-left-0">' +
             '<md-button class="md-icon-button md-accent" ng-click="grid.appScope.fnOpenCrmInteraction(row);">' +
-            '<md-icon md-font-set="material-icons">visibility</md-icon>' +
-            '<md-tooltip ng-if="$root.isMobile == null" md-direction="top">Open</md-tooltip></md-button>' +
-            '</div>';
+            '   <md-icon md-font-set="material-icons">launch</md-icon>' +
+            '   <md-tooltip ng-if="$root.isMobile == null" md-direction="top">View</md-tooltip>' +
+            '</md-button></div>';
 
         $scope.crmInteractionGridOptions = {
             data: 'crmInteractionData',

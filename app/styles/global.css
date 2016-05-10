@@ -1190,3 +1190,12 @@ md-dialog.fullScreenDialog {
 md-list md-list-item > div {
     outline: none;
 }
+
+/*----- margin removed from md-toolbar (default -8px) -----*/
+.md-toolbar-tools > .md-button:last-child {
+    margin-right: 0;
+}
+
+.md-toolbar-tools > .md-button:first-child {
+    margin-left: 0;
+}

@@ -18,7 +18,7 @@
                     <span class="error-msg" ng-if="locationForm.name.$error.required">
                         Location name is required.</span>
                     <span class="error-msg" ng-if="locationForm.name.$error.minlength">
-                        This field is too short minimum 5 character required.</span>
+                        This field is too short minimum 5 characters required.</span>
                 </div>
             </md-input-container>
 
@@ -30,9 +30,9 @@
                     <span class="error-msg" ng-if="locationForm.phone.$error.required">
                         Phone number is required.</span>
                     <span class="error-msg" ng-if="locationForm.phone.$error.minlength">
-                        This field is too short minimum 10 character required.</span>
+                        This field is too short minimum 10 characters required.</span>
                     <span class="error-msg" ng-if="locationForm.phone.$error.maxlength">
-                        This field is too long maximum 20 character allowed.</span>
+                        This field is too long maximum 20 characters allowed.</span>
                 </div>
             </md-input-container>
 
@@ -69,15 +69,13 @@
             <md-input-container class="remove-error-space">
                 <label>Zip</label>
                 <input name="zip" ng-model="location.zip" required ng-pattern="/^[0-9]+$/" md-maxlength="10"
-                       ng-minlength="5" ng-maxlength="20">
+                       ng-minlength="5">
 
                 <div ng-if="locationForm.$submitted || locationForm.zip.$touched">
                     <span class="error-msg" ng-if="locationForm.zip.$error.required">
                         Zip is required.</span>
                     <span class="error-msg" ng-if="locationForm.zip.$error.minlength">
                         This field is too short minimum 5 character required.</span>
-                    <span class="error-msg" ng-if="locationForm.zip.$error.maxlength">
-                        This field is too long maximum 20 character allowed.</span>
                     <span class="error-msg" ng-if="locationForm.zip.$error.pattern">
                         Only digits allowed.</span>
                 </div>
@@ -100,7 +98,7 @@
                            ng-click="locationForm.$valid && saveLocation(location);">Save
                 </md-button>
 
-                <md-button class="md-warn md-raised"
+                <md-button class="md-warn md-raised margin-right-0"
                            ng-click="closeNewLocationSwap();">Cancel
                 </md-button>
             </div>

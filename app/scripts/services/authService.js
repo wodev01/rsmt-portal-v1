@@ -23,7 +23,7 @@ app.factory('AuthService', ['$q', '$location', '$cookies', 'paymentService', 'co
         AuthService.fnGetUser = function (subscription) {
             var token = $cookies.get(cookieName);
             var defer = $q.defer();
-            if(token) {
+            if (!angular.isUndefined(token)) {
                 CarglyPartner._getUser(token, function (response) {
                     if (response.verified === 'true') {
                         /*paymentService.fetchUserPaymentInfo()
@@ -53,6 +53,7 @@ app.factory('AuthService', ['$q', '$location', '$cookies', 'paymentService', 'co
             } else {
                 if(CarglyPartner.queryParams != null && CarglyPartner.queryParams.resetpw != null
                     && CarglyPartner.queryParams.resetpw != '') {
+                    $location.url('/reset-password');
                     defer.resolve();
                 } else {
                     $location.url('/login');
