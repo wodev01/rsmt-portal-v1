@@ -28,7 +28,10 @@ var app = angular
     .constant('globalTimeZone', ["US/Hawaii", "US/Alaska", "US/Pacific", "US/Arizona", "US/Mountain", "US/Central", "US/Eastern"])
     .constant('toastr', toastr);
 
-app.config(function ($mdThemingProvider, toastr, $urlRouterProvider, $stateProvider) {
+app.config(function ($httpProvider, $mdThemingProvider, toastr, $urlRouterProvider, $stateProvider) {
+
+    // Pull in `Request/Response Service` from the dependency injector
+    $httpProvider.interceptors.push('InterceptorsService');
 
     $mdThemingProvider.definePalette('rsmtPalette', {
         '50': 'BDBDBD',
@@ -94,24 +97,13 @@ app.config(function ($mdThemingProvider, toastr, $urlRouterProvider, $stateProvi
             url: "/login",
             templateUrl: "views/login.html",
             controller: 'LoginCtrl',
-            data:{pageTitle:'Login'},
-            resolve: {
-                AuthService : ['AuthService', function (AuthService) {
-                    return AuthService.fnGetUser();
-                }]
-            }
-
+            data:{pageTitle:'Login'}
         })
         .state('resetPassword', {
             url: "/reset-password",
             templateUrl: "views/resetPassword.html",
             controller: 'ResetPasswordCtrl',
-            data:{pageTitle:'Reset Password'},
-            resolve: {
-                AuthService : ['AuthService', function (AuthService) {
-                    return AuthService.fnGetUser();
-                }]
-            }
+            data:{pageTitle:'Reset Password'}
         })
         .state('verify', {
             url: "/verify",

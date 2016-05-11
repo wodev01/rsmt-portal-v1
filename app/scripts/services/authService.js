@@ -1,11 +1,11 @@
 'use strict';
-app.factory('AuthService', ['$q', '$location', '$cookies', 'paymentService', 'cookieName', 'ErrorMsg',
-    function ($q, $location, $cookies, paymentService, cookieName, ErrorMsg) {
+app.factory('AuthService', ['$q', '$state', '$location', '$timeout', '$cookies', 'paymentService', 'cookieName', 'ErrorMsg',
+    function ($q, $state ,$location, $timeout, $cookies, paymentService, cookieName, ErrorMsg) {
         var AuthService = {};
 
-        function fnCheckSubscription(res, subscription){
+        function fnCheckSubscription(res, subscription) {
             var hasSubscriptions = true;
-            if(res.subscriptions !== null && res.subscriptions !== "") {
+            if (res.subscriptions !== null && res.subscriptions !== "") {
                 var userSubscriptions = JSON.parse(res.subscriptions);
                 angular.forEach(userSubscriptions, function (obj) {
                     if (hasSubscriptions) {
@@ -14,10 +14,21 @@ app.factory('AuthService', ['$q', '$location', '$cookies', 'paymentService', 'co
                         }
                     }
                 });
-            }else{
+            } else {
                 hasSubscriptions = false;
             }
             return hasSubscriptions;
+        }
+
+        function fnStateGo(stateName, defer){
+            if ($state.current.name === '') {
+                $timeout(function () {
+                    $state.go(stateName);
+                });
+                defer.resolve();
+            } else {
+                defer.reject();
+            }
         }
 
         AuthService.fnGetUser = function (subscription) {
@@ -25,25 +36,47 @@ app.factory('AuthService', ['$q', '$location', '$cookies', 'paymentService', 'co
             var defer = $q.defer();
             if (!angular.isUndefined(token)) {
                 CarglyPartner._getUser(token, function (response) {
+                    /*---- Check User is verified or not ----*/
                     if (response.verified === 'true') {
+                        /*----- if User is verified then check it's payment info available or not ----*/
                         /*paymentService.fetchUserPaymentInfo()
                             .then(function (res) {
                                 if (res.status === 404) {
-                                    $location.url('/payment');
-                                    defer.resolve(res);
+                                    if($location.path() === '/payment' && $state.current.name === 'login'){
+                                        defer.resolve(res);
+                                    } else {
+                                        fnStateGo('payment', defer);
+                                    }
                                 }
                                 else {*/
-                                    if (fnCheckSubscription(response, subscription)) {
-                                        defer.resolve(response);
+                                    /*---- Check subscription if define in ui route ----*/
+                                    if (!angular.isUndefined(subscription)) {
+                                        if (fnCheckSubscription(response, subscription)) {
+                                            defer.resolve(response);
+                                        } else {
+                                            fnStateGo('main.locations', defer);
+                                        }
                                     } else {
-                                        $location.url('/locations');
-                                        defer.resolve(response);
+                                        /*---- If User already login and it's payment or verify information available then verify and payment page not access ---*/
+                                        if ($location.path() === '/verify' ||
+                                            $location.path() === '/payment') {
+                                            if (fnCheckSubscription(response, subscription)) {
+                                                defer.resolve(response);
+                                            } else {
+                                                fnStateGo('main.locations', defer);
+                                            }
+                                        } else {
+                                            defer.resolve(response);
+                                        }
                                     }
                                 /*}
                             });*/
                     } else {
-                        $location.url('/verify');
-                        defer.resolve();
+                        if($location.path() === '/verify' && $state.current.name === 'login'){
+                            defer.resolve(response);
+                        } else {
+                            fnStateGo('verify', defer);
+                        }
                     }
                 }, function (error) {
                     if (error) {
@@ -51,13 +84,11 @@ app.factory('AuthService', ['$q', '$location', '$cookies', 'paymentService', 'co
                     }
                 });
             } else {
-                if(CarglyPartner.queryParams != null && CarglyPartner.queryParams.resetpw != null
+                if (CarglyPartner.queryParams != null && CarglyPartner.queryParams.resetpw != null
                     && CarglyPartner.queryParams.resetpw != '') {
-                    $location.url('/reset-password');
-                    defer.resolve();
+                    fnStateGo('resetPassword', defer);
                 } else {
-                    $location.url('/login');
-                    defer.resolve();
+                    fnStateGo('login', defer);
                 }
             }
 
