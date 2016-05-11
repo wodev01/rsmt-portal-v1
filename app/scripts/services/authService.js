@@ -1,6 +1,6 @@
 'use strict';
-app.factory('AuthService', ['$q', '$state', '$location', '$timeout', '$cookies', 'paymentService', 'cookieName', 'ErrorMsg',
-    function ($q, $state ,$location, $timeout, $cookies, paymentService, cookieName, ErrorMsg) {
+app.factory('AuthService', ['$q', '$state', '$location', '$cookies', 'paymentService', 'cookieName', 'ErrorMsg',
+    function ($q, $state ,$location, $cookies, paymentService, cookieName, ErrorMsg) {
         var AuthService = {};
 
         function fnCheckSubscription(res, subscription) {
@@ -20,11 +20,9 @@ app.factory('AuthService', ['$q', '$state', '$location', '$timeout', '$cookies',
             return hasSubscriptions;
         }
 
-        function fnStateGo(stateName, defer){
+        function fnRedirectURL(url, defer){
             if ($state.current.name === '') {
-                $timeout(function () {
-                    $state.go(stateName);
-                });
+                $location.url(url);
                 defer.resolve();
             } else {
                 defer.reject();
@@ -45,7 +43,7 @@ app.factory('AuthService', ['$q', '$state', '$location', '$timeout', '$cookies',
                                     if($location.path() === '/payment' && $state.current.name === 'login'){
                                         defer.resolve(res);
                                     } else {
-                                        fnStateGo('payment', defer);
+                                        fnRedirectURL('/payment', defer);
                                     }
                                 }
                                 else {*/
@@ -54,7 +52,7 @@ app.factory('AuthService', ['$q', '$state', '$location', '$timeout', '$cookies',
                                         if (fnCheckSubscription(response, subscription)) {
                                             defer.resolve(response);
                                         } else {
-                                            fnStateGo('main.locations', defer);
+                                            fnRedirectURL('/locations', defer);
                                         }
                                     } else {
                                         /*---- If User already login and it's payment or verify information available then verify and payment page not access ---*/
@@ -63,7 +61,7 @@ app.factory('AuthService', ['$q', '$state', '$location', '$timeout', '$cookies',
                                             if (fnCheckSubscription(response, subscription)) {
                                                 defer.resolve(response);
                                             } else {
-                                                fnStateGo('main.locations', defer);
+                                                fnRedirectURL('/locations', defer);
                                             }
                                         } else {
                                             defer.resolve(response);
@@ -75,7 +73,7 @@ app.factory('AuthService', ['$q', '$state', '$location', '$timeout', '$cookies',
                         if($location.path() === '/verify' && $state.current.name === 'login'){
                             defer.resolve(response);
                         } else {
-                            fnStateGo('verify', defer);
+                            fnRedirectURL('/verify', defer);
                         }
                     }
                 }, function (error) {
@@ -86,35 +84,39 @@ app.factory('AuthService', ['$q', '$state', '$location', '$timeout', '$cookies',
             } else {
                 if (CarglyPartner.queryParams != null && CarglyPartner.queryParams.resetpw != null
                     && CarglyPartner.queryParams.resetpw != '') {
-                    fnStateGo('resetPassword', defer);
+                    fnRedirectURL('/reset-password', defer);
                 } else {
-                    fnStateGo('login', defer);
+                    fnRedirectURL('/login', defer);
                 }
             }
 
             return defer.promise;
         };
 
-        AuthService.AuthTokenVerify = function(){
+        AuthService.fnAuthTokenUndefined = function(){
             var token = $cookies.get(cookieName);
             var defer = $q.defer();
             if (angular.isUndefined(token)) {
-                /*----- Resolve reset password page if resetpw token exist ----*/
                 if(CarglyPartner.queryParams != null && CarglyPartner.queryParams.resetpw != null
                     && CarglyPartner.queryParams.resetpw != '') {
-                    $location.url('/reset-password');
-                    defer.resolve();
-                }else {
-                    $location.url('/login');
+                    fnRedirectURL('/reset-password', defer);
+                } else {
                     defer.resolve();
                 }
             } else {
-                if($state.current.name === ""){
-                    $location.url('/dashboard');
-                    defer.resolve();
-                }else{
-                    defer.reject();
-                }
+                fnRedirectURL('/dashboard', defer);
+            }
+            return defer.promise;
+        };
+
+        AuthService.fnResetPWTokenVerified = function () {
+            var defer = $q.defer();
+            /*----- Resolve reset password page if resetpw token exist ----*/
+            if(CarglyPartner.queryParams != null && CarglyPartner.queryParams.resetpw != null
+                && CarglyPartner.queryParams.resetpw != '') {
+                defer.resolve();
+            } else {
+                fnRedirectURL('/login', defer);
             }
             return defer.promise;
         };

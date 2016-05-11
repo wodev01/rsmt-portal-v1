@@ -97,7 +97,7 @@ app.config(function ($mdThemingProvider, toastr, $urlRouterProvider, $stateProvi
             data:{pageTitle:'Login'},
             resolve: {
                 AuthService: ['AuthService', function (AuthService) {
-                    return AuthService.AuthTokenVerify();
+                    return AuthService.fnAuthTokenUndefined();
                 }]
             }
         })
@@ -108,7 +108,7 @@ app.config(function ($mdThemingProvider, toastr, $urlRouterProvider, $stateProvi
             data:{pageTitle:'Reset Password'},
             resolve: {
                 AuthService: ['AuthService', function (AuthService) {
-                    return AuthService.AuthTokenVerify();
+                    return AuthService.fnResetPWTokenVerified();
                 }]
             }
         })
