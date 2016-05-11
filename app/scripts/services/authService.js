@@ -95,6 +95,30 @@ app.factory('AuthService', ['$q', '$state', '$location', '$timeout', '$cookies',
             return defer.promise;
         };
 
+        AuthService.AuthTokenVerify = function(){
+            var token = $cookies.get(cookieName);
+            var defer = $q.defer();
+            if (angular.isUndefined(token)) {
+                /*----- Resolve reset password page if resetpw token exist ----*/
+                if(CarglyPartner.queryParams != null && CarglyPartner.queryParams.resetpw != null
+                    && CarglyPartner.queryParams.resetpw != '') {
+                    $location.url('/reset-password');
+                    defer.resolve();
+                }else {
+                    $location.url('/login');
+                    defer.resolve();
+                }
+            } else {
+                if($state.current.name === ""){
+                    $location.url('/dashboard');
+                    defer.resolve();
+                }else{
+                    defer.reject();
+                }
+            }
+            return defer.promise;
+        };
+
         return AuthService;
     }
 ]);
