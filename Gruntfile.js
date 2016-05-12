@@ -391,6 +391,12 @@ module.exports = function (grunt) {
                     },
                     {
                         expand: true,
+                        flatten: true,
+                        dest: '<%= yeoman.dist %>/fonts/',
+                        src: 'bower_components/font-awesome/fonts/*'
+                    },
+                    {
+                        expand: true,
                         cwd: '<%= yeoman.app %>',
                         dest: '<%= yeoman.dist %>',
                         src: ['scripts/vendor/wysiwyg.js']

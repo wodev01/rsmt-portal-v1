@@ -80,10 +80,10 @@ app.controller('LocationsCtrl',
         /*--------------- Location Grid Options ---------------*/
         $scope.locationAction = '<div layout="row">' +
             '<md-button class="md-icon-button md-accent" ng-click="grid.appScope.fnLocationEdit(row)">' +
-            '   <md-icon md-font-set="material-icons">visibility</md-icon>' +
+            '   <md-icon md-font-set="fa fa-lg fa-fw fa-eye"></md-icon>' +
             '   <md-tooltip ng-if="$root.isMobile == null" md-direction="top">Open</md-tooltip></md-button>' +
             '<md-button class="md-icon-button md-warn" ng-click="grid.appScope.fnLocationDelete(row,$event);">' +
-            '   <md-icon md-font-set="material-icons">delete</md-icon>' +
+            '   <md-icon md-font-set="fa fa-lg fa-fw fa-trash"></md-icon>' +
             '   <md-tooltip ng-if="$root.isMobile == null" md-direction="top">Delete</md-tooltip>' +
             '</md-button>' +
             '</div>';

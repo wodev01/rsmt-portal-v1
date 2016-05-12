@@ -78,7 +78,7 @@ app.controller('allCustomersCtrl',
 
         $scope.customerAction = '<div class="ui-grid-cell-contents padding-left-0">' +
             '   <md-button class="md-icon-button md-accent" ng-click="grid.appScope.fnViewCustomerDetails($event,row);">' +
-            '       <md-icon md-font-set="material-icons">visibility</md-icon>' +
+            '       <md-icon md-font-set="fa fa-lg fa-fw fa-eye"></md-icon>' +
             '       <md-tooltip ng-if="$root.isMobile == null" md-direction="top">Open</md-tooltip>' +
             '   </md-button></div>';
 

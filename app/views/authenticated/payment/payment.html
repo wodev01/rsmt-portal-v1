@@ -6,7 +6,7 @@
 
         <md-menu md-position-mode="target-right target">
             <md-button ng-click="$mdOpenMenu($event)">
-                <span ng-bind="userObj.name"></span><md-icon md-font-set="material-icons">keyboard_arrow_down</md-icon>
+                <span ng-bind="userObj.name"></span><md-icon md-font-set="fa fa-lg fa-fw fa-angle-down" style="font-weight: 900;"></md-icon>
             </md-button>
 
             <md-menu-content width="4">
@@ -14,7 +14,7 @@
                     <md-button ng-click="fnOpenTermsOfServiceModal($event);">
                         <div layout="row">
                             <p flex>
-                                <md-icon md-font-set="material-icons">description</md-icon>
+                                <md-icon class="margin-top-5 margin-left-3 margin-right-5" md-font-set="fa fa-fw fa-file"></md-icon>
                                 Terms of Use
                             </p>
                         </div>
@@ -25,7 +25,7 @@
                     <md-button ng-click="fnLogout();">
                         <div layout="row">
                             <p flex>
-                                <md-icon md-font-set="material-icons">power_settings_new</md-icon>
+                                <md-icon class="margin-right-5" md-font-set="fa fa-lg fa-fw fa-power-off"></md-icon>
                                 Sign out
                             </p>
                         </div>
@@ -46,7 +46,7 @@
 
             <form name="paymentForm" layout="column" novalidate>
                 <md-input-container class="remove-error-space">
-                    <md-icon class="md-accent">credit_card</md-icon>
+                    <md-icon class="md-accent margin-top-10" md-font-set="fa fa-lg fa-fw fa-credit-card"></md-icon>
                     <input type="number" name="cardNumber" placeholder="Card Number" ng-model="payment.number" ng-pattern="/^(?:4[0-9]{12}(?:[0-9]{3})?|5[1-5][0-9]{14}|6(?:011|5[0-9][0-9])[0-9]{12}|3[47][0-9]{13}|3(?:0[0-5]|[68][0-9])[0-9]{11}|(?:2131|1800|35\d{3})\d{11})$/" required/>
                     <div ng-if="paymentForm.$submitted || paymentForm.cardNumber.$touched">
                         <span class="error-msg" ng-if="paymentForm.cardNumber.$error.required">Card number is required.</span>
@@ -54,7 +54,7 @@
                     </div>
                 </md-input-container>
                 <md-input-container class="remove-error-space">
-                    <md-icon class="md-accent">confirmation_number</md-icon>
+                    <md-icon class="md-accent margin-top-10" md-font-set="fa fa-lg fa-fw fa-check"></md-icon>
                     <input type="number" name="cvv" placeholder="CVV" ng-model="payment.cvv" ng-pattern="/^[0-9]{3,4}$/" required/>
                     <div ng-if="paymentForm.$submitted || paymentForm.cvv.$touched">
                         <span class="error-msg"
@@ -65,7 +65,7 @@
                 <label style="color: rgba(0, 0, 0, 0.40); margin-left:2px;">Expiration (MM/YYYY)</label>
                 <div layout layout-sm="column">
                     <md-input-container  class="remove-error-space">
-                        <md-icon class="md-accent">date_range</md-icon>
+                        <md-icon class="md-accent margin-top-10" md-font-set="fa fa-lg fa-fw fa-calendar"></md-icon>
                         <input type="number" name="exp_month" placeholder="Month" ng-model="payment.exp_month" min="1" max="12" required  ng-pattern="/^(0?[1-9]|1[012])$/"/>
                         <div ng-if="paymentForm.$submitted || paymentForm.exp_month.$touched">
                             <span class="error-msg" ng-if="paymentForm.exp_month.$error.required">Month is required.</span>
@@ -74,7 +74,7 @@
                         </div>
                     </md-input-container>
                     <md-input-container  class="remove-error-space">
-                        <md-icon class="md-accent">date_range</md-icon>
+                        <md-icon class="md-accent margin-top-10" md-font-set="fa fa-lg fa-fw fa-calendar"></md-icon>
                         <input type="number" name="exp_year" placeholder="Year" ng-model="payment.exp_year" min="1000" max="9999" required  ng-pattern="/^[20][0-9]{3}$/"/>
                         <div ng-if="paymentForm.$submitted || paymentForm.exp_year.$touched">
                             <span class="error-msg" ng-if="paymentForm.exp_year.$error.required">Year is required.</span>

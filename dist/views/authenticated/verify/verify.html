@@ -6,7 +6,7 @@
 
         <md-menu md-position-mode="target-right target">
             <md-button ng-click="$mdOpenMenu($event)">
-                <span ng-bind="userObj.name"></span><md-icon md-font-set="material-icons">keyboard_arrow_down</md-icon>
+                <span ng-bind="userObj.name"></span><md-icon md-font-set="fa fa-lg fa-fw fa-angle-down" style="font-weight: 900;"></md-icon>
             </md-button>
 
             <md-menu-content width="4">
@@ -14,7 +14,7 @@
                     <md-button ng-click="fnOpenTermsOfServiceModal($event);">
                         <div layout="row">
                             <p flex>
-                                <md-icon md-font-set="material-icons">description</md-icon>
+                                <md-icon class="margin-top-5 margin-left-3 margin-right-5" md-font-set="fa fa-fw fa-file"></md-icon>
                                 Terms of Use
                             </p>
                         </div>
@@ -25,7 +25,7 @@
                     <md-button ng-click="fnLogout();">
                         <div layout="row">
                             <p flex>
-                                <md-icon md-font-set="material-icons">power_settings_new</md-icon>
+                                <md-icon class="margin-right-5" md-font-set="fa fa-lg fa-fw fa-power-off"></md-icon>
                                 Sign out
                             </p>
                         </div>

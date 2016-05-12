@@ -301,7 +301,7 @@ app.directive('repairOrderGrid', function($mdDialog,allCustomerService) {
                     '   <md-button class="md-icon-button md-accent" ' +
                     '               style="margin-left: 0;"' +
                     '               ng-click="grid.appScope.fnViewRODetails($event,row);">' +
-                    '       <md-icon md-font-set="material-icons">launch</md-icon>' +
+                    '       <md-icon md-font-set="fa fa-lg fa-fw fa-external-link"></md-icon>' +
                     '       <md-tooltip ng-if="$root.isMobile == null" md-direction="top">View</md-tooltip>' +
                     '   </md-button></div>';
 
