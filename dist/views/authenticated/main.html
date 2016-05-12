@@ -1,6 +1,6 @@
 <md-toolbar class="top-header" ng-init="fnInitMain()">
     <div class="md-toolbar-tools">
-        <md-button ng-click="fnToggleSideNav('left')" hide-gt-sm class="md-icon-button">
+        <md-button ng-click="fnToggleSideNav('left')" hide-gt-sm aria-label="Bars" class="md-icon-button">
             <md-icon md-font-set="fa fa-lg fa-fw fa-bars"></md-icon>
         </md-button>
 
@@ -9,13 +9,13 @@
         </div>
 
         <md-menu md-position-mode="target-right target">
-            <md-button ng-click="$mdOpenMenu($event)">
+            <md-button ng-click="$mdOpenMenu($event)" aria-label="User Name">
                 <span ng-bind="userObj.name"></span><md-icon md-font-set="fa fa-lg fa-fw fa-angle-down" style="font-weight: 900;"></md-icon>
             </md-button>
 
             <md-menu-content width="3">
                 <md-menu-item>
-                    <md-button ng-click="fnStateSettings();">
+                    <md-button ng-click="fnStateSettings();" aria-label="Settings">
                         <div layout="row">
                             <p flex>
                                 <md-icon class="margin-right-5" md-font-set="fa fa-lg fa-fw fa-cog"></md-icon>
@@ -26,7 +26,7 @@
                 </md-menu-item>
 
                 <md-menu-item>
-                    <md-button ng-click="fnOpenTermsOfServiceModal($event);">
+                    <md-button ng-click="fnOpenTermsOfServiceModal($event);" aria-label="Terms of Use">
                         <div layout="row">
                             <p flex>
                                 <md-icon class="margin-top-5 margin-left-3 margin-right-5" md-font-set="fa fa-fw fa-file"></md-icon>
@@ -37,7 +37,7 @@
                 </md-menu-item>
 
                 <md-menu-item>
-                    <md-button ng-click="fnLogout();">
+                    <md-button ng-click="fnLogout();" aria-label="Sign out">
                         <div layout="row">
                             <p flex>
                                 <md-icon class="margin-right-5" md-font-set="fa fa-lg fa-fw fa-power-off"></md-icon>
@@ -57,25 +57,25 @@
                 layout="column"
                 md-component-id="left"
                 md-is-locked-open="$mdMedia('gt-sm')">
-        <md-button class="md-primary" ng-class="fnIsActive('/dashboard')"
+        <md-button class="md-primary" ng-class="fnIsActive('/dashboard')" aria-label="Dashboard"
                    ng-if="fnCheckSubscription(userSubscriptions,'realtime_dashboard')"
                    ng-click="$root.fnCloseSideNavs();" ui-sref="main.dashboard">
             <md-icon md-font-set="fa fa-lg fa-fw fa-dashboard"></md-icon>&nbsp;Dashboard</md-button>
 
-        <md-button class="md-primary" ng-class="fnIsActive('/locations')"
+        <md-button class="md-primary" ng-class="fnIsActive('/locations')" aria-label="Locations"
                    ng-click="$root.fnCloseSideNavs();" ui-sref="main.locations">
             <md-icon md-font-set="fa fa-lg fa-fw fa-map-marker"></md-icon>&nbsp;Locations</md-button>
 
-        <md-button class="md-primary" ng-class="fnIsActive('/crm')"
+        <md-button class="md-primary" ng-class="fnIsActive('/crm')" aria-label="CRM"
                    ng-if="fnCheckSubscription(userSubscriptions,'crm_scheduled')"
                    ng-click="$root.fnCloseSideNavs();" ui-sref="main.crm">
             <md-icon md-font-set="fa fa-lg fa-fw fa-users"></md-icon>&nbsp;CRM</md-button>
 
-        <md-button class="md-primary" ng-class="fnIsActive('/products')"
+        <md-button class="md-primary" ng-class="fnIsActive('/products')" aria-label="Products"
                    ng-click="$root.fnCloseSideNavs();" ui-sref="main.products">
             <md-icon md-font-set="fa fa-lg fa-fw fa-product-hunt"></md-icon>&nbsp;Products</md-button>
 
-        <md-button class="md-primary" ng-class="fnIsActive('/location/setup')"
+        <md-button class="md-primary" ng-class="fnIsActive('/location/setup')" aria-label="Location Setup"
                    ng-if="fnCheckSubscription(userSubscriptions,'realtime_dashboard')"
                    ng-click="$root.fnCloseSideNavs();" ui-sref="main.locationSetup">
             <md-icon md-font-set="fa fa-lg fa-fw fa-wrench"></md-icon>&nbsp;Location Setup</md-button>

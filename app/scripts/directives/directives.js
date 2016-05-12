@@ -298,7 +298,7 @@ app.directive('repairOrderGrid', function($mdDialog,allCustomerService) {
 
             $scope.fnSetGridOptions = function(id) {
                 $scope.roAction = '<div class="ui-grid-cell-contents">' +
-                    '   <md-button class="md-icon-button md-accent" ' +
+                    '   <md-button class="md-icon-button md-accent" aria-label="View"' +
                     '               style="margin-left: 0;"' +
                     '               ng-click="grid.appScope.fnViewRODetails($event,row);">' +
                     '       <md-icon md-font-set="fa fa-lg fa-fw fa-external-link"></md-icon>' +

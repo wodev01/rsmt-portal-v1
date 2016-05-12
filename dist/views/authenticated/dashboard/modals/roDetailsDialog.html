@@ -7,7 +7,7 @@
             </span>
 
             <div class="md-primary" layout="row" md-theme="grey">
-                <md-button class="md-fab md-mini"
+                <md-button class="md-fab md-mini" aria-label="Previous"
                            ng-disabled="position === 0"
                            ng-class="{'btn-disabled' : position === 0}"
                            ng-click="fnMove(-1);">
@@ -15,7 +15,7 @@
                     <md-tooltip ng-if="$root.isMobile == null" md-direction="top">Previous</md-tooltip>
                 </md-button>
 
-                <md-button class="md-fab md-mini"
+                <md-button class="md-fab md-mini" aria-label="Next"
                            ng-class="{'btn-disabled' : position === repairOrders.length-1}"
                            ng-disabled="position === repairOrders.length-1"
                            ng-click="fnMove(1);">
@@ -23,7 +23,7 @@
                     <md-tooltip ng-if="$root.isMobile == null" md-direction="top">Next</md-tooltip>
                 </md-button>
 
-                <md-button class="md-icon-button" ng-click="hide();">
+                <md-button class="md-icon-button" ng-click="hide();" aria-label="Close">
                     <md-icon md-font-set="fa fa-lg fa-fw fa-close"></md-icon>
                     <md-tooltip ng-if="$root.isMobile == null" md-direction="top">Close</md-tooltip>
                 </md-button>
