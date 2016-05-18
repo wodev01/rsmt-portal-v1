@@ -4,6 +4,7 @@ app.controller('customerStatisticsCtrl',
 
         $scope.locationId = '';
         $scope.locationOptions = [];
+        $scope.isLocationDataProcessing = false;
 
         $scope.isDataNotNull = $scope.isMsgShow = $scope.isLocationsData = false;
         $scope.customersStatData = [];
@@ -313,12 +314,17 @@ app.controller('customerStatisticsCtrl',
         /*--------------- Locations Filter --------------------------*/
         $scope.fnGetLocationDetails = function () {
             $scope.isLocationsData = false;
+            $scope.isLocationDataProcessing = true;
 
             locationService.fetchLocation().then(function (data) {
                 if (data.length != 0) {
                     $scope.isLocationsData = true;
                     $scope.fnCreateLocationDD(data);
                 }
+                $scope.isLocationDataProcessing = false;
+            }, function (error) {
+                toastr.error('Failed retrieving locations.', 'STATUS CODE: ' + error.status);
+                $scope.isLocationDataProcessing = false;
             });
         };
 

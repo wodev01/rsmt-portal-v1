@@ -2,7 +2,7 @@
 app.controller('allCustomersCtrl',
     function ($scope, cookieName, $cookies, $mdDialog, locationService, allCustomerService) {
 
-        $scope.isLocationsData = false;
+        $scope.isLocationsData = $scope.isLocationDataProcessing = false;
         $scope.locationOptions = [];
         $scope.idsObj = {locationId: '', segmentId: ''};
 
@@ -157,12 +157,17 @@ app.controller('allCustomersCtrl',
         /*--------------- Locations Filter --------------------------*/
         $scope.fnGetLocationDetails = function () {
             $scope.isLocationsData = false;
+            $scope.isLocationDataProcessing = true;
 
             locationService.fetchLocation().then(function (data) {
                 if (data.length != 0) {
                     $scope.isLocationsData = true;
                     $scope.fnCreateLocationDD(data);
                 }
+                $scope.isLocationDataProcessing = false;
+            }, function (error) {
+                toastr.error('Failed retrieving locations data.', 'STATUS CODE: ' + error.status);
+                $scope.isLocationDataProcessing = false;
             });
         };
 

@@ -1,7 +1,12 @@
 <div class="tab-pane" id="customer-statistics-tab">
+    <div ng-if="isLocationDataProcessing" layout="column" layout-align="center center"
+         layout-fill flex>
+        <md-progress-circular class="md-accent" md-diameter="100"
+                              md-mode="indeterminate"></md-progress-circular>
+    </div>
 
-    <div class="text-center" ng-if="!isLocationsData">
-        <div class="md-headline">No Locations Available.</div>
+    <div ng-if="!isLocationDataProcessing && !isLocationsData">
+        <div class="md-headline text-center">Locations not available.</div>
     </div>
 
     <div ng-if="isLocationsData" layout="column">

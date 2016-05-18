@@ -3,6 +3,8 @@ app.controller('scheduledMessagesCtrl',
     function ($scope, cookieName, $filter, $cookies, $mdDialog, $timeout,
               encodeParamService, locationService, crmInteractionService) {
 
+        $scope.isLocationDataProcessing = $scope.isSegmentsDataProcessing = false;
+
         $scope.isLocationsData = $scope.isSegmentsData = false;
         $scope.isCrmInteractionData = $scope.isMoreCrmInteractions = false;
         $scope.isCrmMsgGridShow = false;
@@ -11,6 +13,8 @@ app.controller('scheduledMessagesCtrl',
         $scope.segmentsOptions = [];
         $scope.idsObj = {locationId: '', segmentId: ''};
         $scope.isPagingData = true;
+
+        $scope.isProcessingCrmData = false;
 
         $scope.pagingOptions = {
             pageSize: 20,
@@ -27,6 +31,8 @@ app.controller('scheduledMessagesCtrl',
         $scope.getPagedDataAsync = function (idsObj, paramsObj) {
             $scope.isCrmInteractionData = false;
             $scope.isCrmMsgGridShow = false;
+            $scope.isProcessingCrmData = true;
+            $scope.fnToggleDateRange();
 
             crmInteractionService.fetchCrmInteraction(idsObj, paramsObj)
                 .then(function (data) {
@@ -38,6 +44,12 @@ app.controller('scheduledMessagesCtrl',
                         $scope.isCrmMsgGridShow = true;
                         $scope.isCrmInteractionData = false;
                     }
+                    $scope.isProcessingCrmData = false;
+                    $scope.fnToggleDateRange();
+                }, function (error) {
+                    toastr.error('Failed retrieving scheduled data.', 'STATUS CODE: ' + error.status);
+                    $scope.isProcessingCrmData = false;
+                    $scope.fnToggleDateRange();
                 });
         };
 
@@ -45,14 +57,15 @@ app.controller('scheduledMessagesCtrl',
             '   {{row.entity.customer.first_name}}&nbsp;{{ row.entity.customer.last_name}}' +
             '</div>';
 
-        $scope.infoTmpl = '<div layout="row" layout-padding>' +
+        $scope.infoTmpl = '<div layout="row" class="overflow-auto" layout-padding layout-fill>' +
             '<div class="padding-0"><div> Email: {{row.entity.customer.email_addresses | joinArray}} </div>' +
             '     <div> Phone: {{row.entity.customer.phone_numbers | tel | joinTelArray}} </div>' +
             '     <div> Address: {{row.entity.customer.address1}} </div>' +
             '</div></div>';
 
         $scope.crmInteractionAction = '<div class="ui-grid-cell-contents padding-left-0">' +
-            '<md-button class="md-icon-button md-accent" aria-label="View" ng-click="grid.appScope.fnOpenCrmInteraction(row);">' +
+            '<md-button class="md-icon-button md-accent" aria-label="View" ' +
+            '           ng-click="grid.appScope.fnOpenCrmInteraction(row, $event);">' +
             '   <md-icon md-font-set="fa fa-lg fa-fw fa-external-link"></md-icon>' +
             '   <md-tooltip ng-if="$root.isMobile == null" md-direction="top">View</md-tooltip>' +
             '</md-button></div>';
@@ -142,9 +155,9 @@ app.controller('scheduledMessagesCtrl',
                 template: '<md-dialog aria-label="Alert Dialog">' +
                 '  <md-dialog-content class="md-padding" layout-padding>' +
                 '      <div class="md-title"> Download Interaction CSV </div>' +
-                '      <p>This could take some time. Are you sure..?</p>' +
+                '      <p class="margin-0">This could take some time. Are you sure..?</p>' +
                 '  </md-dialog-content>' +
-                '  <md-dialog-actions>' +
+                '  <md-dialog-actions layout-margin>' +
                 '       <md-button aria-label="download" ' +
                 '           class="md-raised md-accent" ng-click="fnDownload();">Download</md-button>' +
                 '       <md-button aria-label="cancel" class="md-raised" ng-click="fnHide();">Cancel</md-button>' +
@@ -157,13 +170,14 @@ app.controller('scheduledMessagesCtrl',
             });
         };
 
-        $scope.fnOpenCrmInteraction = function (row) {
-            $scope.fnOpenCrmInteractionModal(row.entity);
+        $scope.fnOpenCrmInteraction = function (row, event) {
+            $scope.fnOpenCrmInteractionModal(row.entity, event);
         };
 
-        $scope.fnOpenCrmInteractionModal = function (obj) {
+        $scope.fnOpenCrmInteractionModal = function (obj, ev) {
             $mdDialog.show({
                 controller: 'manageScheduledMessagesCtrl',
+                targetEvent: ev,
                 templateUrl: 'views/authenticated/crm/modals/manageScheduledMessages.html',
                 resolve: {
                     crmInteractionObj: function () {
@@ -176,12 +190,17 @@ app.controller('scheduledMessagesCtrl',
         /*--------------- Locations Filter --------------------------*/
         $scope.fnGetLocationDetails = function () {
             $scope.isLocationsData = false;
+            $scope.isLocationDataProcessing = true;
 
             locationService.fetchLocation().then(function (data) {
-                if (data.length != 0) {
+                if (data.length !== 0) {
                     $scope.isLocationsData = true;
                     $scope.fnCreateLocationDD(data);
                 }
+                $scope.isLocationDataProcessing = false;
+            }, function (error) {
+                toastr.error('Failed retrieving locations.', 'STATUS CODE: ' + error.status);
+                $scope.isLocationDataProcessing = false;
             });
         };
 
@@ -209,12 +228,17 @@ app.controller('scheduledMessagesCtrl',
         /*--------------- Segments Filter --------------------------*/
         $scope.fnGetSegmentsDetails = function (locationId) {
             $scope.isSegmentsData = false;
+            $scope.isSegmentsDataProcessing = true;
 
             crmInteractionService.fetchShopLocationSegments(locationId).then(function (data) {
                 if (data.length !== 0) {
                     $scope.isSegmentsData = true;
                     $scope.fnCreateSegmentsDD(data);
                 }
+                $scope.isSegmentsDataProcessing = false;
+            }, function (error) {
+                toastr.error('Failed retrieving segments.', 'STATUS CODE: ' + error.status);
+                $scope.isSegmentsDataProcessing = false;
             });
         };
 
@@ -240,20 +264,27 @@ app.controller('scheduledMessagesCtrl',
 
         /*-------------- Load More CRM Interactions ---------------*/
         $scope.fnLoadMoreCrmInteractions = function (idsObj) {
-            $scope.filter.page_num += 1;
-            $scope.isMoreCrmInteractions = true;
-            $scope.isPagingData = true;
+            if (!$scope.isMoreCrmInteractions) {
+                $scope.filter.page_num += 1;
+                $scope.isMoreCrmInteractions = $scope.isProcessingCrmData = true;
+                $scope.isPagingData = true;
+                $scope.fnToggleDateRange();
 
-            crmInteractionService.fetchCrmInteraction(idsObj, $scope.filter)
-                .then(function (data) {
-                    if (data.length != 0) {
-                        $scope.crmInteractionData = $scope.crmInteractionData.concat(data);
-                        $scope.isMoreCrmInteractions = false;
-                    } else {
-                        $scope.isMoreCrmInteractions = $scope.isPagingData = false;
-                    }
-                });
-
+                crmInteractionService.fetchCrmInteraction(idsObj, $scope.filter)
+                    .then(function (data) {
+                        if (data.length != 0) {
+                            $scope.crmInteractionData = $scope.crmInteractionData.concat(data);
+                        } else {
+                            $scope.isPagingData = false;
+                        }
+                        $scope.isMoreCrmInteractions = $scope.isProcessingCrmData = false;
+                        $scope.fnToggleDateRange();
+                    }, function (error) {
+                        toastr.error('Failed retrieving scheduled data.', 'STATUS CODE: ' + error.status);
+                        $scope.isProcessingCrmData = false;
+                        $scope.fnToggleDateRange();
+                    });
+            }
         };
 
         $scope.fnChangeFilter = function (filter) {
@@ -276,6 +307,16 @@ app.controller('scheduledMessagesCtrl',
             $scope.fnChangeFilter($scope.filter);
         }
 
+        $scope.fnToggleDateRange = function () {
+            if ($scope.isProcessingCrmData) {
+                $('.comiseo-daterangepicker-triggerbutton.ui-button').css('cursor', 'wait');
+                $('.comiseo-daterangepicker-triggerbutton.ui-button').attr('disabled', 'true');
+            } else {
+                $('.comiseo-daterangepicker-triggerbutton.ui-button').css('cursor', '');
+                $('.comiseo-daterangepicker-triggerbutton.ui-button').removeAttr('disabled');
+            }
+        };
+
         $scope.fnCreateDateRangePicker = function () {
             $timeout(function () {
                 $('#scheduled-messages-tab #pickDateRange').daterangepicker({
@@ -289,6 +330,9 @@ app.controller('scheduledMessagesCtrl',
                         $scope.fnRefreshGrid();
                     }
                 });
+
+                $('.comiseo-daterangepicker-triggerbutton.ui-button').css('cursor', 'wait');
+                $('.comiseo-daterangepicker-triggerbutton.ui-button').attr('disabled', 'true');
             }, 1000);
 
             $scope.getPagedDataAsync($scope.idsObj, $scope.filter);

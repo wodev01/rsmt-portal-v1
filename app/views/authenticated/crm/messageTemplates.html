@@ -1,13 +1,19 @@
 <div class="tab-pane right-panel" id="segments-pane">
+    <div ng-if="isLocationDataProcessing" layout="column" layout-align="center center"
+         layout-fill flex>
+        <md-progress-circular class="md-accent" md-diameter="100"
+                              md-mode="indeterminate"></md-progress-circular>
+    </div>
 
-    <div ng-if="!isLocationsData" class="margin-bottom-10">
-        <div class="md-headline text-center">No Locations Available.</div>
+    <div ng-if="!isLocationDataProcessing && !isLocationsData">
+        <div class="md-headline text-center">Locations not available.</div>
     </div>
 
     <div ng-if="isLocationsData">
 
         <md-input-container >
             <md-select aria-label="Select location" ng-model="locationId"
+                       ng-disabled="!isCrmSegmentsData && !isCrmSegmentsMsgShow"
                        ng-change="fnChangeLocation(locationId);">
                 <md-option ng-repeat="location in locationOptions" ng-value="location.id">
                     {{location.name}}

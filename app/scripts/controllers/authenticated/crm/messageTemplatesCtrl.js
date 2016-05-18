@@ -1,9 +1,9 @@
 'use strict';
 app.controller('messageTemplatesCtrl',
-    function ($scope, $mdDialog, Toast, locationService, crmInteractionService, crmTemplateService, $timeout) {
+    function ($scope, $mdDialog, toastr, locationService, crmInteractionService, crmTemplateService, $timeout) {
 
         $scope.locationOptions = [];
-        $scope.isLocationsData = false;
+        $scope.isLocationsData = $scope.isLocationDataProcessing = false;
 
         $scope.crmSegmentsData = [];
         $scope.isCrmSegmentsData = $scope.isCrmSegmentsMsgShow = false;
@@ -69,7 +69,8 @@ app.controller('messageTemplatesCtrl',
         };
 
         $scope.crmSegmentsAction = '<div class="ui-grid-cell-contents padding-left-0">' +
-            '   <md-button class="md-icon-button md-accent" aria-label="View" ng-click="grid.appScope.fnOpenManageCrmSegments(row, ev);">' +
+            '   <md-button class="md-icon-button md-accent" aria-label="View" ' +
+            '               ng-click="grid.appScope.fnOpenManageCrmSegments(row, $event);">' +
             '       <md-icon md-font-set="fa fa-lg fa-fw fa-external-link"></md-icon>' +
             '       <md-tooltip ng-if="$root.isMobile == null" md-direction="top">View</md-tooltip>' +
             '</md-button></div>';
@@ -103,12 +104,14 @@ app.controller('messageTemplatesCtrl',
 
             $timeout(function () {
                 var iframe = angular.element('md-dialog#message-template-dialog #rendered-html')[0];
-                iframe.src = 'about:blank';
-                iframe.contentWindow.document.open('text/htmlreplace');
-                iframe.contentWindow.document.write($scope.rendered_template.html);
-                iframe.contentWindow.document.close();
-                iframe.contentWindow.document.onmousedown = function () {
-                    return false;
+                if (iframe) {
+                    iframe.src = 'about:blank';
+                    iframe.contentWindow.document.open('text/htmlreplace');
+                    iframe.contentWindow.document.write($scope.rendered_template.html);
+                    iframe.contentWindow.document.close();
+                    iframe.contentWindow.document.onmousedown = function () {
+                        return false;
+                    }
                 }
             }, 1000);
         };
@@ -130,7 +133,7 @@ app.controller('messageTemplatesCtrl',
 
                     }, function (error) {
                         if (error.status !== 401 && error.status !== 500) {
-                            Toast.failure('Error interpolating template. Please try again...');
+                            toastr.error('Error interpolating template. Please try again...', 'STATUS CODE: ' + error.status);
                         }
                     });
             } else {
@@ -139,7 +142,8 @@ app.controller('messageTemplatesCtrl',
             }
 
             $mdDialog.show({
-                scope: $scope.$new(),
+                scope: $scope,
+                preserveScope: true,
                 templateUrl: 'views/authenticated/crm/modals/manageMessageTemplates.html',
                 targetEvent: ev
             }).then(function () {
@@ -169,12 +173,17 @@ app.controller('messageTemplatesCtrl',
 
         $scope.fnGetLocationDetails = function () {
             $scope.isLocationsData = false;
+            $scope.isLocationDataProcessing = true;
 
             locationService.fetchLocation().then(function (data) {
-                if (data.length != 0) {
+                if (data.length !== 0) {
                     $scope.isLocationsData = true;
                     $scope.fnCreateLocationDD(data);
                 }
+                $scope.isLocationDataProcessing = false;
+            }, function (error) {
+                toastr.error('Failed retrieving locations.', 'STATUS CODE: ' + error.status);
+                $scope.isLocationDataProcessing = false;
             });
         };
         /*--------------- End Location Filter --------------------------*/

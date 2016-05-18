@@ -26,7 +26,6 @@
     box-shadow: 0 0 10px #ccc;
 }
 
-
 /*---------- Location Setup ----------*/
 .location-setup md-card div.md-card-image {
     background-repeat: no-repeat;
@@ -109,13 +108,6 @@
     top: 40%;
     left: 40%
 }
-
-/*---------- RO modal ----------*/
-.leftLabel {
-    font-weight: bold;
-    padding-right: 3px;
-}
-
 
 /*---------- CRM All Customer Tab ----------*/
 .breadcrumb {
@@ -217,11 +209,6 @@
     border-left-color: hsla(34, 0%, 25%, 1) !important;
 }
 
-#customerTab .leftLabel {
-    font-weight: bold;
-    padding-right: 3px;
-}
-
 #customerTab .contentHeader {
     background-color: #d3d3d3 !important;
     color: #000000;
@@ -315,11 +302,6 @@ md-dialog#crmSegmentDialog md-content.template-view{
 }
 
 /*---------------- CRM Customer Statistics ----------------*/
-#customer-statistics-tab .leftLabel {
-    font-weight: bold;
-    padding-right: 3px;
-}
-
 #customer-statistics-tab .mapTable, #customer-statistics-tab .mapTable tr td, #customer-statistics-tab .mapTable tr th {
     border: 1px solid;
     border-collapse: collapse;

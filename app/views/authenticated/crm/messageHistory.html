@@ -1,12 +1,20 @@
-<div  id="message-history-tab">
-    <div ng-if="!isLocationsData" class="margin-bottom-10">
-        <div class="md-headline text-center">No Locations Available.</div>
+<div id="message-history-tab">
+    <div ng-if="isLocationDataProcessing" layout="column" layout-align="center center"
+         layout-fill flex>
+        <md-progress-circular class="md-accent" md-diameter="100"
+                              md-mode="indeterminate"></md-progress-circular>
     </div>
+
+    <div ng-if="!isLocationDataProcessing && !isLocationsData">
+        <div class="md-headline text-center">Locations not available.</div>
+    </div>
+
     <div ng-if="isLocationsData">
         <section layout="column" layout-gt-sm="row">
             <div>
                 <md-input-container>
                     <md-select aria-label="Select location" ng-model="idsObj.locationId"
+                               ng-disabled="isSegmentsDataProcessing || isProcessingCrmData"
                                ng-change="fnChangeLocation(idsObj.locationId);">
                         <md-option ng-repeat="location in locationOptions" ng-value="location.id">
                             {{location.name}}
@@ -14,9 +22,9 @@
                     </md-select>
                 </md-input-container>
 
-                <md-input-container>
+                <md-input-container ng-if="isSegmentsData">
                     <md-select aria-label="Select Type" ng-model="idsObj.segmentId"
-                               ng-if="isSegmentsData"
+                               ng-disabled="isProcessingCrmData"
                                ng-change="fnChangeSegment(idsObj);">
                         <md-option ng-repeat="segment in segmentsOptions" ng-value="segment.id">
                             {{segment.name}}
@@ -25,35 +33,45 @@
                 </md-input-container>
             </div>
             <span flex></span>
+
             <div class="margin-top-8" ng-if="isSegmentsData">
                 <div layout="row" layout-align="end center" layout-xs="column"
                      layout-align-sm="space-between center"
                      layout-align-xs="space-between center">
                     <md-button aria-label="Refresh Grid"
                                class="md-raised md-accent"
-                               ng-disabled="!isCrmInteractionData"
-                               ng-click="fnRefreshGrid(idsObj)">Refresh</md-button>
+                               ng-disabled="isProcessingCrmData"
+                               ng-click="fnRefreshGrid(idsObj)">Refresh
+                    </md-button>
 
                     <md-button aria-label="Download CSV"
                                class="md-raised md-accent margin-right-0"
-                               ng-disabled="!isCrmInteractionData"
-                               ng-click="fnDownloadInteractionCSV($event, idsObj)">Export Interaction CSV</md-button>
+                               ng-disabled="isProcessingCrmData"
+                               ng-click="fnDownloadInteractionCSV($event, idsObj)">Export Interaction CSV
+                    </md-button>
                 </div>
             </div>
         </section>
 
-        <div ng-if="!isSegmentsData" class="margin-bottom-10">
-            <div class="md-headline text-center">No Segments Available.</div>
+        <div ng-if="isSegmentsDataProcessing" layout="column" layout-align="center center"
+             layout-fill flex>
+            <md-progress-circular class="md-accent" md-diameter="100"
+                                  md-mode="indeterminate"></md-progress-circular>
+        </div>
+
+        <div ng-if="!isSegmentsDataProcessing && !isSegmentsData" class="margin-bottom-10">
+            <div class="md-headline text-center">Segments not Available.</div>
         </div>
 
         <div ng-if="isSegmentsData">
             <div ng-if="!isCrmInteractionData && !isCrmMsgGridShow" layout="column" layout-align="center center"
                  layout-fill flex>
-                <md-progress-circular class="md-accent" md-diameter="100" md-mode="indeterminate"></md-progress-circular>
+                <md-progress-circular class="md-accent" md-diameter="100"
+                                      md-mode="indeterminate"></md-progress-circular>
             </div>
 
             <div ng-if="isCrmMsgGridShow" class="margin-bottom-10">
-                <div class="md-headline text-center">No CRM Interaction available</div>
+                <div class="md-headline text-center">CRM Interaction data not available.</div>
             </div>
 
             <!--UI Grid-->
@@ -65,7 +83,7 @@
             <div ng-if="isCrmInteractionData" layout="row" layout="row" layout-align="center center" layout-margin>
                 <div ng-if="isPagingData">
                     <md-button aria-label="More Segment Interactions" class="md-raised md-accent"
-                               ng-click="fnLoadMoreCrmInteractions(idsObj)" >
+                               ng-click="fnLoadMoreCrmInteractions(idsObj)">
                         <span ng-if="isMoreCrmInteractions"> Loading... </span>
                         <span ng-if="!isMoreCrmInteractions">More CRM Interactions </span>
                     </md-button>
