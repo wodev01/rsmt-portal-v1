@@ -163,19 +163,20 @@ app.directive('recommendedGrid', function ($mdDialog, allCustomerService) {
             };
 
             $scope.fnSetGridOptions = function (id) {
-                var colDffArr = [{field: 'text', displayName: 'Service', minWidth: 200, enableHiding: false},
+                var colDffArr = [
+                    {field: 'text', displayName: 'Service', minWidth: 250, enableHiding: false},
                     {
                         field: 'recommended_date',
                         displayName: 'Date',
                         cellFilter: 'date:\'MM/dd/yyyy h:mm a\'',
-                        minWidth: 200,
+                        minWidth: 160,
                         enableHiding: false
                     },
                     {
                         field: 'due_date',
                         displayName: 'Due Date',
                         cellFilter: 'date:\'MM/dd/yyyy h:mm a\'',
-                        minWidth: 200,
+                        minWidth: 160,
                         enableHiding: false
                     },
                     {field: 'recommendation_type', displayName: 'Type', minWidth: 100, enableHiding: false}
@@ -200,7 +201,7 @@ app.directive('recommendedGrid', function ($mdDialog, allCustomerService) {
                         },
                         {
                             field: 'customer.phone_numbers', displayName: 'Phone Numbers',
-                            cellFilter: 'joinArray', minWidth: 100, enableHiding: false
+                            cellFilter: 'joinArray', minWidth: 150, enableHiding: false
                         }
                     );
                 }
@@ -345,18 +346,19 @@ app.directive('repairOrderGrid', function ($mdDialog, allCustomerService) {
                             displayName: '',
                             cellTemplate: $scope.roAction,
                             minWidth: 50,
-                            enableColumnMenu: false
+                            enableColumnMenu: false,
+                            enableColumnResize: false
                         },
                         {
                             field: 'closed',
                             displayName: 'Closed',
                             cellFilter: 'date:\'MM/dd/yyyy h:mm a\'',
-                            minWidth: 200
+                            minWidth: 160
                         },
-                        {field: 'inspection', displayName: 'Inspection', cellFilter: 'inspection', minWidth: 110},
+                        {field: 'inspection', displayName: 'Inspection', cellFilter: 'inspection', minWidth: 100},
                         {field: 'order_number', displayName: 'RO #', minWidth: 100},
-                        {name: 'labor', cellTemplate: $scope.laborTmpl, displayName: 'Labor', minWidth: 400},
-                        {name: 'parts', cellTemplate: $scope.partsTmpl, displayName: 'Parts', minWidth: 400},
+                        {name: 'labor', cellTemplate: $scope.laborTmpl, displayName: 'Labor', minWidth: 350},
+                        {name: 'parts', cellTemplate: $scope.partsTmpl, displayName: 'Parts', minWidth: 350},
                         {
                             field: 'total_sold_price_cents',
                             displayName: 'Total RO $',
@@ -500,7 +502,7 @@ app.directive('addDescription', function () {
         link: function (scope, iElement) {
             var html = '';
             angular.forEach(scope.arr, function (objVal) {
-                html += '<div style="white-space: normal; line-height: normal;" layout-margin>'
+                html += '<div class="text-justify" style="white-space: normal; line-height: normal;" layout-margin>'
                     + objVal.description + '</div>';
             });
             iElement.append(html);

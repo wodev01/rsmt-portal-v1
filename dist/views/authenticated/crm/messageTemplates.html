@@ -11,7 +11,7 @@
 
     <div ng-if="isLocationsData">
 
-        <md-input-container >
+        <md-input-container>
             <md-select aria-label="Select location" ng-model="locationId"
                        ng-disabled="!isCrmSegmentsData && !isCrmSegmentsMsgShow"
                        ng-change="fnChangeLocation(locationId);">
@@ -31,11 +31,9 @@
         </div>
 
         <!--UI Grid-->
-        <div ng-if="isCrmSegmentsData">
-            <div ui-grid-selection ui-grid-auto-resize
-                 ng-style="$root.fnReturnGridHeight(crmSegmentsData.length)"
-                 ui-grid="crmSegmentsGridOptions">
-            </div>
+        <div ng-if="isCrmSegmentsData"
+             ng-style="$root.fnReturnGridHeight(crmSegmentsData.length);"
+             ui-grid="crmSegmentsGridOptions" ui-grid-selection ui-grid-auto-resize ui-grid-resize-columns>
         </div>
     </div>
 </div>

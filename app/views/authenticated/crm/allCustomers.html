@@ -21,7 +21,7 @@
         </md-input-container>
 
         <ul class="breadcrumb">
-            <li ng-repeat="breadcrumb in breadcrumbArr" ng-click="fnOnSelectBreadcrumb($index)">
+            <li ng-repeat="breadcrumb in breadcrumbArr" ng-click="fnOnSelectBreadcrumb($index);">
                 <a href="javascript:void(0);">{{breadcrumb.name}}</a>
             </li>
         </ul>
@@ -48,8 +48,8 @@
             </div>
 
             <div ng-if="isDataNotNull"
-                 ui-grid="customersGridOptions" ui-grid-selection ui-grid-auto-resize
-                 ng-style="$root.fnReturnGridHeight(customersData.length, '', false, true);">
+                 ng-style="$root.fnReturnGridHeight(customersData.length, '', false, true);"
+                 ui-grid="customersGridOptions" ui-grid-selection ui-grid-auto-resize ui-grid-resize-columns>
             </div>
         </div>
 

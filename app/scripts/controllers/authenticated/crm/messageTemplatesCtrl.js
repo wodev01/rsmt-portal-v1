@@ -90,7 +90,8 @@ app.controller('messageTemplatesCtrl',
                     cellTemplate: $scope.crmSegmentsAction,
                     width: 50,
                     enableSorting: false,
-                    enableColumnMenu: false
+                    enableColumnMenu: false,
+                    enableColumnResize: false
                 }
             ],
             onRegisterApi: function (gridApi) {

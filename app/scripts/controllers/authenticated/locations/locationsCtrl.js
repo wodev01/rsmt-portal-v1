@@ -85,8 +85,7 @@ app.controller('LocationsCtrl',
             '<md-button class="md-icon-button md-warn" aria-label="Delete" ng-click="grid.appScope.fnLocationDelete(row,$event);">' +
             '   <md-icon md-font-set="fa fa-lg fa-fw fa-trash"></md-icon>' +
             '   <md-tooltip ng-if="$root.isMobile == null" md-direction="top">Delete</md-tooltip>' +
-            '</md-button>' +
-            '</div>';
+            '</md-button></div>';
 
         $scope.locationGridOptions = {
             data: 'locationData',
@@ -96,9 +95,9 @@ app.controller('LocationsCtrl',
             enableRowHeaderSelection: false,
             enableVerticalScrollbar: 0,
             columnDefs: [
-                {field: 'name', displayName: 'Name', minWidth: 100, enableHiding: false},
-                {field: 'address', displayName: 'Address', minWidth: 100, enableHiding: false},
-                {field: 'city', displayName: 'City', minWidth: 100, enableHiding: false},
+                {field: 'name', displayName: 'Name', minWidth: 180, enableHiding: false},
+                {field: 'address', displayName: 'Address', minWidth: 200, enableHiding: false},
+                {field: 'city', displayName: 'City', minWidth: 150, enableHiding: false},
                 {field: 'state', displayName: 'State', minWidth: 100, enableHiding: false},
                 {field: 'zip', displayName: 'Zip', minWidth: 100, enableHiding: false},
                 {
@@ -107,7 +106,8 @@ app.controller('LocationsCtrl',
                     cellTemplate: $scope.locationAction,
                     width: 100,
                     enableSorting: false,
-                    enableColumnMenu: false
+                    enableColumnMenu: false,
+                    enableColumnResize: false
                 }
             ],
             onRegisterApi: function (gridApi) {
@@ -128,6 +128,7 @@ app.controller('LocationsCtrl',
                 .ok('Delete')
                 .cancel('Cancel')
                 .targetEvent(event);
+
             $mdDialog.show(confirm).then(function () {
                 locationService.deleteLocation(row.entity.id).then(function () {
                     $scope.fnFetchLocationData();

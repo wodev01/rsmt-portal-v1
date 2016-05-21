@@ -79,16 +79,17 @@ app.controller('scheduledMessagesCtrl',
             enableVerticalScrollbar: 0,
             columnDefs: [
                 {
-                    name: 'Action',
+                    name: 'action',
                     displayName: '',
                     cellTemplate: $scope.crmInteractionAction,
                     width: 50,
                     enableSorting: false,
-                    enableColumnMenu: false
+                    enableColumnMenu: false,
+                    enableColumnResize: false
                 },
                 {
                     field: 'due_date', displayName: 'Due Date',
-                    cellFilter: 'date:\'MM/dd/yyyy h:mm a\'', minWidth: 150, enableHiding: false
+                    cellFilter: 'date:\'MM/dd/yyyy h:mm a\'', minWidth: 160, enableHiding: false
                 },
                 {
                     name: 'name',
@@ -104,11 +105,11 @@ app.controller('scheduledMessagesCtrl',
                     minWidth: 250,
                     enableHiding: false
                 },
-                {field: 'delivery_type', displayName: 'Delivery', width: 100, enableHiding: false},
-                {field: 'status', displayName: 'Status', width: 100, enableHiding: false},
+                {field: 'delivery_type', displayName: 'Delivery', minWidth: 100, enableHiding: false},
+                {field: 'status', displayName: 'Status', minWidth: 100, enableHiding: false},
                 {
                     field: 'repair_order.closed', displayName: 'Closed',
-                    cellFilter: 'date:\'MM/dd/yyyy h:mm a\'', minWidth: 180, enableHiding: false
+                    cellFilter: 'date:\'MM/dd/yyyy h:mm a\'', minWidth: 160, enableHiding: false
                 }
             ],
             onRegisterApi: function (gridApi) {

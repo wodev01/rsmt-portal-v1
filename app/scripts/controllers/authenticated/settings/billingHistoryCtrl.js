@@ -29,12 +29,6 @@ app.controller('BillingHistoryCtrl',
             });
         };
 
-        $scope.fnInitBillingHistory = function () {
-            if ($stateParams.settingsName == 'billingHistory') {
-                $scope.getPagedDataAsync();
-            }
-        };
-
         $scope.billingHistoryGridOptions = {
             data: 'billingHistoryData',
             rowHeight: 50,
@@ -46,11 +40,11 @@ app.controller('BillingHistoryCtrl',
                 {
                     field: 'date',
                     displayName: 'Date',
-                    minWidth: 150,
+                    minWidth: 100,
                     cellFilter: 'date:\'dd-MM-yyyy\'',
                     enableHiding: false
                 },
-                {field: 'reference', displayName: 'Invoice #', minWidth: 100, enableHiding: false},
+                {field: 'reference', displayName: 'Invoice #', minWidth: 200, enableHiding: false},
                 {field: 'description', displayName: 'Description', minWidth: 250, enableHiding: false},
                 {field: 'amount', displayName: 'Amount', minWidth: 100, enableHiding: false}
             ],
@@ -69,10 +63,15 @@ app.controller('BillingHistoryCtrl',
                 .ok('Delete')
                 .cancel('Cancel')
                 .targetEvent(event);
+
             $mdDialog.show(confirm).then(function () {
             });
         };
 
-        $scope.fnBillingHistoryEdit = function () {
+        $scope.fnInitBillingHistory = function () {
+            if ($stateParams.settingsName == 'billingHistory') {
+                $scope.getPagedDataAsync();
+            }
         };
+
     });

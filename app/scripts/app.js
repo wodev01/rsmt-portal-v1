@@ -19,8 +19,9 @@ var app = angular
         'ui.grid',
         'ui.grid.selection',
         'ui.grid.autoResize',
-        'ngMap',
         'ui.grid.pagination',
+        'ui.grid.resizeColumns',
+        'ngMap',
         'angular-bind-html-compile'
     ])
     .constant('cookieName', 'cargly_rsmt_access_token')

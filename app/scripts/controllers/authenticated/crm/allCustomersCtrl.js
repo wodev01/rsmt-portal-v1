@@ -93,22 +93,22 @@ app.controller('allCustomersCtrl',
             columnDefs: [
                 {
                     displayName: '',
-                    name: 'Action',
+                    name: 'action',
                     cellTemplate: $scope.customerAction,
-                    minWidth: 50,
                     width: '50',
                     enableSorting: false,
                     enableColumnMenu: false,
-                    enableFiltering: false
+                    enableFiltering: false,
+                    enableColumnResize: false
                 },
-                {field: 'first_name', displayName: 'First Name', minWidth: 200, enableHiding: false},
-                {field: 'last_name', displayName: 'Last Name', minWidth: 200, enableHiding: false},
+                {field: 'first_name', displayName: 'First Name', minWidth: 150, enableHiding: false},
+                {field: 'last_name', displayName: 'Last Name', minWidth: 150, enableHiding: false},
                 {field: 'company', displayName: 'Company', minWidth: 200, enableHiding: false},
                 {
                     field: 'phone_numbers',
                     displayName: 'Phone',
                     cellFilter: 'joinTelArray',
-                    minWidth: 200,
+                    minWidth: 150,
                     enableHiding: false
                 },
                 {

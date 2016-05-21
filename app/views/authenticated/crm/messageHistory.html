@@ -76,8 +76,8 @@
 
             <!--UI Grid-->
             <div class="margin-bottom-10" ng-if="isCrmInteractionData"
-                 ui-grid="crmInteractionGridOptions" ui-grid-selection ui-grid-auto-resize
-                 ng-style="$root.fnReturnGridHeight(crmInteractionData.length,crmInteractionGridOptions.rowHeight);">
+                 ng-style="$root.fnReturnGridHeight(crmInteractionData.length,crmInteractionGridOptions.rowHeight);"
+                 ui-grid="crmInteractionGridOptions" ui-grid-selection ui-grid-auto-resize ui-grid-resize-columns>
             </div>
 
             <div ng-if="isCrmInteractionData" layout="row" layout="row" layout-align="center center" layout-margin>

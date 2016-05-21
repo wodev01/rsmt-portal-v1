@@ -1,8 +1,9 @@
 <md-sidenav class="md-sidenav-right md-whiteframe-z2 right-side-nav" md-component-id="manageLocationView">
     <!-- swapping view header -->
     <md-toolbar class="light-black-bg-1">
-        <div class="md-toolbar-tools" layout="row" layout-align="space-between center">
-            {{editLocationName}}
+        <div class="md-toolbar-tools" layout="row">
+            <span ng-bind="editLocationName"></span>
+            <span flex></span>
             <md-button ng-click="fnCloseLocationManageSwap();" class="md-raised md-accent">Back</md-button>
         </div>
     </md-toolbar>
@@ -17,7 +18,9 @@
             </md-tab>
 
             <md-tab label="Recommended Service">
-                <md-content ng-controller="recommendedServiceCtrl" class="md-padding" ng-if="selectedLocationTab === 1">
+                <md-content class="md-padding" ng-controller="recommendedServiceCtrl"
+                            ng-if="selectedLocationTab === 1"
+                            ng-init="fnInitRecommendedService();">
                     <div layout="row" layout-sm="column" layout-align="center center"
                          ng-if="!isDataNotNull && !isMsgShow">
                         <md-progress-circular class="md-accent" md-diameter="100"
@@ -28,15 +31,18 @@
                         No recommended service available.
                     </div>
 
-                    <div layout-fill flex ng-if="isDataNotNull"
-                         ui-grid-selection ui-grid-auto-resize
-                         ng-style="$root.fnReturnGridHeight(recommendedServicesData.length)"
-                         ui-grid="recommendedServiceGridOptions"></div>
+                    <div ng-if="isDataNotNull"
+                         ng-style="$root.fnReturnGridHeight(recommendedServicesData.length);"
+                         ui-grid="recommendedServiceGridOptions"
+                         ui-grid-selection ui-grid-auto-resize ui-grid-resize-columns
+                         layout-fill flex></div>
                 </md-content>
             </md-tab>
 
             <md-tab label="Repair Orders">
-                <md-content ng-controller="repairOrderCtrl" class="md-padding" ng-if="selectedLocationTab === 2">
+                <md-content class="md-padding" ng-controller="repairOrderCtrl"
+                            ng-init="fnInitRepairOrders();"
+                            ng-if="selectedLocationTab === 2">
                     <div layout="row" layout-sm="column" layout-align="center center"
                          ng-if="!isDataNotNull && !isMsgShow">
                         <md-progress-circular class="md-accent" md-diameter="100"
@@ -47,16 +53,15 @@
                         No repair orders available.
                     </div>
 
-                    <div layout-fill flex ng-if="isDataNotNull"
-                         ui-grid-selection ui-grid-auto-resize ui-grid-pagination
-                         ng-style="$root.fnReturnGridHeight(filteredData.length, '', true, false)"
-                         ui-grid="repairOrderGridOptions"></div>
+                    <div ng-if="isDataNotNull"
+                         ng-style="$root.fnReturnGridHeight(filteredData.length, '', true, false);"
+                         ui-grid="repairOrderGridOptions"
+                         ui-grid-selection ui-grid-auto-resize ui-grid-pagination ui-grid-resize-columns
+                         layout-fill flex></div>
                 </md-content>
             </md-tab>
-
         </md-tabs>
     </md-content>
-
 </md-sidenav>
 
 <!-- include swapping view-->

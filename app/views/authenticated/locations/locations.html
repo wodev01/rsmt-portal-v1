@@ -12,14 +12,15 @@
         <div class="md-headline"> No locations available.</div>
     </div>
 
-    <div ng-if="!isLocationDataNotNull && !isLocationMsgShow" layout="column" layout-align="center center" layout-fill
-         flex>
+    <div ng-if="!isLocationDataNotNull && !isLocationMsgShow" layout="column" layout-align="center center"
+         layout-fill flex>
         <md-progress-circular class="md-accent" md-diameter="100" md-mode="indeterminate"></md-progress-circular>
     </div>
 
     <!-- Grid Section -->
-    <div ng-if="isLocationDataNotNull" ng-style="$root.fnReturnGridHeight(locationData.length)"
-         ui-grid="locationGridOptions" ui-grid-selection ui-grid-auto-resize></div>
+    <div ng-if="isLocationDataNotNull"
+         ng-style="$root.fnReturnGridHeight(locationData.length)"
+         ui-grid="locationGridOptions" ui-grid-selection ui-grid-auto-resize ui-grid-resize-columns></div>
 
 </div>
 <!-- include swapping view-->

@@ -23,6 +23,9 @@ app.controller('UsersCtrl',
                     }
                 });
             }, 100);
+
+
+
         };
 
         $scope.$on('refreshUsers', function () {
@@ -64,7 +67,8 @@ app.controller('UsersCtrl',
                     cellTemplate: $scope.userAction,
                     width: 100,
                     enableSorting: false,
-                    enableColumnMenu: false
+                    enableColumnMenu: false,
+                    enableColumnResize: false
                 }
             ],
             onRegisterApi: function (gridApi) {
