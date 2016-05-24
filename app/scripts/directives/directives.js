@@ -476,7 +476,7 @@ app.directive('repairOrderGrid', function ($mdDialog, allCustomerService) {
             $scope.fnOpenRepairOrderModal = function (ev, repairOrder) {
                 $mdDialog.show({
                     controller: 'repairOrderModalCtrl',
-                    templateUrl: 'views/authenticated/locations/modals/roDetailsDialog.html',
+                    templateUrl: 'views/authenticated/dashboard/modals/roDetailsDialog.html',
                     targetEvent: ev,
                     resolve: {
                         repairOrder: function () {

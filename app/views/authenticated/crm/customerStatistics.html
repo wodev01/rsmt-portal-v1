@@ -11,7 +11,7 @@
 
     <div ng-if="isLocationsData" layout="column">
         <div layout="row">
-            <md-input-container>
+            <md-input-container md-theme="rsmt">
                 <md-select aria-label="Select location" ng-model="locationId"
                            ng-change="fnChangeLocation(locationId);"
                            ng-disabled="isProcessing">
