@@ -16,6 +16,7 @@ app.controller('messageTemplatesCtrl',
                     if (segmentsObj.template_name === templateObj.name) {
                         segmentsObj['html'] = templateObj.html;
                         segmentsObj['preview_values'] = templateObj.preview_values;
+                        segmentsObj['subject'] = templateObj.subject;
                         return false;
                     }
                 });
