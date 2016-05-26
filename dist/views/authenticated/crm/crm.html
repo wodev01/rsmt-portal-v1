@@ -36,6 +36,13 @@
                      ng-include="'views/authenticated/crm/customerStatistics.html'" layout-margin>
                 </div>
             </md-tab>
+
+            <md-tab label="Activity">
+                <div md-theme="rsmt" ng-if="selectedCrmTab === 5" ng-controller="crmActivityCtrl"
+                     ng-init="fnInitCrmActivity();"
+                     ng-include="'views/authenticated/crm/crmActivity.html'" layout-margin>
+                </div>
+            </md-tab>
         </md-tabs>
     </md-content>
 </div>

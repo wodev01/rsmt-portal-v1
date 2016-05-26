@@ -355,3 +355,9 @@ md-dialog#download-app md-dialog-content {
     line-height: 2em;
     text-align: justify;
 }
+
+/*---------- CRM Activity tab ----------*/
+#crm-activity-tab .market-session-icon{
+    border: 1px solid #CCCCCC;
+    border-radius: 50%;
+}
