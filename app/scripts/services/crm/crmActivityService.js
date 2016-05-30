@@ -1,6 +1,6 @@
 'use strict';
-app.factory('crmActivityService', ['$q','ErrorMsg',
-    function ($q, ErrorMsg) {
+app.factory('crmActivityService', ['$q', 'ErrorMsg', 'encodeParamService',
+    function ($q, ErrorMsg, encodeParamService) {
         var crmActivityService = {};
 
         // Fetch marketing sessions.
@@ -20,9 +20,8 @@ app.factory('crmActivityService', ['$q','ErrorMsg',
             return defer.promise;
         };
 
-
         // Fetch activities for specific marketing sessions.
-        crmActivityService.fetchSessionActivities = function(partnerId,sessionId){
+        crmActivityService.fetchSessionActivities = function (partnerId, sessionId) {
             var defer = $q.defer();
             CarglyPartner.ajax({
                 url: '/partners/api/crm/' + partnerId + '/sessions/' + sessionId + '/activities',
@@ -35,6 +34,24 @@ app.factory('crmActivityService', ['$q','ErrorMsg',
                     defer.resolve(error);
                 }
             });
+            return defer.promise;
+        };
+
+        crmActivityService.fetchMoreSessions = function (partnerId, filterObj) {
+            var defer = $q.defer();
+
+            CarglyPartner.ajax({
+                url: '/partners/api/crm/' + partnerId + '/sessions' + encodeParamService.getEncodedParams(filterObj),
+                type: 'GET',
+                success: function (data) {
+                    defer.resolve(data);
+                },
+                error: function (error) {
+                    ErrorMsg.CheckStatusCode(error.status);
+                    defer.reject(error);
+                }
+            });
+
             return defer.promise;
         };
 

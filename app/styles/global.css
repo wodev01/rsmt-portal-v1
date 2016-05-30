@@ -1208,3 +1208,7 @@ md-list md-list-item > div {
     font-weight: bold;
     padding-right: 3px;
 }
+
+.breakWord{
+    word-break: break-word;
+}

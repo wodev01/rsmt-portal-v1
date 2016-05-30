@@ -8,7 +8,7 @@
 }
 
 .Product_box {
-    border: 1px solid #000;
+    border: 1px solid #000000;
     font-size: 21px;
     height: auto;
     padding: 31px;
@@ -21,9 +21,9 @@
 }
 
 .Product_box:hover {
-    -moz-box-shadow: 0 0 10px #ccc;
-    -webkit-box-shadow: 0 0 10px #ccc;
-    box-shadow: 0 0 10px #ccc;
+    -moz-box-shadow: 0 0 10px #CCCCCC;
+    -webkit-box-shadow: 0 0 10px #CCCCCC;
+    box-shadow: 0 0 10px #CCCCCC;
 }
 
 /*---------- Location Setup ----------*/
@@ -210,13 +210,15 @@
 }
 
 #customerTab .contentHeader {
-    background-color: #d3d3d3 !important;
+    background-color: #D3D3D3 !important;
     color: #000000;
     margin-top: 5px;
 }
-md-dialog#manage-scheduledmsg-dialog md-toolbar.md-rsmt-theme.md-hue-1:not(.md-menu-toolbar){
+
+md-dialog#manage-scheduledmsg-dialog md-toolbar.md-rsmt-theme.md-hue-1:not(.md-menu-toolbar) {
     color: #FFFFFF;
 }
+
 /*---------- Jquery UI Date-range Picker ----------*/
 .ui-widget {
     font-size: inherit;
@@ -268,7 +270,7 @@ md-dialog#manage-scheduledmsg-dialog md-dialog-content {
     overflow: hidden;
 }
 
-md-dialog#manage-scheduledmsg-dialog md-dialog-content div > md-toolbar:first-child .md-toolbar-tools span{
+md-dialog#manage-scheduledmsg-dialog md-dialog-content div > md-toolbar:first-child .md-toolbar-tools span {
     color: #FFFFFF;
 }
 
@@ -286,18 +288,18 @@ md-dialog#manage-scheduledmsg-dialog div.previewSection md-content.contentViewSe
 }
 
 .checked_item_green {
-    background-color: #00d500;
+    background-color: #00D500;
 }
 
 .checked_item_yellow {
-    background-color: #ffff00;
+    background-color: #FFFF00;
 }
 
 .checked_item_red {
-    background-color: #dd0000;
+    background-color: #DD0000;
 }
 
-md-dialog#crmSegmentDialog md-content.template-view{
+md-dialog#crmSegmentDialog md-content.template-view {
     height: 40vh;
 }
 
@@ -316,7 +318,7 @@ md-dialog#crmSegmentDialog md-content.template-view{
 }
 
 #customer-statistics-tab .subHeader {
-    background-color: #e0e0e0 !important;
+    background-color: #E0E0E0 !important;
     color: #000000 !important;
 }
 
@@ -357,7 +359,13 @@ md-dialog#download-app md-dialog-content {
 }
 
 /*---------- CRM Activity tab ----------*/
-#crm-activity-tab .market-session-icon{
+#crm-activity-tab #market-session-icon {
     border: 1px solid #CCCCCC;
     border-radius: 50%;
+}
+
+#crm-activity-tab #customer-vehicle-info h3{
+    margin-top: 10px !important;
+    margin-bottom: 0px !important;
+    color: rgba(0,0,0,0.54);
 }

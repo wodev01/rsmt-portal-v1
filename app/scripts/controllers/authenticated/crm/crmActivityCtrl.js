@@ -1,27 +1,37 @@
 'use strict';
 app.controller('crmActivityCtrl',
-    function ($scope, locationService, crmActivityService) {
+    function ($scope, $location, $timeout, $anchorScroll, locationService, crmActivityService) {
 
         var partnerId;
 
         $scope.isMsgShow = $scope.isDataNotNull = false;
         $scope.marketingSessionsData = [];
         $scope.sessionActivities = [];
+
         $scope.isActivityDataProcessing = false;
-        $scope.isProcessing = false;
+        $scope.isMoreActivities = false;
+        $scope.activityCursor;
+
+        var filterObj = {};
 
         $scope.getPagedDataAsync = function () {
             $scope.isMsgShow = $scope.isDataNotNull = false;
-            $scope.isProcessing = true;
 
             crmActivityService.fetchMarketingSessions(partnerId)
                 .then(function (data) {
+                    if (data.cursor) {
+                        $scope.activityCursor = data.cursor;
+                        filterObj.cursor = $scope.activityCursor;
+                    } else {
+                        $scope.activityCursor = "";
+                    }
+
                     if (data.results.length !== 0) {
                         $scope.marketingSessionsData = data.results;
-                        $scope.isProcessing = $scope.isMsgShow = false;
+                        $scope.isMsgShow = false;
                         $scope.isDataNotNull = true;
                     } else {
-                        $scope.isProcessing = $scope.isDataNotNull = false;
+                        $scope.isDataNotNull = false;
                         $scope.isMsgShow = true;
                     }
                 }, function (error) {
@@ -53,6 +63,31 @@ app.controller('crmActivityCtrl',
                     toastr.error('Failed retrieving session activities data.', 'STATUS CODE: ' + error.status);
                     $scope.isActivityDataProcessing = false;
                 });
+        };
+
+        // Load more sessions functionality.
+        $scope.fnLoadMoreSessions = function () {
+            if ($scope.activityCursor) {
+                $scope.isMoreActivities = true;
+
+                crmActivityService.fetchMoreSessions(partnerId, filterObj)
+                    .then(function (data) {
+                        if (data.cursor) {
+                            $scope.activityCursor = data.cursor;
+                            filterObj.cursor = $scope.activityCursor;
+                        } else {
+                            $scope.activityCursor = "";
+                        }
+
+                        if (data.results.length !== 0) {
+                            $scope.marketingSessionsData = $scope.marketingSessionsData.concat(data.results);
+                        }
+                        $scope.isMoreActivities = false;
+                    }, function (error) {
+                        toastr.error('Failed retrieving more sessions data.', 'STATUS CODE: ' + error.status);
+                        $scope.isMoreActivities = false;
+                    });
+            }
         };
 
         $scope.fnInitCrmActivity = function () {

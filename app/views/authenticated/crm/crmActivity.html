@@ -12,43 +12,113 @@
     <md-content>
         <div ng-if="isDataNotNull">
             <md-list>
-                <md-list-item class="md-2-line"
+                <md-list-item md-no-ink class="md-2-line"
                               ng-repeat="marketSession in marketingSessionsData"
                               ng-click="fnGetActivities($index, marketSession.session_id)">
                     <div layout="column" flex>
                         <div layout="row" flex>
-                            <md-icon class="" flex="5">
-                                <span class="fa-stack fa-lg market-session-icon">
+                            <md-icon class="margin-top-10" flex="5">
+                                <span id="market-session-icon" class="fa-stack fa-lg">
                                          <i class="fa fa-stack-1x"
                                             ng-class="marketSession.session_type=='EMAIL_SESSION'? 'fa-envelope' : 'fa-globe'"></i>
                                 </span>
                             </md-icon>
-                            <div class="md-list-item-text padding-top-20">
-                                <h3>{{ marketSession.session_type }}</h3>
-
-                                <p>{{ marketSession.created | date:'MM/dd/yyyy h:mm a'}}</p>
+                            <div id="customer-vehicle-info" flex>
+                                <h3>{{ marketSession.modified | date:'MM/dd/yyyy h:mm a'}}</h3>
+                                <div  ng-if="!marketSession.customer">
+                                    Anonymous Customer
+                                </div>
+                                <div layout="row" ng-if="marketSession.customer" layout-xs="column">
+                                    <div flex>
+                                        <div layout="row" flex>
+                                            <label class="leftLabel">Customer Name :</label>
+                                            <label flex>
+                                                {{marketSession.customer.first_name}}&nbsp;{{marketSession.customer.last_name}}
+                                            </label>
+                                        </div>
+                                        <div layout="row" flex>
+                                            <span class="breakWord" flex>
+                                                <label class="leftLabel">Vehicle :</label>
+                                                <label>{{marketSession.vehicle.year}}</label>
+                                                <label>&nbsp;{{marketSession.vehicle.make}}</label>
+                                                <label>&nbsp;{{marketSession.vehicle.model}}</label>
+                                                <label>&nbsp;({{marketSession.vehicle.last_odo | number}}&nbsp;miles)</label>
+                                            </span>
+                                        </div>
+                                        <div layout="row" flex>
+                                            <label class="leftLabel">Phone :</label>
+                                            <label flex>
+                                                {{marketSession.customer.phone_numbers | joinArray}}
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div flex>
+                                        <div layout="row" flex>
+                                            <label class="leftLabel">Email :</label>
+                                            <label flex>
+                                                {{marketSession.customer.email_addresses | joinArray}}
+                                            </label>
+                                        </div>
+                                        <div layout="row" flex>
+                                            <label class="leftLabel">First Seen :</label>
+                                            <label flex>
+                                                {{marketSession.customer.first_seen | date:'MM/dd/yyyy h:mm a'}}
+                                            </label>
+                                        </div>
+                                        <div layout="row" flex>
+                                            <label class="leftLabel">Last Seen :</label>
+                                            <label flex>
+                                                {{marketSession.customer.last_seen | date:'MM/dd/yyyy h:mm a'}}
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
+                            <md-icon class="margin-top-10" flex="5">
+                                <span>
+                                    <i class="fa" ng-class="marketSession.active ? 'fa-chevron-up' : 'fa-chevron-down'"></i>
+                                </span>
+                            </md-icon>
                         </div>
 
-                        <div ng-show="marketSession.active" flex-offset="5">
+                        <!--START:  Session Activities -->
+                        <div id="session-activities" ng-show="marketSession.active"  flex-offset="5">
                             <div ng-if="isActivityDataProcessing" layout="column" layout-align="center center"
                                  layout-fill flex>
                                 <md-progress-circular class="md-accent" md-diameter="50"
                                                       md-mode="indeterminate"></md-progress-circular>
                             </div>
                             <md-list ng-if="!isActivityDataProcessing">
-                                <md-list-item ng-repeat="activity in sessionActivities">
-                                    <p>Activity Type:&nbsp;&nbsp;{{activity.activity_type}}</p>
-
-                                    <p>Time:&nbsp;&nbsp;{{activity.occurred | date:'MM/dd/yyyy h:mm a'}}</p>
+                                <md-list-item class="padding-0" ng-repeat="activity in sessionActivities">
+                                    <div layout="column" flex>
+                                        <span>{{activity.occurred | date:'MM/dd/yyyy h:mm a'}}
+                                              &nbsp;&nbsp;&nbsp;{{activity.activity_type}}
+                                              &nbsp;&nbsp;&nbsp;<a class="breakWord" target="_blank" ng-href="{{activity.source}}">{{activity.source}}</a>
+                                        </span>
+                                    </div>
                                     <md-divider ng-if="!$last"></md-divider>
                                 </md-list-item>
                             </md-list>
                         </div>
+                        <!--END:  Session Activities -->
                     </div>
                     <md-divider ng-if="!$last"></md-divider>
                 </md-list-item>
             </md-list>
+        </div>
+
+        <div ng-if="isDataNotNull" layout="row" layout-align="center center" layout-margin>
+            <div ng-if="activityCursor">
+                <md-button aria-label="More Activities" class="md-raised md-accent"
+                           ng-click="fnLoadMoreSessions();">
+                    <span ng-if="isMoreActivities"> Loading... </span>
+                    <span ng-if="!isMoreActivities">More Activities </span>
+                </md-button>
+            </div>
+
+            <div ng-if="!activityCursor">
+                <div class="md-title">... No more results found ...</div>
+            </div>
         </div>
     </md-content>
 </div>
