@@ -105,16 +105,21 @@ app.controller('messageTemplatesCtrl',
         $scope.fnGenerateIframe = function () {
 
             $timeout(function () {
-                var iframe = angular.element('md-dialog#message-template-dialog #rendered-html')[0];
-                if (iframe) {
-                    iframe.src = 'about:blank';
-                    iframe.contentWindow.document.open('text/htmlreplace');
-                    iframe.contentWindow.document.write($scope.rendered_template.html);
-                    iframe.contentWindow.document.close();
-                    iframe.contentWindow.document.onmousedown = function () {
-                        return false;
-                    }
-                }
+                var createFrame = document.createElement("iframe");
+                createFrame.setAttribute('frameBorder',0);
+                createFrame.style.width = '100%';
+                createFrame.style.height = '100%';
+                angular.element('#rendered-html').append(createFrame);
+
+                var doc, html = '<html><head></head><body style="padding: 8px 0 8px 0;">' + $scope.rendered_template.html + '</body></html>';
+                if(createFrame.contentDocument) {doc = createFrame.contentDocument;}
+                else if(createFrame.contentWindow) {doc = createFrame.contentWindow.document;}
+                else {doc = createFrame.document;}
+
+                doc.open();
+                doc.writeln(html);
+                doc.close();
+
             }, 1000);
         };
 
