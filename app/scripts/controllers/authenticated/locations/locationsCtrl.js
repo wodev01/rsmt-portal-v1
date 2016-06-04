@@ -25,6 +25,7 @@ app.controller('LocationsCtrl',
         // Create new location.
         $scope.newLocationView = function () {
             $scope.islocationEditable = false;
+            locationService.setLocationObj({});
             $scope.fnOpenNewLocationSwap();
         };
 

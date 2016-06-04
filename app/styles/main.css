@@ -359,10 +359,6 @@ md-dialog#download-app md-dialog-content {
 }
 
 /*---------- CRM Activity tab ----------*/
-/*#crm-activity-tab .activityContent md-list{*/
-    /*min-width: 350px;*/
-/*}*/
-
 #crm-activity-tab md-icon {
     min-width: 40px;
 }
@@ -376,7 +372,8 @@ md-dialog#download-app md-dialog-content {
     color: rgba(0, 0, 0, 0.54);
 }
 
-#crm-activity-tab #customer-vehicle-info .customerDetails, #crm-activity-tab #session-activities md-list md-list-item {
+#crm-activity-tab #customer-vehicle-info .customerDetails,
+#crm-activity-tab #session-activities md-list md-list-item {
     line-height: 25px;
     font-size: 13px;
 }

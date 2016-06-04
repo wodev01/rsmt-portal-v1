@@ -47,12 +47,12 @@ app.controller('crmActivityCtrl',
             }
         };
 
-                    $scope.fnGetActivities = function (index, sessionId) {
+        $scope.fnGetActivities = function (index, sessionId) {
             $scope.marketingSessionsData[index].active = !$scope.marketingSessionsData[index].active;
             collapseAnother(index);
             $scope.isActivityDataProcessing = true;
 
-            if($scope.marketingSessionsData[index].active) {
+            if ($scope.marketingSessionsData[index].active) {
                 crmActivityService.fetchSessionActivities(partnerId, sessionId)
                     .then(function (data) {
                         if (data.length !== 0) {
@@ -69,27 +69,25 @@ app.controller('crmActivityCtrl',
 
         // Load more sessions functionality.
         $scope.fnLoadMoreSessions = function () {
-            if ($scope.activityCursor) {
-                if(!$scope.isMoreActivities){
-                    $scope.isMoreActivities = true;
-                    crmActivityService.fetchMoreSessions(partnerId, filterObj)
-                        .then(function (data) {
-                            if (data.cursor) {
-                                $scope.activityCursor = data.cursor;
-                                filterObj.cursor = $scope.activityCursor;
-                            } else {
-                                $scope.activityCursor = "";
-                            }
+            if (!$scope.isMoreActivities) {
+                $scope.isMoreActivities = true;
+                crmActivityService.fetchMoreSessions(partnerId, filterObj)
+                    .then(function (data) {
+                        if (data.cursor) {
+                            $scope.activityCursor = data.cursor;
+                            filterObj.cursor = $scope.activityCursor;
+                        } else {
+                            $scope.activityCursor = "";
+                        }
 
-                            if (data.results.length !== 0) {
-                                $scope.marketingSessionsData = $scope.marketingSessionsData.concat(data.results);
-                            }
-                            $scope.isMoreActivities = false;
-                        }, function (error) {
-                            toastr.error('Failed retrieving more sessions data.', 'STATUS CODE: ' + error.status);
-                            $scope.isMoreActivities = false;
-                        });
-                }
+                        if (data.results.length !== 0) {
+                            $scope.marketingSessionsData = $scope.marketingSessionsData.concat(data.results);
+                        }
+                        $scope.isMoreActivities = false;
+                    }, function (error) {
+                        toastr.error('Failed retrieving more sessions data.', 'STATUS CODE: ' + error.status);
+                        $scope.isMoreActivities = false;
+                    });
             }
         };
 

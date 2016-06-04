@@ -307,7 +307,6 @@ app.controller('customerStatisticsCtrl',
         /*------ On scope destroy, cancel timeout  ------*/
         $scope.$on("$destroy", function () {
             $scope.mapLabel = 'Completed...';
-            $timeout.cancel($scope.timer);
             clearMarkers();
         });
 
