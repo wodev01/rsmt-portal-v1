@@ -359,7 +359,7 @@ md-dialog#download-app md-dialog-content {
 }
 
 /*---------- CRM Activity tab ----------*/
-#crm-activity-tab md-icon {
+#crm-activity-tab md-list md-list-item md-icon {
     min-width: 40px;
 }
 

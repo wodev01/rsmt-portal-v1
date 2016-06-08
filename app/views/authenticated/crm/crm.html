@@ -37,8 +37,15 @@
                 </div>
             </md-tab>
 
+            <md-tab label="Forms">
+                <div md-theme="rsmt" ng-if="selectedCrmTab === 5" ng-controller="crmFormsCtrl"
+                     ng-init="fnInitCrmForms();"
+                     ng-include="'views/authenticated/crm/crmForms.html'" layout-margin>
+                </div>
+            </md-tab>
+
             <md-tab label="Activity">
-                <div md-theme="rsmt" ng-if="selectedCrmTab === 5" ng-controller="crmActivityCtrl"
+                <div md-theme="rsmt" ng-if="selectedCrmTab === 6" ng-controller="crmActivityCtrl"
                      ng-init="fnInitCrmActivity();"
                      ng-include="'views/authenticated/crm/crmActivity.html'" layout-margin>
                 </div>

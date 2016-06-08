@@ -1,0 +1,19 @@
+<div class="tab-pane" id="crm-forms-tab">
+
+    <div ng-if="!isFormsDetails && !isCrmFormsGridShow" layout="column" layout-align="center center"
+         layout-fill flex>
+        <md-progress-circular class="md-accent" md-diameter="100"
+                              md-mode="indeterminate"></md-progress-circular>
+    </div>
+
+    <div ng-if="isCrmFormsGridShow" class="margin-bottom-10">
+        <div class="md-headline text-center">CRM Forms data not available.</div>
+    </div>
+
+    <!--UI Grid-->
+    <div class="margin-bottom-10" ng-if="isFormsDetails"
+         ng-style="$root.fnReturnGridHeight(crmFormsDetails.length);"
+         ui-grid="crmFormsGridOptions" ui-grid-selection ui-grid-auto-resize ui-grid-resize-columns>
+    </div>
+
+</div>

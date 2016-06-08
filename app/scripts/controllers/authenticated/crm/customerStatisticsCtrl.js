@@ -1,10 +1,10 @@
 'use strict';
 app.controller('customerStatisticsCtrl',
-    function ($scope, $timeout, $filter, NgMap, locationService, allCustomerService) {
+    function ($scope, $rootScope, $timeout, $location, $filter, NgMap, locationService, allCustomerService) {
 
         $scope.locationId = '';
         $scope.locationOptions = [];
-        $scope.isLocationDataProcessing = false;
+        $scope.isLocationDataProcessing = $scope.recursiveInitMarker = true;
 
         $scope.isDataNotNull = $scope.isMsgShow = $scope.isLocationsData = false;
         $scope.customersStatData = [];
@@ -22,7 +22,6 @@ app.controller('customerStatisticsCtrl',
         var markersArr = [];
         var infowindow = new google.maps.InfoWindow();
         var geocoder = new google.maps.Geocoder();
-        $scope.timer;
         $scope.ngMap;
 
         /*-------------------- Pie Chart ----------------*/
@@ -82,7 +81,7 @@ app.controller('customerStatisticsCtrl',
 
         /*-------------------- Clear all markers on the map ----------------*/
         function clearMarkers() {
-            $timeout.cancel($scope.timer);
+            $timeout.cancel();
             for (var i = 0; i < markersArr.length; i++) {
                 markersArr[i].setMap(null);
             }
@@ -204,12 +203,18 @@ app.controller('customerStatisticsCtrl',
                 if (customersStatData[count]._position) {
                     createMarker(customersStatData[count]._position, angular.copy(customersStatData[count]));
                 } else {
-                    var tmpObj = tempData[i];
-                    var tmpAddress = tmpObj.address1 + " " + tmpObj.city + " " + tmpObj.postal_code + " " + tmpObj.state;
-                    tmpAddress = tmpAddress.replace(/#/g, '');
-                    tmpObj._fullName = tmpObj.first_name + " " + tmpObj.last_name;
-                    tmpObj._fullAddress = tmpAddress;
-                    geocodeAddress(tmpObj);
+                    if ($rootScope.selectedTabIndex == 4 && $location.url() == '/crm') {
+                        var tmpObj = tempData[i];
+                        var tmpAddress = tmpObj.address1 + " " + tmpObj.city + " " + tmpObj.postal_code + " " + tmpObj.state;
+                        tmpAddress = tmpAddress.replace(/#/g, '');
+                        tmpObj._fullName = tmpObj.first_name + " " + tmpObj.last_name;
+                        tmpObj._fullAddress = tmpAddress;
+                        geocodeAddress(tmpObj);
+                    }else{
+                        $scope.recursiveInitMarker = false;
+                        clearMarkers();
+                        break;
+                    }
                 }
             }
 
@@ -219,10 +224,12 @@ app.controller('customerStatisticsCtrl',
                 return;
             }
 
-            $scope.timer = $timeout(function () {
-            }, 5000).then(function () {
-                $scope.fnInitMarkers(tempData, customersStatData);
-            });
+            if($scope.recursiveInitMarker){
+                $timeout(function () {
+                }, 5000).then(function () {
+                    $scope.fnInitMarkers(tempData, customersStatData);
+                });
+            }
         };
 
         /*------ Map Initialization ------*/
@@ -230,6 +237,7 @@ app.controller('customerStatisticsCtrl',
             count = 0;
             $scope.mapLabel = 'Locating customers...';
             $scope.totalCustomersFound = 0;
+            $scope.recursiveInitMarker = true;
             NgMap.getMap().then(function (map) {
                 $scope.ngMap = map;
                 var tempData = angular.copy($scope.customersStatData);
