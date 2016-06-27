@@ -49,7 +49,8 @@
                      layout-align-sm="space-around start"
                      layout-align-xs="space-around start">
                 <div class="margin-top-16" layout="row" flex>
-                    <input id="pickDateRange"/>
+                    <date-range-picker id="pickDateRange" date-range-obj="dateRangeObj"
+                                       selection-change="fnRefreshGrid"></date-range-picker>
                 </div>
 
                 <div layout="row" layout-align="space-between center" layout-fill flex>

@@ -15,6 +15,7 @@ app.controller('scheduledMessagesCtrl',
         $scope.isPagingData = true;
 
         $scope.isProcessingCrmData = false;
+        $scope.dateRangeObj = {};
 
         $scope.pagingOptions = {
             pageSize: 20,
@@ -119,8 +120,8 @@ app.controller('scheduledMessagesCtrl',
             }
         };
 
-        $scope.fnRefreshGrid = function () {
-            fnGetDateRange();
+        $scope.fnRefreshGrid = function (dateRangeObj) {
+            fnGetDateRange(dateRangeObj);
         };
 
         $scope.fnDownloadInteractionCSV = function (event, idsObj) {
@@ -294,17 +295,14 @@ app.controller('scheduledMessagesCtrl',
             $scope.getPagedDataAsync($scope.idsObj, filter);
         };
 
-        function fnGetDateRange() {
-            var dateRangeObj = $('#scheduled-messages-tab #pickDateRange').daterangepicker('getRange');
-
-            if (dateRangeObj) {
+        function fnGetDateRange(dateRangeObj) {
+            if (dateRangeObj && Object.keys(dateRangeObj).length !== 0) {
                 $scope.filter['from'] = $filter('date')(dateRangeObj.start, 'yyyy-MM-dd');
                 $scope.filter['to'] = $filter('date')(dateRangeObj.end, 'yyyy-MM-dd');
             } else {
                 delete $scope.filter['from'];
                 delete $scope.filter['to'];
             }
-
             $scope.fnChangeFilter($scope.filter);
         }
 
@@ -320,22 +318,9 @@ app.controller('scheduledMessagesCtrl',
 
         $scope.fnCreateDateRangePicker = function () {
             $timeout(function () {
-                $('#scheduled-messages-tab #pickDateRange').daterangepicker({
-                    datepickerOptions: {
-                        numberOfMonths: 2,
-                        maxDate: null
-                    },
-                    presetRanges: [],
-                    initialText: 'Select period...',
-                    onChange: function () {
-                        $scope.fnRefreshGrid();
-                    }
-                });
-
                 $('.comiseo-daterangepicker-triggerbutton.ui-button').css('cursor', 'wait');
                 $('.comiseo-daterangepicker-triggerbutton.ui-button').attr('disabled', 'true');
-            }, 1000);
-
+            });
             $scope.getPagedDataAsync($scope.idsObj, $scope.filter);
         };
 

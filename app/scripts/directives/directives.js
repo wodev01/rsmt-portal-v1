@@ -509,3 +509,37 @@ app.directive('addDescription', function () {
         }
     };
 });
+
+app.directive('dateRangePicker', function () {
+    return {
+        restrict: 'E',
+        scope: {
+            dateRangeObj: '=',
+            selectionChange: '='
+        },
+        link: function(scope, elem) {
+
+            function onSelectionChange() {
+                scope.dateRangeObj = angular.element(elem).daterangepicker('getRange');
+                if (scope.selectionChange) {
+                    scope.selectionChange(scope.dateRangeObj);
+                }
+            }
+
+            angular.element(elem).daterangepicker({
+                datepickerOptions: {
+                    numberOfMonths: 2,
+                    maxDate: null
+                },
+                initialText: 'Select Date Period...',
+                presetRanges: [],
+                change: function () {
+                    onSelectionChange();
+                },
+                clear: function () {
+                    onSelectionChange();
+                }
+            });
+        }
+    };
+});
