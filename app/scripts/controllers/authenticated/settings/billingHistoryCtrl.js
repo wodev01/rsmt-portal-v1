@@ -46,7 +46,7 @@ app.controller('BillingHistoryCtrl',
                 },
                 {field: 'reference', displayName: 'Invoice #', minWidth: 200, enableHiding: false},
                 {field: 'description', displayName: 'Description', minWidth: 250, enableHiding: false},
-                {field: 'amount', displayName: 'Amount', minWidth: 100, enableHiding: false}
+                {field: 'amount', cellFilter: 'CentToDollar | currency',displayName: 'Amount', minWidth: 100, enableHiding: false}
             ],
             onRegisterApi: function (gridApi) {
                 gridApi.selection.on.rowSelectionChanged($scope, function (row) {
